@@ -1,5 +1,5 @@
 -- scan character handles
-
+--[[
 local charas = {
     autopcr.getUnitAddr(104701, 5, 12),
     autopcr.getUnitAddr(104301, 5, 13),
@@ -7,7 +7,7 @@ local charas = {
     autopcr.getUnitAddr(107101, 5, 12),
     autopcr.getUnitAddr(170101, 5, 13)
 };
-
+]]
 -- data for 1600x900
 --[[ minitouch test
 minitouch.connect("localhost", 1111);
@@ -19,13 +19,13 @@ minitouch.setPos(7, 1544, 839); --forward
 minitouch.setPos(8, 1512, 43);  --pause
 --]]
 
----[[ mouse calibration
+--[[ mouse calibration
 for i = 1, 5 do
     autopcr.calibrate(i);
 end
 --]]
 
----[[ auto ub
+--[[ auto ub
 while (autopcr.getTime() > 1) --when not end
 do
     for i = 1, 5 do --judge every chara
@@ -54,6 +54,28 @@ minitouch.press(4);
 autopcr.waitFrame(4000);
 minitouch.press(5);
 --]]
+
+---[[ crit test
+local chara = autopcr.getUnitAddr(106301, 5, 15)
+--]]
+local boss = 85;
+local last = 0;
+
+while (true)
+do
+    local now = autopcr.nextCrit();
+    if (now ~= last)
+    then
+        last = now;
+        local crit = autopcr.getCrit(chara, boss, false);
+        if (now < crit)
+        then
+            print('yls必定暴击 crit rate = '..crit, 'next crit = '..now);
+        else
+            print('yls必定不暴击 crit rate = '..crit, 'next crit = '..now);
+        end
+    end
+end
 
 autopcr.waitTime(.5);
 minitouch.framePress(8);
