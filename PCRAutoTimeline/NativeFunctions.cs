@@ -6,7 +6,7 @@ using CodeStage.AntiCheat.ObscuredTypes;
 
 namespace PCRAutoTimeline
 {
-    public class NativeFunctions
+    public unsafe class NativeFunctions
     {
         [DllImport("user32")]
         public static extern int mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
@@ -120,27 +120,7 @@ namespace PCRAutoTimeline
         (
             long lpProcess,
             long lpBaseAddress,
-            out ObscuredInt lpBuffer,
-            long nSize,
-            int BytesRead
-        );
-
-        [DllImport("kernel32.dll")]
-        public static extern bool ReadProcessMemory
-        (
-            long lpProcess,
-            long lpBaseAddress,
-            out ObscuredFloat lpBuffer,
-            long nSize,
-            int BytesRead
-        );
-
-        [DllImport("kernel32.dll")]
-        public static extern bool ReadProcessMemory
-        (
-            long lpProcess,
-            long lpBaseAddress,
-            out ObscuredLong lpBuffer,
+            void *lpBuffer,
             long nSize,
             int BytesRead
         );
@@ -153,6 +133,12 @@ namespace PCRAutoTimeline
             out MEMORY_BASIC_INFORMATION lpBuffer,
             int dwLength
         );
+
+        public static bool ReadProcessMemory<T>(long hProcess, long lpAddress, out T lpBuffer) where T : unmanaged
+        {
+            fixed (T *ptr = &lpBuffer)
+                return ReadProcessMemory(hProcess, lpAddress, ptr, Marshal.SizeOf<T>(), 0);
+        }
 
         [DllImport("kernel32.dll")]
         public static extern int OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);

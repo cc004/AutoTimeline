@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Linq;
 using System.Net.Sockets;
+using System.Text;
 using CodeStage.AntiCheat.ObscuredTypes;
 using Neo.IronLua;
 
@@ -14,12 +15,16 @@ namespace PCRAutoTimeline
     {
         public static long hwnd, addr;
 
+        public static long seed_addr;
 
         private static readonly byte[] idcode =
         {
             0x3c, 0, 0, 0,
             0x89, 0x88, 0x88, 0x3C
         };
+
+        private static readonly byte[] seed_code = Encoding.UTF8.GetBytes(
+            "_GlobalWindTime\0_WindQuality\0\0\0\0_Wind\0\0\0\0\0\0\0\0\0\0\0_Shininess\0\0\0\0\0\0");
 
         public static (int, float) TryGetInfo(long hwnd, long addr)
         {
@@ -45,7 +50,7 @@ namespace PCRAutoTimeline
             var pid = int.Parse(Console.ReadLine());
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
-
+            
             var tuple =  AobscanHelper.Aobscan(hwnd, idcode, addr =>
             {
                 var frame = TryGetInfo(hwnd, addr);
@@ -68,6 +73,12 @@ namespace PCRAutoTimeline
                 Console.WriteLine("aobscan failed.");
                 return;
             }
+            
+            seed_addr = AobscanHelper.Aobscan(hwnd, seed_code, addr =>
+            {
+                Console.WriteLine($"seed found.");
+                return true;
+            }).Item1 - 0x90;
 
             chunk.Run(env);
 

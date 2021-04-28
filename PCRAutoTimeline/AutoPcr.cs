@@ -1,12 +1,14 @@
 ﻿using CodeStage.AntiCheat.ObscuredTypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PCRAutoTimeline
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class Autopcr
     {
         private static readonly Dictionary<int, NativeFunctions.POINT> mousepos = new();
@@ -95,22 +97,69 @@ namespace PCRAutoTimeline
         }
 
 
+        public static long getBossAddr(int unitid, int rarity, int promotion)
+        {
+            var b = BitConverter.GetBytes(unitid);
+
+            var tuple = AobscanHelper.Aobscan(Program.hwnd, b.Concat(b).ToArray(),
+                addr => UnitEvaluator(unitid, rarity, promotion, addr));
+            return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
+        }
+
+
         public static float getTp(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x4E0, out ObscuredFloat tp, 16, 0);
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x4E0, out ObscuredFloat tp);
             return tp;
         }
 
         public static long getHp(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x390, out ObscuredLong hp, 20, 0);
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x390, out ObscuredLong hp);
             return hp;
         }
 
         public static long getMaxHp(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3A4, out ObscuredLong hp, 20, 0);
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3A4, out ObscuredLong hp);
             return hp;
+        }
+
+        public static int getLevel(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x384, out ObscuredInt level);
+            return level;
+        }
+
+        public static int getPhysicalCritical(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x400, out ObscuredInt crit);
+            return crit;
+        }
+
+        public static int getMagicCritical(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x40C, out ObscuredInt crit);
+            return crit;
+        }
+
+        public static float getCrit(long unitHandle, int targetLevel, bool isMagic)
+        {
+            return (isMagic ? getMagicCritical(unitHandle) : getPhysicalCritical(unitHandle)) * 0.05f * 0.01f *
+                getLevel(unitHandle) / targetLevel;
+        }
+
+        public static uint[] predRandom(int count)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out UnityRandom.state);
+            var result = new uint[count];
+            for (int i = 0; i < count; ++i) result[i] = UnityRandom.Random();
+            return result;
+        }
+
+        public static float nextCrit()
+        {
+            return predRandom(3)[2] % 1000 / 1000f;
         }
 
         public static int getFrame()
