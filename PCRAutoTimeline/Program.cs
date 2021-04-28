@@ -41,8 +41,6 @@ namespace PCRAutoTimeline
 
             var chunk = lua.CompileChunk(File.ReadAllText("timeline.lua"), "timeline.lua", new LuaCompileOptions());
 
-            chunk.Run(env);
-
             Console.Write("pid>");
             var pid = int.Parse(Console.ReadLine());
             //var pid = 11892;
