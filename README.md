@@ -15,7 +15,7 @@
 
 AutoPcrApi:
 
-- `void autopcr.calibrate(id)` 对站位id进行校准
+- `void autopcr.calibrate(id)` 对站位id进行校准（可以为字符串或者数字）
 - `void autopcr.press(id)` 点击站位为id的角色，不占用时间，但可能点不上
 - `void autopcr.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
 - `long autopcr.getUnitAddr(unit_id, rarity, rank)` 根据数据获取角色的句柄，请务必保证搜索时该角色tp为0且满血，否则会搜索失败
@@ -34,7 +34,7 @@ MiniTouchApi:
 - `void minitouch.getMaxY()` 返回最大Y
 - `void minitouch.connect(host, port)` 链接minitouch server
 - `void minitouch.write(text)` 写minitouch指令
-- `void minitouch.setPos(id, x, y)` 注册站位id
+- `void minitouch.setPos(id, x, y)` 注册站位id（可以为字符串或者数字）
 - `void minitouch.press(id)` 点击站位为id的角色，不占用时间，但可能点不上
 - `void minitouch.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
 

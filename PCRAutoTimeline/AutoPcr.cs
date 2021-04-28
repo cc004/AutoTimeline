@@ -7,9 +7,27 @@ using System.Threading.Tasks;
 
 namespace PCRAutoTimeline
 {
-    public static class AutoPcr
+    public static class Autopcr
     {
         private static readonly Dictionary<int, NativeFunctions.POINT> mousepos = new();
+
+        public static void calibrate(string i)
+        {
+            Console.Write($"Mouse for pos {i}:");
+            Console.ReadLine();
+            NativeFunctions.GetCursorPos(out var pos);
+            if (!mousepos.ContainsKey(i.GetHashCode())) mousepos.Add(i.GetHashCode(), pos);
+            else mousepos[i.GetHashCode()] = pos;
+            Console.WriteLine(pos);
+        }
+        public static void press(string id)
+        {
+            PressAt(mousepos[id.GetHashCode()]);
+        }
+        public static void framePress(string id)
+        {
+            framePress(id.GetHashCode());
+        }
 
         public static void calibrate(int i)
         {

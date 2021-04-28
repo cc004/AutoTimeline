@@ -1,4 +1,5 @@
 -- scan character handles
+
 local charas = {
     autopcr.getUnitAddr(104701, 5, 12),
     autopcr.getUnitAddr(104301, 5, 13),

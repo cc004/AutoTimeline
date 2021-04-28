@@ -94,6 +94,21 @@ namespace PCRAutoTimeline
 
         private static readonly Dictionary<int, (int, int)> pos = new ();
 
+        public static void setPos(string id, int x, int y)
+        {
+            setPos(id.GetHashCode(), x, y);
+        }
+
+        public static void press(string id)
+        {
+            press(id.GetHashCode());
+        }
+
+        public static void framePress(string id)
+        {
+            framePress(id.GetHashCode());
+        }
+
         public static void setPos(int id, int x, int y)
         {
             if (pos.ContainsKey(id)) pos[id] = (x, y);
@@ -112,7 +127,7 @@ namespace PCRAutoTimeline
         {
             write($"d 0 {pos[id].Item1} {pos[id].Item2} 1");
             write("c");
-            AutoPcr.waitOneFrame();
+            Autopcr.waitOneFrame();
             write("u 0");
             write("c");
         }
