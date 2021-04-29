@@ -182,6 +182,23 @@ namespace PCRAutoTimeline
             _waitFrame(frame - frameoff);
         }
 
+        public static void waitTill(Func<bool> cond, int frameMax, int count)
+        {
+            int i = 0, start = getFrame();
+            while (getFrame() < frameMax && i < count || start == getFrame())
+                if (cond()) ++i; else i = 0;
+        }
+
+        public static void waitTillCrit(long unit, int targetLevel, bool isMagic, int frameMax)
+        {
+            waitTill(() =>
+            {
+                var crit = nextCrit() - getCrit(unit, targetLevel, isMagic);
+                Console.WriteLine($"now crit = {crit}");
+                return crit < 0;
+            }, frameMax, 5);
+        }
+
         public static void waitTime(float time)
         {
             WaitFor(inf => inf.Item2 <= time - timeoff);
