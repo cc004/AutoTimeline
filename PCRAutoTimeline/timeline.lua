@@ -7,6 +7,9 @@ local charas = {
     autopcr.getUnitAddr(106301, 5, 15),
     autopcr.getUnitAddr(103801, 5, 15)
 };
+
+local boss = autopcr.getBossAddr(401041402);
+
 --]]
 -- data for 1600x900
 ---[[ minitouch test
@@ -29,10 +32,12 @@ end
 while (autopcr.getTime() > 1) --when not end
 do
     for i = 2, 5 do --judge every chara
-        if (autopcr.getTp(charas[i]) == 1000) --ready for tp
+        if (autopcr.getTp(charas[i]) == 1000 and
+           (autopcr.getDef(boss) <= 160 or i == 2 and autopcr.getDef(boss) <= 250)) --ready for tp
         then
-            autopcr.waitTillCrit(charas[i], 85, false, 300 + autopcr.getFrame());
-            print('trying to press '..i, 'frame='..autopcr.getFrame())
+            print('boss_def='..autopcr.getDef(boss));
+            autopcr.waitTillCrit(charas[i], boss, false, 180 + autopcr.getFrame());
+            print('trying to press '..i, 'frame='..autopcr.getFrame(), 'def='..autopcr.getDef(boss))
             --autopcr.framePress(i);
             minitouch.framePress(i); --trigger ub press
             break;
