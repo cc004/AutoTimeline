@@ -24,8 +24,8 @@ AutoPcrApi:
 - `int autopcr.getDef(unit_handle)` 根据获得的句柄返回角色物理防御
 - `int autopcr.getMagicDef(unit_handle)` 根据获得的句柄返回角色法术防御
 - `int autopcr.getLevel(unit_handle)` 根据获得的句柄返回角色等级
-- `int autopcr.getFrame()` 返回当前时间
-- `float autopcr.getTime()` 返回当前帧数
+- `int autopcr.getFrame()` 返回当前帧数
+- `float autopcr.getTime()` 返回当前时间
 - `void autopcr.waitFrame(frame)` 暂停程序直到帧数达到
 - `void autopcr.waitTime(frame)` 暂停程序直到时间达到
 - `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
