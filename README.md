@@ -21,16 +21,18 @@ AutoPcrApi:
 - `long autopcr.getMaxHp(unit_handle)` 根据获得的句柄返回角色最大hp
 - `int autopcr.getPhysicalCritical(unit_handle)` 根据获得的句柄返回角色物理暴击
 - `int autopcr.getMagicCritical(unit_handle)` 根据获得的句柄返回角色法术暴击
+- `int autopcr.getDef(unit_handle)` 根据获得的句柄返回角色物理防御
+- `int autopcr.getMagicDef(unit_handle)` 根据获得的句柄返回角色法术防御
 - `int autopcr.getLevel(unit_handle)` 根据获得的句柄返回角色等级
 - `int autopcr.getFrame()` 返回当前时间
 - `float autopcr.getTime()` 返回当前帧数
 - `void autopcr.waitFrame(frame)` 暂停程序直到帧数达到
 - `void autopcr.waitTime(frame)` 暂停程序直到时间达到
 - `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
-- `float autopcr.getCrit(unit_handle, target_level, isMagic)` 获取对某个target攻击的暴击率
+- `float autopcr.getCrit(unit_handle, target_handle, isMagic)` 获取对某个target攻击的暴击率
 - `uint[] autopcr.predRandom(count)` 获取下count个随机数的值
 - `float autopcr.nextCrit()` 获取用于下一次攻击判定的随机数，如果小于critrate则暴击
-- `void waitTillCrit(unit_handle, target_level, isMagic, frameMax)` 等待至多到frameMax, 直到unit下一段伤害必定暴击
+- `void waitTillCrit(unit_handle, target_handle, isMagic, frameMax)` 等待至多到frameMax, 直到unit下一段伤害必定暴击
 
 MiniTouchApi:
 
