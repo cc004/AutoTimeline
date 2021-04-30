@@ -87,23 +87,39 @@ namespace PCRAutoTimeline
             return false;
         }
 
+        private static bool BossEvaluator(int unitid, long addr)
+        {
+            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
+            var t2 = TryGetIntInt(Program.hwnd, addr);
+            if (t.Item1 == 1 && t.Item2 == 1 && t2.Item2 >= 200000 && t2.Item2 <= 399999)
+            {
+                var tp = getTp(addr - 0x244);
+                var hp = getHp(addr - 0x244);
+                var maxHp = getMaxHp(addr - 0x244);
+                if (tp == 0.0)
+                {
+                    Console.WriteLine($"unit found @{addr:x} unitid = {unitid}, tp = {tp}, hp = {hp}/{maxHp}");
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static long getUnitAddr(int unitid, int rarity, int promotion)
         {
             var b = BitConverter.GetBytes(unitid);
-
             var tuple = AobscanHelper.Aobscan(Program.hwnd, b.Concat(b).ToArray(),
                 addr => UnitEvaluator(unitid, rarity, promotion, addr));
             return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
         }
 
 
-        public static long getBossAddr(int unitid, int rarity, int promotion)
+        public static long getBossAddr(int unitid)
         {
             var b = BitConverter.GetBytes(unitid);
-
-            var tuple = AobscanHelper.Aobscan(Program.hwnd, b.Concat(b).ToArray(),
-                addr => UnitEvaluator(unitid, rarity, promotion, addr));
-            return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
+            var tuple2 = AobscanHelper.Aobscan(Program.hwnd, b.ToArray(),
+                addr => BossEvaluator(unitid, addr));
+            return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
         }
 
 
@@ -131,6 +147,18 @@ namespace PCRAutoTimeline
             return level;
         }
 
+        public static int getDef(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3D0, out ObscuredInt def);
+            return def;
+        }
+
+        public static int getMagicDef(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3DC, out ObscuredInt def);
+            return def;
+        }
+
         public static int getPhysicalCritical(long unitHandle)
         {
             NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x400, out ObscuredInt crit);
@@ -143,10 +171,10 @@ namespace PCRAutoTimeline
             return crit;
         }
 
-        public static float getCrit(long unitHandle, int targetLevel, bool isMagic)
+        public static float getCrit(long unitHandle, long targetHandle, bool isMagic)
         {
             return (isMagic ? getMagicCritical(unitHandle) : getPhysicalCritical(unitHandle)) * 0.05f * 0.01f *
-                getLevel(unitHandle) / targetLevel;
+                getLevel(unitHandle) / getLevel(targetHandle);
         }
 
         public static uint[] predRandom(int count)
@@ -189,11 +217,11 @@ namespace PCRAutoTimeline
                 if (cond()) ++i; else i = 0;
         }
 
-        public static void waitTillCrit(long unit, int targetLevel, bool isMagic, int frameMax)
+        public static void waitTillCrit(long unit, long target, bool isMagic, int frameMax)
         {
             waitTill(() =>
             {
-                var crit = nextCrit() - getCrit(unit, targetLevel, isMagic);
+                var crit = nextCrit() - getCrit(unit, target, isMagic);
                 Console.WriteLine($"now crit = {crit}");
                 return crit < 0;
             }, frameMax, 5);
