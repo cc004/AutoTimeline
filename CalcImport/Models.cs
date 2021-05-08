@@ -388,6 +388,48 @@ namespace PCRCaculator.Guild
 
 namespace PCRCaculator.Guild
 {
+	// Token: 0x02000188 RID: 392
+	public class UBDetail
+	{
+		// Token: 0x0400093E RID: 2366
+		public bool isBossUB;
+
+		// Token: 0x0400093F RID: 2367
+		public UnitData unitData;
+
+		// Token: 0x04000940 RID: 2368
+		public int UBTime;
+
+		// Token: 0x04000941 RID: 2369
+		public int Damage;
+
+		// Token: 0x04000942 RID: 2370
+		public bool Critical;
+	}
+	public enum ActionState
+	{
+		IDLE = 0,
+		ATK = 1,
+		SKILL_1 = 2,
+		SKILL = 3,
+		WALK = 4,
+		DAMAGE = 5,
+		DIE = 6,
+		GAME_START = 7
+	}
+
+	public struct UnitStateChangeData
+	{
+		public int currentFrameCount;
+		public ActionState changStateFrom;
+		public ActionState changStateTo;
+		public string describe;
+	}
+	public class Timeline
+    {
+		public GuildTimelineData timeline;
+		public Dictionary<int, List<UnitStateChangeData>> state;
+	}
 	// Token: 0x02000114 RID: 276
 	public class GuildTimelineData
 	{
