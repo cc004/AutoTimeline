@@ -1,4 +1,5 @@
 ﻿using CodeStage.AntiCheat.ObscuredTypes;
+using Neo.IronLua;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -187,13 +188,20 @@ namespace PCRAutoTimeline
 
         public static float nextCrit()
         {
-            return predRandom(3)[2] % 1000 / 1000f;
+            return nextNCrit(1)[0];
         }
 
         public static float[] nextNCrit(int n)
         {
             var preds = predRandom(3 * n);
-            return Enumerable.Range(0, n).Select(i => preds[2 * i + 2] % 1000 / 1000f).ToArray();
+            return Enumerable.Range(0, n).Select(i => preds[2 * i + n + 1] % 1000 / 1000f).ToArray();
+        }
+
+        public static float[] nextCrits(LuaTable table)
+        {
+            var ns = table.ArrayList.Select(obj => (int)obj).ToArray();
+            var preds = predRandom(ns.Last() + 1);
+            return ns.Select(i => preds[i] % 1000 / 1000f).ToArray();
         }
 
         public static int getFrame()
@@ -239,6 +247,17 @@ namespace PCRAutoTimeline
             {
                 var critrate = getCrit(unit, target, isMagic);
                 var crit = nextNCrit(n).Count(crit => crit - critrate < 0);
+                Console.WriteLine($"now crit = {crit}");
+                return crit >= m;
+            }, frameMax, 5);
+        }
+
+        public static void waitTillCrits(long unit, long target, bool isMagic, int frameMax, int m, LuaTable table)
+        {
+            waitTill(() =>
+            {
+                var critrate = getCrit(unit, target, isMagic);
+                var crit = nextCrits(table).Count(crit => crit - critrate < 0);
                 Console.WriteLine($"now crit = {crit}");
                 return crit >= m;
             }, frameMax, 5);
