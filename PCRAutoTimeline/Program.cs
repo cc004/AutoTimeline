@@ -80,6 +80,25 @@ namespace PCRAutoTimeline
                 return true;
             }).Item1 - 0x90;
 
+            /*
+            UnityRandom.State state0;
+            NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out state0);
+            UnityRandom.State state;
+            int last = 0;
+            while (true)
+            {
+                NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out state);
+                int i = 0;
+                UnityRandom.state = state0;
+                while (state.x != UnityRandom.state.x)
+                {
+                    ++i;
+                    UnityRandom.Random();
+                }
+                if (i > last) Console.WriteLine($"rand times={i}");
+                last = i;
+            }
+            */
             chunk.Run(env);
 
             Console.WriteLine("script finished.");

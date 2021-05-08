@@ -31,8 +31,14 @@ AutoPcrApi:
 - `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
 - `float autopcr.getCrit(unit_handle, target_handle, isMagic)` 获取对某个target攻击的暴击率
 - `uint[] autopcr.predRandom(count)` 获取下count个随机数的值
+
 - `float autopcr.nextCrit()` 获取用于下一次攻击判定的随机数，如果小于critrate则暴击
-- `void waitTillCrit(unit_handle, target_handle, isMagic, frameMax)` 等待至多到frameMax, 直到unit下一段伤害必定暴击
+- `float[] autopcr.nextNCrit(count)` 返回下n次攻击判定的随机数，如果小于critrate则暴击（如果ub带随机效果则可能结果不正确，如病娇）
+- `float[] autopcr.nextCrits(critlist)` 返回下几个攻击判定的随机数，用来对抗带随即效果的ub，比如病娇ub的critlist填{4,6,12}，如果小于critrate则暴击
+
+- `void autopcr.waitTillCrit(unit_handle, target_handle, isMagic, frameMax)` 等待至多到frameMax, 直到unit下一段伤害必定暴击
+- `void autopcr.waitTillNCrit(unit_handle, target_handle, isMagic, frameMax, m, n)` 等待直到下次n段伤害有m个暴击（如果ub带随机效果则可能结果不正确，如病娇）
+- `void autopcr.waitTillCrits(unit_handle, target_handle, isMagic, frameMax, m, critlist)` 等待直到下几个攻击判定有m个暴击
 
 MiniTouchApi:
 
