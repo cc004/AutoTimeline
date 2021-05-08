@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcImport", "CalcImport\CalcImport.csproj", "{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,14 @@ Global
 		{91A3B9D8-53D3-4C4A-8230-AADDDFE842A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91A3B9D8-53D3-4C4A-8230-AADDDFE842A2}.Release|x86.ActiveCfg = Release|Any CPU
 		{91A3B9D8-53D3-4C4A-8230-AADDDFE842A2}.Release|x86.Build.0 = Release|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Debug|x86.Build.0 = Debug|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Release|x86.ActiveCfg = Release|Any CPU
+		{59CA9EF1-3DAF-42AD-91B2-3F378120FF6C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

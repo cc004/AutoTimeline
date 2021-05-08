@@ -59,6 +59,7 @@ namespace PCRAutoTimeline
             client.NoDelay = true;
             client.Connect(host, port);
             br = new BinaryReader(client.GetStream());
+            stream = client.GetStream();
 
             var res = read();
             res = read();
@@ -70,12 +71,13 @@ namespace PCRAutoTimeline
             Console.WriteLine($"minitouch connected @{host}:{port} ({maxx}x{maxy})");
         }
 
+        private static NetworkStream stream;
+
         public static void write(string cmd)
         {
             lock (client)
             {
-                client.GetStream().Write(Encoding.ASCII.GetBytes(cmd + "\n"));
-                client.GetStream().Flush();
+                stream.Write(Encoding.ASCII.GetBytes(cmd + "\n"));
             }
         }
 
@@ -83,7 +85,6 @@ namespace PCRAutoTimeline
         {
             lock (client)
             {
-                var s = client.GetStream();
                 List<byte> res = new ();
                 for (;;)
                 {
@@ -119,19 +120,17 @@ namespace PCRAutoTimeline
 
         public static void press(int id)
         {
-            write($"d 0 {pos[id].Item1} {pos[id].Item2} 1");
-            write("c");
-            write("u 0");
-            write("c");
+            write($"d 0 {pos[id].Item1} {pos[id].Item2} 1\nc\nu 0\nc");
+            stream.Flush();
         }
 
         public static void framePress(int id)
         {
-            write($"d 0 {pos[id].Item1} {pos[id].Item2} 1");
-            write("c");
+            write($"d 0 {pos[id].Item1} {pos[id].Item2} 1\nc");
+            stream.Flush();
             Autopcr.waitOneFrame();
-            write("u 0");
-            write("c");
+            write("u 0\nc");
+            stream.Flush();
         }
     }
 
