@@ -190,6 +190,12 @@ namespace PCRAutoTimeline
             return predRandom(3)[2] % 1000 / 1000f;
         }
 
+        public static float[] nextNCrit(int n)
+        {
+            var preds = predRandom(3 * n);
+            return Enumerable.Range(0, n).Select(i => preds[2 * i + 2] % 1000 / 1000f).ToArray();
+        }
+
         public static int getFrame()
         {
             return Program.TryGetInfo(Program.hwnd, Program.addr).Item1;
@@ -224,6 +230,17 @@ namespace PCRAutoTimeline
                 var crit = nextCrit() - getCrit(unit, target, isMagic);
                 Console.WriteLine($"now crit = {crit}");
                 return crit < 0;
+            }, frameMax, 5);
+        }
+
+        public static void waitTillNCrit(long unit, long target, bool isMagic, int frameMax, int m, int n)
+        {
+            waitTill(() =>
+            {
+                var critrate = getCrit(unit, target, isMagic);
+                var crit = nextNCrit(n).Count(crit => crit - critrate < 0);
+                Console.WriteLine($"now crit = {crit}");
+                return crit >= m;
             }, frameMax, 5);
         }
 

@@ -1,15 +1,13 @@
 -- scan character handles
 ---[[
-local charas = {
-    autopcr.getUnitAddr(104701, 5, 13),
-    autopcr.getUnitAddr(101701, 5, 15),
-    autopcr.getUnitAddr(104301, 5, 13),
-    autopcr.getUnitAddr(106301, 5, 15),
-    autopcr.getUnitAddr(103801, 5, 15)
-};
-
+--[[
+local heiqi = autopcr.getUnitAddr(104701, 5, 15);
+]]
+local lang = autopcr.getUnitAddr(104301, 5, 13);
+local yls = autopcr.getUnitAddr(106301, 5, 15);
+local bingjiao = autopcr.getUnitAddr(102701, 5, 13);
+local kezong = autopcr.getUnitAddr(107101, 5, 13);
 local boss = autopcr.getBossAddr(401041402);
-
 --]]
 -- data for 1600x900
 ---[[ minitouch test
@@ -28,9 +26,47 @@ for i = 1, 5 do
 end
 --]]
 
----[[ auto ub
+---[[ detailed logic
+
+while (autopcr.getTime() > .5) --when not end
+do
+    local def = autopcr.getDef(boss);
+    if (def <= 0 or autopcr.getTime() < 1 or autopcr.getTime() >= 70 and def <= 10)
+    then
+        if (autopcr.getTp(bingjiao) == 1000 and autopcr.getPhysicalCritical(bingjiao) >= 600)
+        then
+            print('boss_def='..def);
+            --autopcr.waitTillNCrit(bingjiao, boss, false, 180 + autopcr.getFrame(), 2, 3);
+            minitouch.framePress(3);
+        end
+        if (autopcr.getTp(kezong) == 1000)
+        then
+            print('boss_def='..def);
+            minitouch.framePress(4);
+        end
+        if (autopcr.getTp(yls) == 1000)
+        then
+            print('boss_def='..def);
+            autopcr.waitTillCrit(yls, boss, false, 180 + autopcr.getFrame());
+            minitouch.framePress(5);
+        end
+    end
+    if (def <= 50 or autopcr.getTime() < 1)
+    then
+        if (autopcr.getTp(lang) == 1000)
+        then
+            print('boss_def='..def);
+            autopcr.waitTillCrit(lang, boss, false, 180 + autopcr.getFrame());
+            minitouch.framePress(2);
+        end
+    end
+end
+
+--]]
+--[[ auto ub
 while (autopcr.getTime() > 1) --when not end
 do
+    print('boss_def='..autopcr.getDef(boss));
     for i = 2, 5 do --judge every chara
         if (autopcr.getTp(charas[i]) == 1000 and
            (autopcr.getDef(boss) <= 160 or i == 2 and autopcr.getDef(boss) <= 250)) --ready for tp
@@ -43,6 +79,7 @@ do
             break;
         end
     end
+    autopcr.waitOneFrame();
 end
 --]]
 
@@ -83,5 +120,5 @@ do
 end
 --]]
 
-autopcr.waitTime(.5);
+autopcr.waitTime(.2);
 minitouch.framePress(8);
