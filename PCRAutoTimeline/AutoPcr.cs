@@ -216,7 +216,7 @@ namespace PCRAutoTimeline
 
         private static void _waitFrame(int frame)
         {
-            WaitFor(inf => inf.Item1 >= frame);
+            WaitFor(inf => inf.Item1 >= frame, inf => inf.Item1);
         }
 
         public static void waitFrame(int frame)
@@ -265,7 +265,7 @@ namespace PCRAutoTimeline
 
         public static void waitTime(float time)
         {
-            WaitFor(inf => inf.Item2 <= time - timeoff);
+            WaitFor(inf => inf.Item2 <= time - timeoff, inf => inf.Item2);
         }
 
         private static (int, int) TryGetIntInt(long hwnd, long addr)
@@ -281,12 +281,21 @@ namespace PCRAutoTimeline
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
-        private static void WaitFor(Func<(int, float), bool> check)
+
+        public static void bossub(int framecount)
+        {
+            frameoff -= framecount;
+        }
+
+        private static void WaitFor(Func<(int, float), bool> check, Func<(int, float), float> changing)
         {
             (int, float) frame;
+            float lastf = float.NaN;
             var last = -1;
+            float lastff;
             do
             {
+                lastff = lastf;
                 frame = Program.TryGetInfo(Program.hwnd, Program.addr);
                 if (frame.Item1 != last)
                 {
@@ -294,7 +303,8 @@ namespace PCRAutoTimeline
                         $"\rframeCount = {frame.Item1}, limitTime = {frame.Item2}                  ");
                     last = frame.Item1;
                 }
-            } while (!check(frame));
+                lastf = changing(frame);
+            } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
             Console.WriteLine();
         }
 
