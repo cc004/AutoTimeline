@@ -36,7 +36,7 @@ AutoPcrApi:
 
 - `float autopcr.nextCrit()` 获取用于下一次攻击判定的随机数，如果小于critrate则暴击
 - `float[] autopcr.nextNCrit(count)` 返回下n次攻击判定的随机数，如果小于critrate则暴击（如果ub带随机效果则可能结果不正确，如病娇）
-- `float[] autopcr.nextCrits(critlist)` 返回下几个攻击判定的随机数，用来对抗带随即效果的ub，比如病娇ub的critlist填{4,6,12}，如果小于critrate则暴击
+- `float[] autopcr.nextCrits(critlist)` 返回下几个攻击判定的随机数，用来对抗带随即效果的ub，比如病娇ub的critlist填{4,6,12}，更多多段顺序见critlist.md，如果小于critrate则暴击
 
 - `void autopcr.waitTillCrit(unit_handle, target_handle, isMagic, frameMax)` 等待至多到frameMax, 直到unit下一段伤害必定暴击
 - `void autopcr.waitTillNCrit(unit_handle, target_handle, isMagic, frameMax, m, n)` 等待直到下次n段伤害有m个暴击（如果ub带随机效果则可能结果不正确，如病娇）
