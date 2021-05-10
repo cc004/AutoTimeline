@@ -3,13 +3,15 @@
 --[[
 local heiqi = autopcr.getUnitAddr(104701, 5, 15);
 ]]
----[[
+--[[
 local lang = autopcr.getUnitAddr(104301, 5, 13);
 local yls = autopcr.getUnitAddr(106301, 5, 15);
 local bingjiao = autopcr.getUnitAddr(102701, 5, 13);
 local kezong = autopcr.getUnitAddr(107101, 5, 13);
 local boss = autopcr.getBossAddr(401041402);
 --]]
+local shengchui = autopcr.getUnitAddr(108601, 5, 12);
+
 -- data for 1600x900
 --[[ minitouch test
 minitouch.connect("localhost", 1111);
@@ -25,14 +27,14 @@ minitouch.setPos(8, 1512, 43);  --pause
 local bingjiao   = autopcr.getUnitAddr(102701, 5, 13);
 local boss = autopcr.getBossAddr(401041402);
 ]]
----[[ mouse calibration
+--[[ mouse calibration
 for i = 1, 5 do
     autopcr.calibrate(i);
 end
 autopcr.calibrate(8);
 --]]
 
----[[ detailed logic
+--[[ detailed logic
 
 while (autopcr.getTime() > .5) --when not end
 do
@@ -42,7 +44,7 @@ do
     print('crit='..(crits[0]<crit), ','..(crits[1]<crit), ','..(crits[2]<crit))
 ]]
 
----[[
+--[[
     local def = autopcr.getDef(boss);
     if (def <= 0 or autopcr.getTime() < 1 or autopcr.getTime() >= 70 and def <= 10)
     then
@@ -74,7 +76,7 @@ do
         end
     end
 --]]
-end
+--end
 
 --]]
 --[[ auto ub
@@ -116,19 +118,22 @@ minitouch.press(5);
 local chara = autopcr.getUnitAddr(106301, 5, 15)
 local boss = 85;
 local last = 0;
-
+]]
+autopcr.calibrate(0);
 while (true)
 do
-    local now = autopcr.nextCrit();
+    local crits = autopcr.nextCrits({5});
+    local now = crits[0];
     if (now ~= last)
     then
         last = now;
-        local crit = autopcr.getCrit(chara, boss, false);
+        local crit = autopcr.getCrit(shengchui, shengchui, false);
         if (now < crit)
         then
-            print('yls必定暴击 crit rate = '..crit, 'next crit = '..now);
+            print('圣锤必定暴击自己 crit rate = '..crit, 'next crit = '..now);
+            autopcr.framePress(0);
         else
-            print('yls必定不暴击 crit rate = '..crit, 'next crit = '..now);
+            print('圣锤必定不暴击自己 crit rate = '..crit, 'next crit = '..now);
         end
     end
 end

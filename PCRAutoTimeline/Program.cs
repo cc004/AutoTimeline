@@ -89,6 +89,7 @@ namespace PCRAutoTimeline
             {
                 NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out state);
                 int i = 0;
+                List<float> rands;
                 UnityRandom.state = state0;
                 while (state.x != UnityRandom.state.x)
                 {
