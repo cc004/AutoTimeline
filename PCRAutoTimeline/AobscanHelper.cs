@@ -38,7 +38,7 @@ namespace PCRAutoTimeline
         /// <param name="ctx"></param>
         /// <param name="aob"></param>
         /// <returns></returns>
-        public static (long, long) Aobscan(long handle, byte[] aob, Func<long, bool> matchValidator, long blockToStart = 0)
+        public static (long, long) Aobscan(long handle, byte[] aob, Func<long, bool> matchValidator, long blockToStart = 0, Action<string> callback = null)
         {
             long i = blockToStart;
             while (i < long.MaxValue)
@@ -53,7 +53,8 @@ namespace PCRAutoTimeline
                     i = mbi.BaseAddress + mbi.RegionSize;
                     continue;
                 }
-                Console.Write($"\rscanning {mbi.BaseAddress:x}...");
+                if (callback != null) callback($"scanning {mbi.BaseAddress:x}...");
+                else Console.Write($"\rscanning {mbi.BaseAddress:x}...");
                 byte[] va = new byte[mbi.RegionSize];
                 NativeFunctions.ReadProcessMemory(handle, mbi.BaseAddress, va, mbi.RegionSize, 0);
                 long r = Memmem(va, mbi.RegionSize, aob, aob.Length, r => matchValidator(mbi.BaseAddress + r));
