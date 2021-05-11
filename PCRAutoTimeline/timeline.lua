@@ -10,7 +10,7 @@ local bingjiao = autopcr.getUnitAddr(102701, 5, 13);
 local kezong = autopcr.getUnitAddr(107101, 5, 13);
 local boss = autopcr.getBossAddr(401041402);
 --]]
-local shengchui = autopcr.getUnitAddr(108601, 5, 12);
+--local shengchui = autopcr.getUnitAddr(108601, 5, 12);
 
 -- data for 1600x900
 --[[ minitouch test
@@ -31,8 +31,80 @@ local boss = autopcr.getBossAddr(401041402);
 for i = 1, 5 do
     autopcr.calibrate(i);
 end
-autopcr.calibrate(8);
+--autopcr.calibrate(8);
 --]]
+
+function getPhysical(unit_id, rarity, rank, name, key, crits, n, def)
+    return {
+        unit_handle = autopcr.getUnitAddr(unit_id, rarity, rank),
+        name = name,
+        key = key,
+        crits = crits,
+        n = n,
+        isMagic = false,
+        critnum = 0,
+        def = def
+    }
+end
+
+function getMagic(unit_id, rarity, rank, name, key, crits, n, def)
+    return {
+        unit_handle = autopcr.getUnitAddr(unit_id, rarity, rank),
+        name = name,
+        key = key,
+        crits = crits,
+        n = n,
+        isMagic = true,
+        critnum = 0
+    }
+end
+
+-- 配置
+local charas = {
+    -- id, 星级, rank, 通用名, 按键绑定，暴击位置, 暴击数, 自动ub防御上限
+    getPhysical(103801, 5, 13, "tp", "Q", {3}, 1, 999), -- 单段伤害就是2， 1代表一共1个暴击
+    getPhysical(106301, 4, 13, "yls", "W", {2}, 1, 100),
+    getPhysical(170101, 5, 13, "环奈", "E", {2}, 0, 0),
+    getPhysical(107101, 5, 13, "克总", "R", {2}, 0, 0),
+    getPhysical(104301, 5, 13, "狼", "T", {2}, 1, 0),
+}
+--boss id
+local boss = autopcr.getBossAddr(401031403);
+
+
+for i = 1, 5 do
+    autopcr.calibrate(charas[i].name)
+end
+autopcr.calibrate("暂停");
+
+while (true)
+do
+    if (autopcr.getTime() < 0.1)
+    then
+        autopcr.framePress("暂停");
+    end
+    local def = autopcr.getDef(boss);
+    for i = 1, 5 do
+        if (input.keyPressed(charas[i].key) or def < charas[i].def)
+        then
+            local crits = autopcr.critNum(charas[i].unit_handle, boss, charas[i].isMagic, charas[i].crits);
+            print('now crit='..crits, '/'..charas[i].n);
+            local iscrit = crits >= charas[i].n;
+            if (iscrit) then
+                charas[i].critnum = charas[i].critnum + 1;
+                if (charas[i].critnum == 5) then
+                    autopcr.framePress(charas[i].name);
+                    charas[i].critnum = 0;
+                end
+            else
+                charas[i].critnum = 0;
+            end
+        else
+            charas[i].critnum = 0;
+        end
+    end
+end
+
 
 --[[ detailed logic
 
@@ -119,6 +191,7 @@ local chara = autopcr.getUnitAddr(106301, 5, 15)
 local boss = 85;
 local last = 0;
 ]]
+--[[
 autopcr.calibrate(0);
 while (true)
 do
@@ -138,6 +211,3 @@ do
     end
 end
 --]]
-
-autopcr.waitTime(.2);
-autopcr.framePress(8);

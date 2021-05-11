@@ -204,6 +204,12 @@ namespace PCRAutoTimeline
             return ns.Select(i => preds[i] % 1000 / 1000f).ToArray();
         }
 
+        public static int critNum(long unitHandle, long targetHandle, bool isMagic, LuaTable table)
+        {
+            var crit = getCrit(unitHandle, targetHandle, isMagic);
+            return nextCrits(table).Count(f => f < crit);
+        }
+
         public static int getFrame()
         {
             return Program.TryGetInfo(Program.hwnd, Program.addr).Item1;
