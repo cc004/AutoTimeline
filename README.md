@@ -2,6 +2,8 @@
 
 代码基于GPLv3开源，仅供交流winapi如ReadProcessMemory的使用方法，禁止用于其他用途以及任何形式的商业用途，否则后果自负。
 
+[lua分享站](http://pcr.youtobechina.com/)  
+
 仅适配x64模拟器 x32的app
 
 (什么?你不想写代码就想用?请打开auto)
