@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace PCRAutoTimeline
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class Autopcr
     {
         private static readonly Dictionary<int, NativeFunctions.POINT> mousepos = new();
@@ -176,6 +175,19 @@ namespace PCRAutoTimeline
         {
             return (isMagic ? getMagicCritical(unitHandle) : getPhysicalCritical(unitHandle)) * 0.05f * 0.01f *
                 getLevel(unitHandle) / getLevel(targetHandle);
+        }
+
+        private enum ActionState
+        {
+            IDLE = 0, ATK, SKILL_1, SKILL,
+            WALK, DAMAGE, SUMMON, DIE, GAME_START,
+            LOSE
+        }
+
+        public static string getActionState(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x18C, out int state);
+            return ((ActionState)state).ToString();
         }
 
         public static uint[] predRandom(int count)

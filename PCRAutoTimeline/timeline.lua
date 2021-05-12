@@ -33,7 +33,7 @@ for i = 1, 5 do
 end
 --autopcr.calibrate(8);
 --]]
-
+--[[
 function getPhysical(unit_id, rarity, rank, name, key, crits, n, def)
     return {
         unit_handle = autopcr.getUnitAddr(unit_id, rarity, rank),
@@ -106,6 +106,8 @@ do
 end
 
 
+
+]]
 --[[ detailed logic
 
 while (autopcr.getTime() > .5) --when not end
@@ -209,5 +211,14 @@ do
             print('圣锤必定不暴击自己 crit rate = '..crit, 'next crit = '..now);
         end
     end
+end
+--]]
+
+---[[state test
+local tp = autopcr.getUnitAddr(104301, 5, 13);
+
+while (true)
+do
+    print(autopcr.getActionState(tp));
 end
 --]]

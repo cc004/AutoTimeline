@@ -43,8 +43,7 @@ AutoPcrApi:
 - `void autopcr.waitTillCrit(unit_handle, target_handle, isMagic, frameMax)` 等待至多到frameMax, 直到unit下一段伤害必定暴击
 - `void autopcr.waitTillNCrit(unit_handle, target_handle, isMagic, frameMax, m, n)` 等待直到下次n段伤害有m个暴击（如果ub带随机效果则可能结果不正确，如病娇）
 - `void autopcr.waitTillCrits(unit_handle, target_handle, isMagic, frameMax, m, critlist)` 等待直到下几个攻击判定有m个暴击
-- `void autopcr.bossub(framecount)` 补偿摸轴器支持导致的帧数损失
-
+- `string autopcr.getActionState(unit_handle)` 获取单位当前状态，取值如下：IDLE, ATK, SKILL_1, SKILL, WALK, DAMAGE, SUMMON, DIE, GAME_START, LOSE
 MiniTouchApi:
 
 - `void minitouch.getMaxX()` 返回最大X
