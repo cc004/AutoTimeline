@@ -44,6 +44,7 @@ AutoPcrApi:
 - `void autopcr.waitTillNCrit(unit_handle, target_handle, isMagic, frameMax, m, n)` 等待直到下次n段伤害有m个暴击（如果ub带随机效果则可能结果不正确，如病娇）
 - `void autopcr.waitTillCrits(unit_handle, target_handle, isMagic, frameMax, m, critlist)` 等待直到下几个攻击判定有m个暴击
 - `string autopcr.getActionState(unit_handle)` 获取单位当前状态，取值如下：IDLE, ATK, SKILL_1, SKILL, WALK, DAMAGE, SUMMON, DIE, GAME_START, LOSE
+
 MiniTouchApi:
 
 - `void minitouch.getMaxX()` 返回最大X
@@ -53,6 +54,18 @@ MiniTouchApi:
 - `void minitouch.setPos(id, x, y)` 注册站位id（可以为字符串或者数字）
 - `void minitouch.press(id)` 点击站位为id的角色，不占用时间，但可能点不上
 - `void minitouch.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
+
+InputApi:
+
+- `void input.keyPressed(key)` 返回键盘是否被按下
+
+MonitorApi: (experimental)
+
+- `void monitor.add(unit_handle)` 把单位加入检测列表中，必须在start前调用
+- `void monitor.start()` 开始检测，必须在除了add意外所有函数前调用
+- `void monitor.waitAction(unit_handle, action_id)` 等待unit执行完毕action_id
+- `int monitor.getSkillId(unit_handle)` 获取当前角色的技能id，普攻为1
+- `string monitor.getActionState(unit_handle)` 同autopcr同名函数，但是速度更快
 
 ### 依赖
 
