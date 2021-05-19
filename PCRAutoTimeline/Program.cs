@@ -41,9 +41,11 @@ namespace PCRAutoTimeline
 
             using var lua = new Lua();
             var env = lua.CreateEnvironment();
+
             env.RegisterPackage("autopcr", typeof(Autopcr));
             env.RegisterPackage("minitouch", typeof(Minitouch));
             env.RegisterPackage("input", typeof(Input));
+            env.RegisterPackage("monitor", typeof(Monitor));
 
             var chunk = lua.CompileChunk(File.ReadAllText("timeline.lua"), "timeline.lua", new LuaCompileOptions());
 
@@ -104,10 +106,13 @@ namespace PCRAutoTimeline
             chunk.Run(env);
 
             Console.WriteLine("script finished.");
+            exiting = true;
             Minitouch.exit();
 
             Console.ReadLine();
 
         }
+
+        public static bool exiting;
     }
 }
