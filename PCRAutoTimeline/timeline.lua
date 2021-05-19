@@ -215,10 +215,17 @@ end
 --]]
 
 ---[[state test
-local tp = autopcr.getUnitAddr(104301, 5, 13);
+local ke = autopcr.getUnitAddr(107101, 5, 15);
 
-while (true)
-do
-    print(autopcr.getActionState(tp));
+monitor.add(ke);
+monitor.start();
+autopcr.calibrate("克总");
+
+while (true) do
+    if (autopcr.getTp(ke) == 1000)
+    then
+        monitor.waitAction(ke, 107100301);
+        autopcr.press("克总");
+    end
 end
 --]]
