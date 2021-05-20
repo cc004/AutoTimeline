@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
 using Newtonsoft.Json;
 using PCRCaculator;
 using PCRCaculator.Guild;
@@ -87,11 +87,18 @@ namespace CalcInject
             }
         }
 
-        private static Harmony inst = new Harmony("injector");
         public static void Main()
         {
-            inst.Patch(typeof(ExcelHelper.ExcelHelper)
-                .GetMethod("OutputGuildTimeLine"), postfix: new HarmonyMethod(typeof(Injector), "OutputGuildTimeLine"));
+            try
+            {
+               DotNetDetour.DetourFactory.CreateDetourEngine()
+                    .Patch(typeof(ExcelHelper.ExcelHelper).GetMethod("OutputGuildTimeLine"),
+                    typeof(Injector).GetMethod("OutputGuildTimeLine"), null);
+            }
+            catch (Exception e)
+            {
+                File.WriteAllText("err.log", e.ToString());
+            }
         }
     }
 }
