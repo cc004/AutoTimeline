@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
-using PCRCaculator;
-using PCRCaculator.Guild;
+﻿using ExcelDataReader;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,67 +7,54 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CalcImport
 {
     class Program
 	{
-		private static Dictionary<int, int> ubtime = new Dictionary<int, int>();
 		private static Dictionary<int, string[]> characters = JsonConvert.DeserializeObject<Dictionary<int, string[]>>(File.ReadAllText("characters.json"));
+		[STAThread]
+		
+		static void Main(string[] args)
+        {
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "excel|*.xlsx";
+			if (dialog.ShowDialog() != DialogResult.OK) return;
 
-		private static int CacheGetUbTime(int unit)
-		{
-			if (ubtime.TryGetValue(unit, out var val)) return val;
+			var data = ExcelReaderFactory.CreateOpenXmlReader(File.OpenRead(dialog.FileName), null).AsDataSet()
+				.Tables["轴模板"].Rows;
 
-			var textAsset = File.ReadAllText($"unitPrefabDatas/UNIT_{unit}.json");
-			var time = JsonConvert.DeserializeObject<UnitPrefabData>(textAsset).UnitActionControllerData.UnionBurstList.First().BlackOutTime;
+			var j = 9;
+			List<Tuple<int, int>> timeline = new List<Tuple<int, int>>();
 
-			float dtime = 1 / 60f, counter = 0;
-			var frame = 1;
-			while ((counter += dtime) <= time) ++frame;
+			while (data[j][10] is double @double)
+            {
+				timeline.Add(new Tuple<int, int>((int)@double, (int)(double)data[j][11]));
+				++j;
+            }
 
-			ubtime[unit] = frame;
-			return frame;
-		}
-
-		private static void SaveTimeline(Timeline timeline, string path)
-		{
-			var timelineData = timeline.timeline;
 			var src = new StringBuilder();
 
-			foreach (var unit in timelineData.playerGroupData.playerData.playrCharacters)
+			foreach (var unit in new HashSet<int>(timeline.Select(t => t.Item2).Where(t => t < 200000)))
 			{
-				src.AppendLine($"print(\"calibrate for {characters[unit.unitId / 100].First()}\");");
-				src.AppendLine($"autopcr.calibrate({unit.unitId});");
+				src.AppendLine($"print(\"calibrate for {characters[unit / 100].First()}\");");
+				src.AppendLine($"autopcr.calibrate(\"{characters[unit / 100].First()}\");");
 			}
 
 			src.AppendLine("autopcr.setOffset(2, 0); --offset calibration");
 
 			var offset = 0;
-			foreach (var ub in timeline.state
-				.SelectMany(pair => pair.Value.Where(data => data.changStateTo == ActionState.SKILL_1)
-					.Select(data => new Tuple<int, int>(pair.Key, data.currentFrameCount)))
-				.OrderBy(tuple => tuple.Item2))
+			foreach (var ub in timeline)
 			{
-				if (timelineData.playerGroupData.playerData.playrCharacters.Any(c => c.unitId == ub.Item1))
-					src.AppendLine($"autopcr.waitFrame({offset + ub.Item2}); autopcr.press({ub.Item1});");
-				offset += CacheGetUbTime(ub.Item1);
+				if (ub.Item2 < 200000)
+					src.AppendLine($"autopcr.waitFrame({ub.Item1}); autopcr.press(\"{characters[ub.Item2 / 100].First()}\");");
+				else
+					src.AppendLine("print(\"boss ub\");");
 			}
 
-			File.WriteAllText(path, src.ToString());
-		}
+			File.WriteAllText("timeline.lua", src.ToString());
 
-		static void Main(string[] args)
-        {
-			if (!File.Exists("timeline.json"))
-			{
-				Console.Write("请把摸轴器生成的timeline.json放在目录下");
-				Console.ReadLine();
-				return;
-			}
-			var data = JsonConvert.DeserializeObject<Timeline>((File.ReadAllText("timeline.json")));
-
-			SaveTimeline(data, "timeline.lua");
 			Console.Write("已经保存到timeline.lua");
 			Console.ReadLine();
 		}
