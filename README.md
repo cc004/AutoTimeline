@@ -1,6 +1,6 @@
 # AutoTimeline
 
-代码基于GPLv3开源，仅供交流winapi如ReadProcessMemory的使用方法，禁止用于其他用途以及任何形式的商业用途，否则后果自负。
+代码基于GPLv3开源，仅供交流winapi如ReadProcessMemory的使用方法，禁止用于其他用途以及任何形式的商业用途。
 
 [lua分享站](http://pcr.youtobechina.com/)  
 
