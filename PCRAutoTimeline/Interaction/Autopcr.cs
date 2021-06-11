@@ -1,10 +1,12 @@
 ﻿using CodeStage.AntiCheat.ObscuredTypes;
 using Neo.IronLua;
+using PCRAutoTimeline.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PCRAutoTimeline
@@ -13,6 +15,11 @@ namespace PCRAutoTimeline
     {
         private static readonly Dictionary<int, NativeFunctions.POINT> mousepos = new();
 
+        public static UnitCtrl getUnit(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle, out UnitCtrl unit);
+            return unit;
+        }
         public static void calibrate(string i)
         {
             Console.Write($"Mouse for pos {i}:");
@@ -46,8 +53,8 @@ namespace PCRAutoTimeline
             PressAt(mousepos[id]);
         }
 
-        private static int frameoff = 0; 
-        private static float timeoff = 0;
+        internal static int frameoff = 0;
+        internal static float timeoff = 0;
 
         public static void setOffset(int frame, float time)
         {
@@ -177,17 +184,16 @@ namespace PCRAutoTimeline
                 getLevel(unitHandle) / getLevel(targetHandle);
         }
 
-        private enum ActionState
-        {
-            IDLE = 0, ATK, SKILL_1, SKILL,
-            WALK, DAMAGE, SUMMON, DIE, GAME_START,
-            LOSE
-        }
-
         public static string getActionState(long unitHandle)
         {
             NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x18C, out int state);
             return ((ActionState)state).ToString();
+        }
+
+        public static float getCastTimer(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x194, out ObscuredFloat castTimer);
+            return castTimer;
         }
 
         public static uint[] predRandom(int count)
@@ -322,7 +328,25 @@ namespace PCRAutoTimeline
                     last = frame.Item1;
                 }
                 lastf = changing(frame);
+                Thread.Sleep(1);
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
+            Console.WriteLine();
+        }
+        internal static void WaitFor(Func<(int, float), bool> check)
+        {
+            (int, float) frame;
+            var last = -1;
+            do
+            {
+                frame = Program.TryGetInfo(Program.hwnd, Program.addr);
+                if (frame.Item1 != last)
+                {
+                    Console.Write(
+                        $"\rframeCount = {frame.Item1}, limitTime = {frame.Item2}                  ");
+                    last = frame.Item1;
+                }
+                Thread.Sleep(1);
+            } while (!check(frame));
             Console.WriteLine();
         }
 

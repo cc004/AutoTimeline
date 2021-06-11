@@ -11,23 +11,27 @@ namespace PCRAutoTimeline
         private class UnitData
         {
             public ActionState state;
-            public int skillid, prefab, frame;
-            public float time, last = 0f, lastskill;
+            public int skillid, prefab, frame, framesince;
+            public float time, last = 0f;
             public long handle;
             public long[] curaction;
-            private Dictionary<long, float> exectime = new Dictionary<long, float>();
-            private Dictionary<long, long[]> actions = new Dictionary<long, long[]>();
+            private readonly Dictionary<long, long> exectime = new Dictionary<long, long>();
+            private readonly Dictionary<long, long[]> actions = new Dictionary<long, long[]>();
 
             public event Action<int> ActionExec;
 
+            //private static long bossaddr;
+
             public void Refresh(int frame, float time)
             {
+                //if (bossaddr == 0) bossaddr = Autopcr.getBossAddr(401041501);
+
                 NativeFunctions.ReadProcessMemory(Program.hwnd, handle + 0x18C, out int state);
                 if (curaction != null)
-                    foreach (var action in curaction)
+                    foreach (var action in curaction.Where(x => exectime[x] == framesince))
                     {
-                        var exec = exectime[action] + lastskill;
-                        if (exec <= time && exec > last) ActionExec?.Invoke((int)action);
+                       // Console.WriteLine($"{prefab} action executed {action}@{frame} {Autopcr.getDef(bossaddr)}");
+                        ActionExec?.Invoke((int)action);
                     }
                 ActionState cur = (ActionState)state;
                 if (cur != this.state)
@@ -37,7 +41,7 @@ namespace PCRAutoTimeline
                     {
                         NativeFunctions.ReadProcessMemory(Program.hwnd, handle + 0x110, out skillid);
                         curaction = actions[skillid];
-                        lastskill = time;
+                        framesince = Autopcr.frameoff;
                     }
                     else skillid = cur == ActionState.ATK ? 1 : 0;
 
@@ -45,9 +49,13 @@ namespace PCRAutoTimeline
                     this.time = time;
                     //Console.WriteLine($"{prefab} action changed state={cur}/{skillid}@{frame}");
                 }
+                else
+                    ++framesince;
                 this.state = cur;
                 last = time;
             }
+
+            //const float delta = 1 / 60f;
 
             public void Initialize()
             {
@@ -59,14 +67,14 @@ namespace PCRAutoTimeline
                     .Where(prefab => prefab.Visible)
                     .SelectMany(prefab => prefab.Details)
                     .Where(det => det.Visible && det.ActionId > 0)
-                    .ToDictionary(ap => (long)ap.ActionId, ap => ap.ExecTimeForPrefab.Select(ex => ex.Time).Max());
+                    .ToDictionary(ap => (long)ap.ActionId, ap => 1 + (int)Math.Ceiling(60 * ap.ExecTimeForPrefab.Select(ex => ex.Time).Max()));
                 Dictionary<long, long> dep = null;
-                float getexec(long a)
+                long getexec(long a)
                 {
                     if (exectime.TryGetValue(a, out var res)) return res;
                     var b = dep[a];
                     if (b == 0) return exectimes[a];
-                    return Math.Max(exectimes[a], getexec(b));
+                    return Math.Max(exectimes[a], getexec(b) + 1); // coroutine is executed 1 frame after added to queue
                 }
 
                 var skilldata = UnitSkillDatum.FromUnitId(prefab);

@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using CodeStage.AntiCheat.ObscuredTypes;
 using Neo.IronLua;
+using System.Threading;
 
 namespace PCRAutoTimeline
 {
@@ -39,6 +40,7 @@ namespace PCRAutoTimeline
             //Minitouch.setPos(1, 100, 100);
             //Minitouch.press(1);
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             using var lua = new Lua();
             var env = lua.CreateEnvironment();
 
@@ -47,17 +49,35 @@ namespace PCRAutoTimeline
             env.RegisterPackage("input", typeof(Input));
             env.RegisterPackage("monitor", typeof(Monitor));
 
-            var chunk = lua.CompileChunk(File.ReadAllText("timeline.lua"), "timeline.lua", new LuaCompileOptions());
+            LuaChunk chunk;
+            try
+            {
+                chunk = lua.CompileChunk(File.ReadAllText("timeline.lua"), "timeline.lua", new LuaCompileOptions());
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("你timeline.lua呢？");
+                throw;
+            }
+            catch (LuaParseException e)
+            {
+                Console.WriteLine($"lua写错了！滚去学编程 行{e.Line}, 列{e.Column}");
+                throw;
+            }
 
             Console.Write("pid>");
             var pid = int.Parse(Console.ReadLine());
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
-            
+
+            Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
+            var time = int.Parse(Console.ReadLine());
+
             var tuple =  AobscanHelper.Aobscan(hwnd, idcode, addr =>
             {
                 var frame = TryGetInfo(hwnd, addr);
-                if (frame.Item1 >= 0 && frame.Item1 < 1000 && frame.Item2 > 80 && frame.Item2 < 100)
+                Console.WriteLine(frame);
+                if (frame.Item1 >= 0 && frame.Item1 < 1200 && frame.Item2 > time - 1 && frame.Item2 < time + 1)
                 {
                     Console.WriteLine($"data found, frameCount = {frame.Item1}, limitTime = {frame.Item2}");
                     return true;
@@ -73,8 +93,8 @@ namespace PCRAutoTimeline
 
             if (addr == -1)
             {
-                Console.WriteLine("aobscan failed.");
-                return;
+                Console.WriteLine("没找到数据！好好看看是不是输错进程pid了或者没进对战，进对战不要开倍速！");
+                throw new Exception();
             }
             
             seed_addr = AobscanHelper.Aobscan(hwnd, seed_code, addr =>
@@ -103,14 +123,20 @@ namespace PCRAutoTimeline
                 last = i;
             }
             */
-            chunk.Run(env);
 
-            Console.WriteLine("script finished.");
+            chunk.Run(env);
             exiting = true;
             Minitouch.exit();
 
             Console.ReadLine();
 
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine($"程序出错了！赶紧手打或者挂树吧，以下是详细信息：\n{e.ExceptionObject}");
+            Console.WriteLine("按enter退出");
+            Console.ReadLine();
         }
 
         public static bool exiting;

@@ -215,17 +215,9 @@ end
 --]]
 
 ---[[state test
-local ke = autopcr.getUnitAddr(107101, 5, 15);
-
-monitor.add(ke);
-monitor.start();
-autopcr.calibrate("克总");
+local ke = autopcr.getUnitAddr(107101, 5, 13);
 
 while (true) do
-    if (autopcr.getTp(ke) == 1000)
-    then
-        monitor.waitAction(ke, 107100301);
-        autopcr.press("克总");
-    end
+    print(autopcr.getActionState(ke)..' '..autopcr.getCastTimer(ke))
 end
 --]]
