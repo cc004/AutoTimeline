@@ -34,7 +34,7 @@ namespace PCRAutoTimeline
             bool action = false;
             void setaction(int id) { if (id == actionid) action = true; }
             units[unitHandle].ActionExec += setaction;
-            Autopcr.WaitFor(_ => action, pair => pair.Item2);
+            Autopcr.WaitFor(_ => action);
             units[unitHandle].ActionExec -= setaction;
         }
 
@@ -46,21 +46,21 @@ namespace PCRAutoTimeline
             };
             data.Initialize();
             units.Add(handle, data);
-        } 
+        }
+        //const float delta = 1 / 60f;
         public static void start()
         {
             new Thread(() =>
             {
-                var last = -1;
-                var sw = new Stopwatch();
-                sw.Start();
+                var (_, last) = Program.TryGetInfo(Program.hwnd, Program.addr);
                 while (!Program.exiting)
                 {
                     var (frame, time) = Program.TryGetInfo(Program.hwnd, Program.addr);
-                    if (frame != last)
+                    if (time != last)
                     {
+                        Thread.Sleep(5);
                         foreach (var pair in units) pair.Value.Refresh(frame, -time);
-                        last = frame;
+                        last = time;
                     }
                     Thread.Sleep(1);
                 }
