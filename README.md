@@ -4,6 +4,8 @@
 
 [lua分享站](http://pcr.youtobechina.com/)  
 
+qq群1023837088
+
 仅适配x64模拟器 x32的app
 
 (什么?你不想写代码就想用?请打开auto)
