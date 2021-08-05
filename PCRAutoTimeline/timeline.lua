@@ -214,10 +214,42 @@ do
 end
 --]]
 
----[[state test
+--[[state test
 local ke = autopcr.getUnitAddr(107101, 5, 13);
 
 while (true) do
     print(autopcr.getActionState(ke)..' '..autopcr.getCastTimer(ke))
+end
+--]]
+
+---[[ async test
+local count = 0;
+
+function asynctest1()
+    print("async1 starting")
+    while (true) do
+        async.await()
+        count=count+1
+    end
+end
+
+function asynctest2()
+    print("async2 starting")
+    while (true) do
+        async.await()
+        count=count+1
+    end
+end
+
+async.start(asynctest1)
+async.start(asynctest2)
+print("asynctest stated");
+while (true) do
+    async.await()
+    count=count+1
+    
+    if (count % 300 == 1) then
+        print(count)
+    end
 end
 --]]

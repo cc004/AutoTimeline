@@ -3,3 +3,9 @@ bin/*
 obj/*
 packages/*
 Log2Timeline/*
+DBPatcher/*
+PluginLoader/*
+TimelineHelper/*
+ResourceLoader/*
+ResourceLoaderLogger/*
+*.dll

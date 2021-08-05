@@ -26,11 +26,11 @@ namespace CalcImport
 				.Tables["轴模板"].Rows;
 
 			var j = 9;
-			List<Tuple<int, int>> timeline = new List<Tuple<int, int>>();
+			List<Tuple<int, int, string>> timeline = new List<Tuple<int, int, string>>();
 
 			while (data[j][10] is double @double)
             {
-				timeline.Add(new Tuple<int, int>((int)@double, (int)(double)data[j][11]));
+				timeline.Add(new Tuple<int, int, string>((int)@double, (int)(double)data[j][11], data[j][1].ToString()));
 				++j;
             }
 
@@ -48,7 +48,7 @@ namespace CalcImport
 			foreach (var ub in timeline)
 			{
 				if (ub.Item2 < 200000)
-					src.AppendLine($"autopcr.waitFrame({ub.Item1}); autopcr.press(\"{characters[ub.Item2 / 100].First()}\");");
+					src.AppendLine($"autopcr.waitFrame({ub.Item1}); autopcr.press(\"{characters[ub.Item2 / 100].First()}\"); --{ub.Item3}");
 				else
 					src.AppendLine("print(\"boss ub\");");
 			}
