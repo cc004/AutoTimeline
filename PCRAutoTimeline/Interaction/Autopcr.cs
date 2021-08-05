@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace PCRAutoTimeline
+namespace PCRAutoTimeline.Interaction
 {
     public static class Autopcr
     {
@@ -292,6 +290,11 @@ namespace PCRAutoTimeline
             WaitFor(inf => inf.Item2 <= time - timeoff, inf => inf.Item2);
         }
 
+        public static void waitLFrame(int frame)
+        {
+            WaitFor(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
+        }
+
         internal static (int, int) TryGetIntInt(long hwnd, long addr)
         {
             var data = new byte[16];
@@ -328,7 +331,7 @@ namespace PCRAutoTimeline
                     last = frame.Item1;
                 }
                 lastf = changing(frame);
-                Thread.Sleep(1);
+                Async.await();
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
             Console.WriteLine();
         }
@@ -345,7 +348,7 @@ namespace PCRAutoTimeline
                         $"\rframeCount = {frame.Item1}, limitTime = {frame.Item2}                  ");
                     last = frame.Item1;
                 }
-                Thread.Sleep(1);
+                Async.await();
             } while (!check(frame));
             Console.WriteLine();
         }

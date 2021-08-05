@@ -9,6 +9,7 @@ using System.Text;
 using CodeStage.AntiCheat.ObscuredTypes;
 using Neo.IronLua;
 using System.Threading;
+using PCRAutoTimeline.Interaction;
 
 namespace PCRAutoTimeline
 {
@@ -34,29 +35,42 @@ namespace PCRAutoTimeline
             return (BitConverter.ToInt32(data, 0), BitConverter.ToSingle(data, 8));
         }
 
+        private static int TryGetProcess()
+        {
+            foreach (var proc in Process.GetProcesses())
+            {
+                if (proc.ProcessName == "LdVBoxHeadless") return proc.Id;
+            }
+
+            return 0;
+        }
         static void Main(string[] args)
         {
             //Minitouch.connect("localhost", 1111);
             //Minitouch.setPos(1, 100, 100);
             //Minitouch.press(1);
-
+            
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            NativeFunctions.timeBeginPeriod(1);
+
             using var lua = new Lua();
             var env = lua.CreateEnvironment();
 
             env.RegisterPackage("autopcr", typeof(Autopcr));
             env.RegisterPackage("minitouch", typeof(Minitouch));
             env.RegisterPackage("input", typeof(Input));
-            env.RegisterPackage("monitor", typeof(Monitor));
+            env.RegisterPackage("async", typeof(Async));
 
             LuaChunk chunk;
+            var file = args.Length > 0 ? args[0] : "timeline.lua";
+
             try
             {
-                chunk = lua.CompileChunk(File.ReadAllText("timeline.lua"), "timeline.lua", new LuaCompileOptions());
+                chunk = lua.CompileChunk(File.ReadAllText(file), "timeline.lua", new LuaCompileOptions());
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("你timeline.lua呢？");
+                Console.WriteLine($"你{file}呢？");
                 throw;
             }
             catch (LuaParseException e)
@@ -66,7 +80,8 @@ namespace PCRAutoTimeline
             }
 
             Console.Write("pid>");
-            var pid = int.Parse(Console.ReadLine());
+            var str = Console.ReadLine();
+            var pid = string.IsNullOrEmpty(str) ? TryGetProcess() : int.Parse(str);
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
 
@@ -94,7 +109,7 @@ namespace PCRAutoTimeline
             if (addr == -1)
             {
                 Console.WriteLine("没找到数据！好好看看是不是输错进程pid了或者没进对战，进对战不要开倍速！");
-                throw new Exception();
+                //throw new Exception();
             }
             
             seed_addr = AobscanHelper.Aobscan(hwnd, seed_code, addr =>
@@ -124,7 +139,12 @@ namespace PCRAutoTimeline
             }
             */
 
-            chunk.Run(env);
+            Async.start(() =>
+            {
+                chunk.Run(env);
+                return null;
+            });
+
             exiting = true;
             Minitouch.exit();
 

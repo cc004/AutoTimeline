@@ -10,6 +10,10 @@
 
 ## 用法
 
+### 运行
+
+默认读取timeline.lua，可以通过命令行更改输入文件名
+
 ### 编写timeline.lua
 
 AutoPcrApi:
@@ -28,10 +32,13 @@ AutoPcrApi:
 - `int autopcr.getDef(unit_handle)` 根据获得的句柄返回角色物理防御
 - `int autopcr.getMagicDef(unit_handle)` 根据获得的句柄返回角色法术防御
 - `int autopcr.getLevel(unit_handle)` 根据获得的句柄返回角色等级
+
 - `int autopcr.getFrame()` 返回当前帧数
 - `float autopcr.getTime()` 返回当前时间
 - `void autopcr.waitFrame(frame)` 暂停程序直到帧数达到
+- `void autopcr.waitLFrame(frame)` 暂停程序直到逻辑帧数达到
 - `void autopcr.waitTime(frame)` 暂停程序直到时间达到
+
 - `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
 - `float autopcr.getCrit(unit_handle, target_handle, isMagic)` 获取对某个target攻击的暴击率
 - `uint[] autopcr.predRandom(count)` 获取下count个随机数的值
@@ -44,6 +51,7 @@ AutoPcrApi:
 - `void autopcr.waitTillNCrit(unit_handle, target_handle, isMagic, frameMax, m, n)` 等待直到下次n段伤害有m个暴击（如果ub带随机效果则可能结果不正确，如病娇）
 - `void autopcr.waitTillCrits(unit_handle, target_handle, isMagic, frameMax, m, critlist)` 等待直到下几个攻击判定有m个暴击
 - `string autopcr.getActionState(unit_handle)` 获取单位当前状态，取值如下：IDLE, ATK, SKILL_1, SKILL, WALK, DAMAGE, SUMMON, DIE, GAME_START, LOSE
+- `int autopcr.getSkillId(unit_handle)` 获取当前角色的技能id，普攻为1
 
 MiniTouchApi:
 
@@ -59,13 +67,10 @@ InputApi:
 
 - `void input.keyPressed(key)` 返回键盘是否被按下
 
-MonitorApi: (experimental)
+AsyncApi:
 
-- `void monitor.add(unit_handle)` 把单位加入检测列表中，必须在start前调用
-- `void monitor.start()` 开始检测，必须在除了add意外所有函数前调用
-- `void monitor.waitAction(unit_handle, action_id)` 等待unit执行完毕action_id
-- `int monitor.getSkillId(unit_handle)` 获取当前角色的技能id，普攻为1
-- `string monitor.getActionState(unit_handle)` 同autopcr同名函数，但是速度更快
+- `void async.start(action)` 开始一个新协程
+- `void async.await()` 协程进入等待，使其他进程进入运行态
 
 ### 依赖
 
@@ -78,7 +83,7 @@ MonitorApi: (experimental)
 ### 运行程序
 
 1. 必须使用管理员模式运行，设置帧率为60，关闭倍速，先进入对战，然后在开始时暂停
-3. 输入模拟器主程序的PID(不要输错成前台ui程序)
+3. 输入模拟器主程序的PID(不要输错成前台ui程序)，如果是雷电模拟器且只有一个实例这步可以直接按回车
 4. 等待扫描，结束后会显示当前帧数和剩余时间
 5. 继续模拟器运行脚本，脚本中进行站位校准和自动打轴
 6. 继续运行后不要乱动鼠标！！！

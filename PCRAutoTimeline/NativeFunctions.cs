@@ -145,6 +145,9 @@ namespace PCRAutoTimeline
         [DllImport("kernel32.dll")]
         public static extern int CloseHandle(int dwHandle);
         public const int PROCESS_ALL_ACCESS = 0x1F0FFF;
+
+        [DllImport("winmm")]
+        public static extern void timeBeginPeriod(int t);
     }
 
 }
