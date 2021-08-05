@@ -109,7 +109,7 @@ namespace PCRAutoTimeline
             if (addr == -1)
             {
                 Console.WriteLine("没找到数据！好好看看是不是输错进程pid了或者没进对战，进对战不要开倍速！");
-                //throw new Exception();
+                throw new Exception();
             }
             
             seed_addr = AobscanHelper.Aobscan(hwnd, seed_code, addr =>
