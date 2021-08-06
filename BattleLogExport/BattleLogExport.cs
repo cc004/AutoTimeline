@@ -54,6 +54,8 @@ namespace BattleLogExport
             {
                 src.AppendLine($"print(\"calibrate for {tuple.Value.name}\");");
                 src.AppendLine($"autopcr.calibrate(\"{tuple.Value.name}\");");
+                srct.AppendLine($"print(\"calibrate for {tuple.Value.name}\");");
+                srct.AppendLine($"autopcr.calibrate(\"{tuple.Value.name}\");");
             }
 
             var damage = dmgs.Where(pair => pair.Key <= 999999).Sum(pair => pair.Value);
@@ -97,7 +99,7 @@ namespace BattleLogExport
             srct.AppendLine($"--[[\n{msg}\n]]");
 
             File.WriteAllText("timeline.lua", src.ToString());
-            File.WriteAllText("timeline_logic.lua", src.ToString());
+            File.WriteAllText("timeline_logic.lua", srct.ToString());
             Log("timeline.lua generated.");
         }
 
