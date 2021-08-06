@@ -222,7 +222,7 @@ while (true) do
 end
 --]]
 
----[[ async test
+--[[ async test
 local count = 0;
 
 function asynctest1()
@@ -252,4 +252,21 @@ while (true) do
         print(count)
     end
 end
+--]]
+
+---[[ monitor test
+
+local kezong = autopcr.getUnitAddr(107101, 5, 14);
+monitor.add("克总", kezong);
+autopcr.calibrate("克总");
+autopcr.setOffset(2, 0);
+
+while (true) do
+    monitor.waitSkill("克总", 1071003, 56);
+    if (autopcr.getTp(kezong) == 1000) then
+        autopcr.press("克总");
+    end
+    monitor.waitSkill("克总", 0, 0);
+end
+
 --]]

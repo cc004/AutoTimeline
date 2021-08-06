@@ -25,6 +25,16 @@ namespace PCRAutoTimeline.Interaction
             nowRunning = node;
             node.Value.Release();
         }
+
+        internal static void start(Action coroutine)
+        {
+            start(() =>
+            {
+                coroutine();
+                return null;
+            });
+        }
+
         public static void start(Func<LuaResult> coroutine)
         {
             var sema = new Semaphore(0, 1);

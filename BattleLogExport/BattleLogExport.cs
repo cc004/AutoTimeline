@@ -23,7 +23,7 @@ namespace BattleLogExport
 
         private static string UnitDetail(UnitCtrl info)
         {
-            return $"{info.Rarity}*r{(int)info.PromotionLevel} {info.Level}(??????)? (?,?,?,?)";
+            return $"{info.Rarity}*r{(int)info.PromotionLevel} {info.Level}(??????)? (?,?,?,?)    autopcr.getUnitAddr({info.UnitId}, {info.Rarity}, {info.PromotionLevel})";
         }
 
         private static string ToTime(long time, int limit)
@@ -44,7 +44,7 @@ namespace BattleLogExport
             var dbmgr = ManagerSingleton<MasterDataManager>.Instance;
 
             var cdict = __instance.GetMyUnitList().ToDictionary(u => u.UnitId, u => new{ name=(string)(dbmgr.masterUnitData.Get(u.UnitId).UnitName), unit=u });
-            var enemy = dbmgr.masterUnitEnemyData.Get(__instance.BossUnit.PrefabId).unit_name;;
+            var enemy = dbmgr.masterUnitEnemyData.Get(__instance.BossUnit.PrefabId).unit_name;
             var dmgs = __instance.GetMyUnitList().ToDictionary(i => i.UnitId, i => i.UnitDamageInfo.damage);
             var msg = new StringBuilder();
             var src = new StringBuilder();
@@ -64,6 +64,7 @@ namespace BattleLogExport
             msg.AppendLine(string.Join("\n",
                  cdict.Select(c => $"{c.Value.name}\t（{dmgs[c.Value.unit.UnitId]:D6}）\t{UnitDetail(c.Value.unit)}")));
 
+            msg.AppendLine($"boss: autopcr.getBossAddr({__instance.BossUnit.UnitId})");
             msg.AppendLine("帧轴：");
 
             var skippingFrame = 0;
