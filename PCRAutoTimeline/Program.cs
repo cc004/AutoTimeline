@@ -142,13 +142,11 @@ namespace PCRAutoTimeline
             Async.start(() =>
             {
                 chunk.Run(env);
+                exiting = true;
+                Minitouch.exit();
+                Console.ReadLine();
                 return null;
             });
-
-            exiting = true;
-            Minitouch.exit();
-
-            Console.ReadLine();
 
         }
 
