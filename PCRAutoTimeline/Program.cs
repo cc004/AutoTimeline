@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using CodeStage.AntiCheat.ObscuredTypes;
 using Neo.IronLua;
-using System.Threading;
 using PCRAutoTimeline.Interaction;
 
 namespace PCRAutoTimeline
@@ -60,6 +58,7 @@ namespace PCRAutoTimeline
             env.RegisterPackage("minitouch", typeof(Minitouch));
             env.RegisterPackage("input", typeof(Input));
             env.RegisterPackage("async", typeof(Async));
+            env.RegisterPackage("monitor", typeof(Monitor));
 
             LuaChunk chunk;
             var file = args.Length > 0 ? args[0] : "timeline.lua";
@@ -94,7 +93,7 @@ namespace PCRAutoTimeline
                 Console.WriteLine(frame);
                 if (frame.Item1 >= 0 && frame.Item1 < 1200 && frame.Item2 > time - 1 && frame.Item2 < time + 1)
                 {
-                    Console.WriteLine($"data found, frameCount = {frame.Item1}, limitTime = {frame.Item2}");
+                    Console.WriteLine($"data found, rFrame = {frame.Item1}, lFrame = {(90 - frame.Item2) * 60}, lTime = {frame.Item2}");
                     return true;
                 }
                 return false;
@@ -145,7 +144,6 @@ namespace PCRAutoTimeline
                 exiting = true;
                 Minitouch.exit();
                 Console.ReadLine();
-                return null;
             });
 
         }

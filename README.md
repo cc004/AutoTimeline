@@ -37,9 +37,9 @@ AutoPcrApi:
 
 - `int autopcr.getFrame()` 返回当前帧数
 - `float autopcr.getTime()` 返回当前时间
-- `void autopcr.waitFrame(frame)` 暂停程序直到帧数达到
-- `void autopcr.waitLFrame(frame)` 暂停程序直到逻辑帧数达到
-- `void autopcr.waitTime(frame)` 暂停程序直到时间达到
+- `void autopcr.waitFrame(frame)` 暂停协程直到帧数达到
+- `void autopcr.waitLFrame(frame)` 暂停协程直到逻辑帧数达到
+- `void autopcr.waitTime(frame)` 暂停协程直到时间达到
 
 - `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
 - `float autopcr.getCrit(unit_handle, target_handle, isMagic)` 获取对某个target攻击的暴击率
@@ -72,7 +72,15 @@ InputApi:
 AsyncApi:
 
 - `void async.start(action)` 开始一个新协程
-- `void async.await()` 协程进入等待，使其他进程进入运行态
+- `void async.await()` 协程进入等待，使其他协程进入运行态
+
+MonitorApi: (experimental)
+
+- `void monitor.add(name, unit_handle)` 把单位加入检测列表中
+- `void monitor.waitSkill(name, skill, frame)` 等待unit执行skill多少帧后
+- `int monitor.getSkillId(name)` 获取当前角色的技能id，普攻为1
+- `int monitor.getSkillFrame(name)` 获取当前角色的技能开始执行时的渲染帧
+- `string monitor.getActionState(name)` 同autopcr同名函数，但是速度更快
 
 ### 依赖
 

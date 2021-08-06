@@ -193,6 +193,12 @@ namespace PCRAutoTimeline.Interaction
             NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x194, out ObscuredFloat castTimer);
             return castTimer;
         }
+        
+        public static int getSkillId(long unitHandle)
+        {
+            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x110, out int skillid);
+            return skillid;
+        }
 
         public static uint[] predRandom(int count)
         {
@@ -327,7 +333,7 @@ namespace PCRAutoTimeline.Interaction
                 if (frame.Item1 != last)
                 {
                     Console.Write(
-                        $"\rframeCount = {frame.Item1}, limitTime = {frame.Item2}                  ");
+                        $"\rrFrame = {frame.Item1}, lFrame = {(90 - frame.Item2) * 60}, lTime = {frame.Item2}                                 ");
                     last = frame.Item1;
                 }
                 lastf = changing(frame);
