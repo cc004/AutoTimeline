@@ -66,6 +66,12 @@ namespace PCRAutoTimeline.Interaction
             _waitFrame(frame + 1);
         }
 
+        public static void waitOneLFrame()
+        {
+            var frame = getLFrame();
+            waitLFrame(frame + 1);
+        }
+
         public static void framePress(int id)
         {
             var point = mousepos[id];
@@ -242,6 +248,11 @@ namespace PCRAutoTimeline.Interaction
             return Program.TryGetInfo(Program.hwnd, Program.addr).Item2;
         }
 
+        public static int getLFrame()
+        {
+            return (int)(90 - Program.TryGetInfo(Program.hwnd, Program.addr).Item2)*60;
+        }
+
         private static void _waitFrame(int frame)
         {
             WaitFor(inf => inf.Item1 >= frame, inf => inf.Item1);
@@ -298,7 +309,7 @@ namespace PCRAutoTimeline.Interaction
 
         public static void waitLFrame(int frame)
         {
-            WaitFor(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
+            WaitForNoPrint(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
         }
 
         internal static (int, int) TryGetIntInt(long hwnd, long addr)
@@ -340,6 +351,25 @@ namespace PCRAutoTimeline.Interaction
                 Async.await();
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
             Console.WriteLine();
+        }
+
+        internal static void WaitForNoPrint(Func<(int, float), bool> check, Func<(int, float), float> changing)
+        {
+            (int, float) frame;
+            float lastf = float.NaN;
+            var last = -1;
+            float lastff;
+            do
+            {
+                lastff = lastf;
+                frame = Program.TryGetInfo(Program.hwnd, Program.addr);
+                if (frame.Item1 != last)
+                {
+                    last = frame.Item1;
+                }
+                lastf = changing(frame);
+                Async.await();
+            } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
         }
         internal static void WaitFor(Func<(int, float), bool> check)
         {
