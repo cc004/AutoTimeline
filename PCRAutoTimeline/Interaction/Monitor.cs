@@ -105,7 +105,7 @@ namespace PCRAutoTimeline.Interaction
             Autopcr.WaitFor(i => i.Item1 >= unit.frame + deltaFrame - Autopcr.frameoff, i => i.Item1);
         }
 
-        public static int waitSkillLframe(string name, int skill, int deltaFrame)
+        public static int waitSkillLFrame(string name, int skill, int deltaFrame)
         {
             var unit = units[name];
             var realdeltaFrame = deltaFrame;
