@@ -59,6 +59,7 @@ namespace PCRAutoTimeline
             env.RegisterPackage("input", typeof(Input));
             env.RegisterPackage("async", typeof(Async));
             env.RegisterPackage("monitor", typeof(Monitor));
+            env.RegisterPackage("unitautodata", typeof(UnitAutoData));
 
             LuaChunk chunk;
             var file = args.Length > 0 ? args[0] : "timeline.lua";
@@ -77,7 +78,7 @@ namespace PCRAutoTimeline
                 Console.WriteLine($"lua写错了！滚去学编程 行{e.Line}, 列{e.Column}");
                 throw;
             }
-
+            
             Console.Write("pid>");
             var str = Console.ReadLine();
             var pid = string.IsNullOrEmpty(str) ? TryGetProcess() : int.Parse(str);
@@ -136,14 +137,14 @@ namespace PCRAutoTimeline
                 if (i > last) Console.WriteLine($"rand times={i}");
                 last = i;
             }
+            
             */
-
             Async.start(() =>
             {
                 chunk.Run(env);
-                exiting = true;
-                Minitouch.exit();
-                Console.ReadLine();
+                //exiting = true;
+                //Minitouch.exit();
+                //Console.ReadLine();
             });
 
         }
