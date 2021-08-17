@@ -94,7 +94,7 @@ MonitorApi: (experimental)
 
 - `void monitor.add(name, unit_handle)` 把单位加入检测列表中
 - `void monitor.waitSkill(name, skill, frame)` 等待unit执行skill多少帧后
-- `int monitor.waitSkillLFrame(name, skill, frame)` 等待unit执行skill多少逻辑帧后，修改了等待方式，适配BOSSUB打断，其他角色UB;返回值用于判断等待过程中角色是否遇到异常情况
+- `int monitor.waitSkillLFrame(name, skill, frame)` 等待unit执行skill多少逻辑帧后，修改了等待方式，适配BOSSUB打断，其他角色UB;返回值用于标记技能是否被打断，技能等待是否正常，0表示没有被打断，1表示被打断，2表示异常返回（目前只有循环次数过多造成的异常）
 - `int monitor.getSkillId(name)` 获取当前角色的技能id，普攻为1
 - `int monitor.getSkillFrame(name)` 获取当前角色的技能开始执行时的渲染帧
 - `int monitor.getSkillLFrame(name)` 获取当前角色的技能开始执行时的逻辑帧
