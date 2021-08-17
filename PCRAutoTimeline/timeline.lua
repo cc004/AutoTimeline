@@ -270,6 +270,7 @@ while (true) do
 end
 
 --]]
+<<<<<<< HEAD
 
 ---[[ pvz helper
 
@@ -296,3 +297,21 @@ while (true) do
     end
 end
 --]]
+=======
+--print("载入全角色技能数据");
+--unitautodata.Init();
+--unitautodata.getSkillExFrame(170101,1701002);
+minitouch.connect("localhost", 1111);
+for i = 0, 4 do
+    minitouch.setPos(5 - i, 400 + i * 208, 860);
+end
+minitouch.setPos(6, 1544, 716); --auto
+minitouch.setPos(7, 1544, 839); --forward
+minitouch.setPos(8, 1512, 43);  --pause
+minitouch.press(1);
+minitouch.press(2);
+minitouch.press(3);
+minitouch.press(4);
+minitouch.press(5);
+
+>>>>>>> d3f086a756b3e88b35aaa3f87d986b8dcaae2b30

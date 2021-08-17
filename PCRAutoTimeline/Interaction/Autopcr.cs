@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
+
 namespace PCRAutoTimeline.Interaction
 {
     public static class Autopcr
@@ -31,6 +32,8 @@ namespace PCRAutoTimeline.Interaction
         {
             PressAt(mousepos[id.GetHashCode()]);
         }
+
+
         public static void framePress(string id)
         {
             framePress(id.GetHashCode());
@@ -64,6 +67,12 @@ namespace PCRAutoTimeline.Interaction
         {
             var frame = getFrame();
             _waitFrame(frame + 1);
+        }
+
+        public static void waitOneLFrame()
+        {
+            var frame = getLFrame();
+            waitLFrame(frame + 1);
         }
 
         public static void framePress(int id)
@@ -247,6 +256,11 @@ namespace PCRAutoTimeline.Interaction
             return Program.TryGetInfo(Program.hwnd, Program.addr).Item2;
         }
 
+        public static int getLFrame()
+        {
+            return (int)(90 - Program.TryGetInfo(Program.hwnd, Program.addr).Item2)*60;
+        }
+
         private static void _waitFrame(int frame)
         {
             WaitFor(inf => inf.Item1 >= frame, inf => inf.Item1);
@@ -303,7 +317,7 @@ namespace PCRAutoTimeline.Interaction
 
         public static void waitLFrame(int frame)
         {
-            WaitFor(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
+            WaitForNoPrint(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
         }
 
         internal static (int, int) TryGetIntInt(long hwnd, long addr)
@@ -319,6 +333,8 @@ namespace PCRAutoTimeline.Interaction
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
+
+
 
         public static void bossub(int framecount)
         {
@@ -346,6 +362,25 @@ namespace PCRAutoTimeline.Interaction
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
             Console.WriteLine();
         }
+
+        internal static void WaitForNoPrint(Func<(int, float), bool> check, Func<(int, float), float> changing)
+        {
+            (int, float) frame;
+            float lastf = float.NaN;
+            var last = -1;
+            float lastff;
+            do
+            {
+                lastff = lastf;
+                frame = Program.TryGetInfo(Program.hwnd, Program.addr);
+                if (frame.Item1 != last)
+                {
+                    last = frame.Item1;
+                }
+                lastf = changing(frame);
+                Async.await();
+            } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
+        }
         internal static void WaitFor(Func<(int, float), bool> check)
         {
             (int, float) frame;
@@ -364,6 +399,12 @@ namespace PCRAutoTimeline.Interaction
             Console.WriteLine();
         }
 
+
+
+        public static void SwitchToGame()//用后台的handle不行，要用dnpayer的，我再想想有没有必要
+        {
+            NativeFunctions.SetForegroundWindow(Program.main_handle);
+        }
 
     }
 }
