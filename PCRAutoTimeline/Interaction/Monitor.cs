@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace PCRAutoTimeline.Interaction
 {
-    public static partial class Monitor
+    public static class Monitor
     {
         private class Unit
         {
             public long unit_handle;
-            public UnitData unit_data;
             public int skillid;
             public int frame;
             public int Lframe;
@@ -45,8 +44,6 @@ namespace PCRAutoTimeline.Interaction
         public static void add(string name, long unit_handle)
         {
             var unit = new Unit { unit_handle = unit_handle };
-            unit.unit_data = new UnitData { handle = unit.unit_handle };
-            unit.unit_data.Initialize();
             units.Add(name, unit);
             Async.start(() => Coroutine(unit));
         }
@@ -61,31 +58,7 @@ namespace PCRAutoTimeline.Interaction
             return units[name].skillid;
         }
 
-        public static long getSkillExFrame(string name,long skillid)
-        {
-            if (skillid == 0)
-            {
-                return 0;
-            }
-            else if (skillid == 1)
-            {
-                return 0;
-            }
 
-            var skill_action_frame = new List<long>();
-            var unit = units[name];
-            unit.unit_data.actions.TryGetValue(skillid, out var skill_action_list);
-            foreach (long action_id in skill_action_list)
-            {
-                unit.unit_data.exectime.TryGetValue(action_id, out var temp_frame);
-                skill_action_frame.Add(temp_frame);
-
-
-            }
-            var max_frame = skill_action_frame.Max();
-
-            return max_frame;
-        }
 
         public static int getSkillFrame(string name)
         {

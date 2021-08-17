@@ -14,8 +14,11 @@ namespace PCRAutoTimeline
     class Program
     {
         public static long hwnd, addr;
+        public static IntPtr main_handle;//目前没啥用
 
         public static long seed_addr;
+
+        //public static IntPtr main_handle;
 
         private static readonly byte[] idcode =
         {
@@ -59,7 +62,7 @@ namespace PCRAutoTimeline
             env.RegisterPackage("input", typeof(Input));
             env.RegisterPackage("async", typeof(Async));
             env.RegisterPackage("monitor", typeof(Monitor));
-            env.RegisterPackage("unitautodata", typeof(UnitAutoData));
+            env.RegisterPackage("unitautodata", typeof(UnitAutoCtr));
 
             LuaChunk chunk;
             var file = args.Length > 0 ? args[0] : "timeline.lua";
@@ -84,10 +87,12 @@ namespace PCRAutoTimeline
             var pid = string.IsNullOrEmpty(str) ? TryGetProcess() : int.Parse(str);
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
-
+            main_handle = Process.GetProcessById(pid).MainWindowHandle;
+            
+            
             Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
             var time = int.Parse(Console.ReadLine());
-
+            
             var tuple =  AobscanHelper.Aobscan(hwnd, idcode, addr =>
             {
                 var frame = TryGetInfo(hwnd, addr);
@@ -117,7 +122,7 @@ namespace PCRAutoTimeline
                 Console.WriteLine($"seed found.");
                 return true;
             }).Item1 - 0x90;
-
+            
             /*
             UnityRandom.State state0;
             NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out state0);
@@ -142,8 +147,8 @@ namespace PCRAutoTimeline
             Async.start(() =>
             {
                 chunk.Run(env);
-                //exiting = true;
-                //Minitouch.exit();
+                exiting = true;
+                Minitouch.exit();
                 //Console.ReadLine();
             });
 

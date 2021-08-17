@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
+
 namespace PCRAutoTimeline.Interaction
 {
     public static class Autopcr
@@ -31,6 +32,8 @@ namespace PCRAutoTimeline.Interaction
         {
             PressAt(mousepos[id.GetHashCode()]);
         }
+
+
         public static void framePress(string id)
         {
             framePress(id.GetHashCode());
@@ -326,6 +329,8 @@ namespace PCRAutoTimeline.Interaction
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
 
+
+
         public static void bossub(int framecount)
         {
             frameoff -= framecount;
@@ -389,6 +394,12 @@ namespace PCRAutoTimeline.Interaction
             Console.WriteLine();
         }
 
+
+
+        public static void SwitchToGame()//用后台的handle不行，要用dnpayer的，我再想想有没有必要
+        {
+            NativeFunctions.SetForegroundWindow(Program.main_handle);
+        }
 
     }
 }
