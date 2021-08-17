@@ -85,9 +85,10 @@ AsyncApi:
 UnitAutoDataApi:
 
 - `void unitautodata.Init()` 调用UnitAutoDataApi前，必须要先初始化
-- `int unitautodata.GetAtkPrefabFrame(unit_id)` 根据unit_id获取当前角色普攻生效帧，没有数据返回-1
+- `int unitautodata.GetAtkPrefabFrame(unit_id)` 根据unit_id获取当前角色普攻生效帧(对弹道和部分物理角色有BUG)，没有数据返回-1
 - `int unitautodata.GetAtkType(unit_id)` 根据unit_id获取当前角色的输出/破甲类型，1表示物理，2表示魔法
 - `int unitautodata.GetUbTypeFromId(unit_id)` 根据unit_id获取当前角色的UB类型，1表示输出，2表示奶，3表示破甲，4表示增益
+- `int unitautodata.getSkillExFrame(name,skillid)` 获取当前角色的该技能所有动作都生效的逻辑帧(对弹道技能有BUG)
 
 MonitorApi: (experimental)
 
@@ -97,7 +98,6 @@ MonitorApi: (experimental)
 - `int monitor.getSkillId(name)` 获取当前角色的技能id，普攻为1
 - `int monitor.getSkillFrame(name)` 获取当前角色的技能开始执行时的渲染帧
 - `int monitor.getSkillLFrame(name)` 获取当前角色的技能开始执行时的逻辑帧
-- `long monitor.getSkillExFrame(name,skillid)` 获取当前角色的该技能所有动作都生效的逻辑帧(对弹道技能有BUG)
 - `string monitor.getActionState(name)` 同autopcr同名函数，但是速度更快
 
 ### 依赖
