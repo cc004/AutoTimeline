@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
+
+
 namespace PCRAutoTimeline.Interaction
 {
-    class UnitAutoData
+    class UnitAutoCtr
     {
 		private class Unit_auto
 		{
@@ -27,9 +29,19 @@ namespace PCRAutoTimeline.Interaction
 
 		private static RootObject unit_auto_data;
 
+		private class UnitData
+		{
+			public int prefab;
+			public readonly Dictionary<long, long> exectime = new Dictionary<long, long>();
+			public readonly Dictionary<long, long[]> actions = new Dictionary<long, long[]>();
+		}
+
+		private static List<UnitData> units;
+
+
 		public static void Init() 
 		{
-			FileStream fs = new FileStream("UnitAutoData.json", FileMode.Open);
+			FileStream fs = new FileStream("Data/UnitAutoData.json", FileMode.Open);
 			StreamReader fileStream = new StreamReader(fs);
 			string str = "";
 			string line;
@@ -39,6 +51,23 @@ namespace PCRAutoTimeline.Interaction
 			}
 			unit_auto_data = JsonConvert.DeserializeObject<RootObject>(str);
 
+			FileStream fs2 = new FileStream("Data/unit_auto_prefab.json", FileMode.Open);
+			StreamReader fileStream2 = new StreamReader(fs2);
+			string str2 = "";
+			string line2;
+			while ((line2 = fileStream2.ReadLine()) != null)
+			{
+				str2 += line2;
+			}
+			units = JsonConvert.DeserializeObject<List<UnitData>>(str2);
+
+		}
+
+
+		public static void setGameTop(long handle)
+		{ 
+			
+		
 		}
 
 
@@ -83,6 +112,40 @@ namespace PCRAutoTimeline.Interaction
 				}
 			}
 			return -1;
+		}
+
+		public static int getSkillExFrame(long unit_id, long skillid)
+		{
+			if (skillid == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				foreach (UnitData unit in units)
+				{
+					if (unit.prefab == unit_id)
+					{
+						var skill_action_frame = new List<long>();
+						try
+						{
+							unit.actions.TryGetValue(skillid, out var skill_action_list);
+							foreach (long action_id in skill_action_list)
+							{
+								unit.exectime.TryGetValue(action_id, out var temp_frame);
+								skill_action_frame.Add(temp_frame);
+
+
+							}
+							var max_frame = skill_action_frame.Max();
+
+							return (int)max_frame;
+						}
+						catch { return 0; }
+					}
+				}
+				return 0;
+			}
 		}
 
 	}
