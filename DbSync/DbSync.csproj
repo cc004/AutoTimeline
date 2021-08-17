@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C64AD5BE-55CB-4536-8B03-54CA53E7B9F9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DbSync</RootNamespace>
+    <AssemblyName>DbSync</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\PrincessConnectReDive4.61\PrincessConnectReDive\priconner\PrincessConnectReDive_Data\Managed\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\PrincessConnectReDive4.61\PrincessConnectReDive\priconner\PrincessConnectReDive_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PCRCalculator">
+      <HintPath>..\..\..\..\PrincessConnectReDive4.61\PrincessConnectReDive\Plugins\PCRCalculator.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\PrincessConnectReDive4.61\PrincessConnectReDive\priconner\PrincessConnectReDive_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\LogUploader\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssetsTools.Dynamic\DynamicAsset.cs" />
+    <Compile Include="AssetsTools.Dynamic\DynamicAssetArray.cs" />
+    <Compile Include="AssetsTools.Dynamic\DynamicAssetDictionary.cs" />
+    <Compile Include="AssetsTools.Dynamic\Extensions.cs" />
+    <Compile Include="AssetsTools.LZ4\LZ4Codec.cs" />
+    <Compile Include="AssetsTools\AssetBundleFile.cs" />
+    <Compile Include="AssetsTools\AssetsFile.cs" />
+    <Compile Include="AssetsTools\BuildTarget.cs" />
+    <Compile Include="AssetsTools\ClassIDType.cs" />
+    <Compile Include="AssetsTools\Extensions.cs" />
+    <Compile Include="AssetsTools\IDynamicAssetBase.cs" />
+    <Compile Include="AssetsTools\ILGeneratorExtension.cs" />
+    <Compile Include="AssetsTools\IOLibExtensions.cs" />
+    <Compile Include="AssetsTools\ISerializable.cs" />
+    <Compile Include="AssetsTools\ISerializableArrayExtensions.cs" />
+    <Compile Include="AssetsTools\MemoryPool.cs" />
+    <Compile Include="AssetsTools\MiniMemoryPool.cs" />
+    <Compile Include="AssetsTools\SerializedType.cs" />
+    <Compile Include="AssetsTools\TypeExtensions.cs" />
+    <Compile Include="AssetsTools\TypeTree.cs" />
+    <Compile Include="AssetsTools\UnityBinaryReader.cs" />
+    <Compile Include="AssetsTools\UnityBinaryWriter.cs" />
+    <Compile Include="AssetsTools\UnknownFormatException.cs" />
+    <Compile Include="DbSync.cs" />
+    <Compile Include="Microsoft.CodeAnalysis\EmbeddedAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System.Runtime.CompilerServices\IsUnmanagedAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PluginLoader\PluginLoader.csproj">
+      <Project>{fa48e9e5-95a8-46c2-926f-ae89da994e45}</Project>
+      <Name>PluginLoader</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

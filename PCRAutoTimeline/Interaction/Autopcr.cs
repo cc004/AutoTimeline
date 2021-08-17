@@ -92,6 +92,11 @@ namespace PCRAutoTimeline.Interaction
             return false;
         }
 
+        public static void sleep(int time)
+        {
+            for (int i = 0; i < time; ++i) Async.await();
+        }
+
         private static bool BossEvaluator(int unitid, long addr)
         {
             var t = TryGetIntInt(Program.hwnd, addr + 0x10);

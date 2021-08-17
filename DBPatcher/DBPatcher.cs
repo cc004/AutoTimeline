@@ -1,5 +1,6 @@
 ﻿using Coneshell;
 using Cute;
+using PCRCalculator.Tool;
 using PluginLoader;
 using Sqlite3Plugin;
 using System;

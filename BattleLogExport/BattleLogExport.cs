@@ -1,7 +1,6 @@
 ﻿using Elements;
 using Elements.Battle;
 using HarmonyLib;
-using Newtonsoft0.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,9 +20,18 @@ namespace BattleLogExport
             return frame;
         }
 
+        private static Dictionary<int, UnitParameter> param;
+
         private static string UnitDetail(UnitCtrl info)
         {
-            return $"{info.Rarity}*r{(int)info.PromotionLevel} {info.Level}(??????)? (?,?,?,?)    autopcr.getUnitAddr({info.UnitId}, {info.Rarity}, {info.PromotionLevel})";
+            var data = (param = param ?? Singleton<UserData>.Instance.UnitParameterDictionary)[info.UnitId];
+            var estring = string.Concat(data.UniqueData.EquipSlot.Select(e => e.IsSlot ? e.EnhancementLevel.ToString() : "-"));
+            var lstring = string.Join(",", new SkillLevelInfo[]
+            {
+                data.UniqueData.MainSkill[0], data.UniqueData.MainSkill[1], data.UniqueData.UnionBurst[0], data.UniqueData.ExSkill[0]
+            }.Select(l => l.SkillLevel));
+            var uel = data.UniqueData.UniqueEquipSlot?[0]?.EnhancementLevel.ToString();
+            return $"{info.Rarity}*r{(int)info.PromotionLevel} {info.Level}({estring}){uel} ({lstring})    autopcr.getUnitAddr({info.UnitId}, {info.Rarity}, {info.PromotionLevel})";
         }
 
         private static string ToTime(long time, int limit)

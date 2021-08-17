@@ -254,7 +254,7 @@ while (true) do
 end
 --]]
 
----[[ monitor test
+--[[ monitor test
 
 local kezong = autopcr.getUnitAddr(107101, 5, 14);
 monitor.add("克总", kezong);
@@ -269,4 +269,30 @@ while (true) do
     monitor.waitSkill("克总", 0, 0);
 end
 
+--]]
+
+---[[ pvz helper
+
+autopcr.calibrate("水壶");
+autopcr.calibrate("中心1");
+autopcr.calibrate("中心2");
+autopcr.calibrate("中心3");
+autopcr.calibrate("中心4");
+autopcr.calibrate("中心5");
+autopcr.calibrate("中心6");
+autopcr.calibrate("中心7");
+autopcr.calibrate("中心8");
+
+while (true) do
+    if (input.keyPressed("Q")) then
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心1"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心2"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心3"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心4"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心5"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心6"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心7"); autopcr.sleep(10);
+        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心8"); autopcr.sleep(10);
+    end
+end
 --]]
