@@ -64,12 +64,6 @@ namespace PCRAutoTimeline.Interaction
 		}
 
 
-		public static void setGameTop(long handle)
-		{ 
-			
-		
-		}
-
 
 		public static int GetUbTypeFromId(long unit_id)
         {
