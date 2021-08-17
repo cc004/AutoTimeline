@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceLoadLogger", "Resou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceLoader", "ResourceLoader\ResourceLoader.csproj", "{3531BFFD-9876-4CA0-95A6-BFB64A693B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformPatcher", "PlatformPatcher\PlatformPatcher.csproj", "{93E034D5-F5B8-4FA2-AC97-3EA9DAB0702C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlatformPatcher", "PlatformPatcher\PlatformPatcher.csproj", "{93E034D5-F5B8-4FA2-AC97-3EA9DAB0702C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitorDataGenerator", "MonitorDataGenerator\MonitorDataGenerator.csproj", "{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +119,14 @@ Global
 		{93E034D5-F5B8-4FA2-AC97-3EA9DAB0702C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93E034D5-F5B8-4FA2-AC97-3EA9DAB0702C}.Release|x86.ActiveCfg = Release|Any CPU
 		{93E034D5-F5B8-4FA2-AC97-3EA9DAB0702C}.Release|x86.Build.0 = Release|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5ACFAD9E-F4F7-4778-BE05-EF7C0FD8EC8A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,8 +26,17 @@ namespace PCRAutoTimeline
         public const int MOUSEEVENTF_MIDDLEUP = 0x0040;
         //标示是否采用绝对坐标 
         public const int MOUSEEVENTF_ABSOLUTE = 0x8000;
+
+        //post事件常量
+        public const uint WM_LBUTTONDOWN = 0x201;
+        public const uint WM_LBUTTONUP = 0x202;
+
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
 
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out POINT lpPoint);
