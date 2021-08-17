@@ -4,5 +4,3 @@ obj/*
 packages/*
 Log2Timeline/*
 *.dll
-/MonitorDataGenerator/obj
-/MonitorDataGenerator/bin
