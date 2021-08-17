@@ -8,7 +8,13 @@ qq群1023837088
 
 仅适配x64模拟器 x32的app
 
-(什么?你不想写代码就想用?请打开auto)
+(什么?你不想写代码就想用?请打开auto)  
+
+更新了部分函数的实现方式，增加了逻辑帧相关的操作  
+
+现在可以根据技能生效帧进行自动目押了（但是对有弹道角色支持有BUG） 
+
+使用时请把Data文件夹数据放在根目录下
 
 ## 用法
 
@@ -36,9 +42,11 @@ AutoPcrApi:
 - `int autopcr.getLevel(unit_handle)` 根据获得的句柄返回角色等级
 
 - `int autopcr.getFrame()` 返回当前帧数
+- `int autopcr.getLFrame()` 返回当前逻辑帧数
 - `float autopcr.getTime()` 返回当前时间
 - `void autopcr.waitFrame(frame)` 暂停协程直到帧数达到
-- `void autopcr.waitLFrame(frame)` 暂停协程直到逻辑帧数达到
+- `void autopcr.waitLFrame(frame)` 暂停协程直到逻辑帧数达到;现在，利用逻辑帧的等待，将不再输出当前时间和逻辑帧，如果轴佬需要观察当前帧数，可以在脚本中单独调用autopcr.getLFrame(),并print
+- `void autopcr.waitOneLFrame()` 暂停协程直到过去一个逻辑帧
 - `void autopcr.waitTime(frame)` 暂停协程直到时间达到
 
 - `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
@@ -74,12 +82,22 @@ AsyncApi:
 - `void async.start(action)` 开始一个新协程
 - `void async.await()` 协程进入等待，使其他协程进入运行态
 
+UnitAutoDataApi:
+
+- `void unitautodata.Init()` 调用UnitAutoDataApi前，必须要先初始化
+- `int unitautodata.GetAtkPrefabFrame(unit_id)` 根据unit_id获取当前角色普攻生效帧(对弹道和部分物理角色有BUG)，没有数据返回-1
+- `int unitautodata.GetAtkType(unit_id)` 根据unit_id获取当前角色的输出/破甲类型，1表示物理，2表示魔法
+- `int unitautodata.GetUbTypeFromId(unit_id)` 根据unit_id获取当前角色的UB类型，1表示输出，2表示奶，3表示破甲，4表示增益
+- `int unitautodata.getSkillExFrame(name,skillid)` 获取当前角色的该技能所有动作都生效的逻辑帧(对弹道技能有BUG)
+
 MonitorApi: (experimental)
 
 - `void monitor.add(name, unit_handle)` 把单位加入检测列表中
 - `void monitor.waitSkill(name, skill, frame)` 等待unit执行skill多少帧后
+- `int monitor.waitSkillLFrame(name, skill, frame)` 等待unit执行skill多少逻辑帧后，修改了等待方式，适配BOSSUB打断，其他角色UB;返回值用于标记技能是否被打断，技能等待是否正常，0表示没有被打断，1表示被打断，2表示异常返回（目前只有循环次数过多造成的异常）
 - `int monitor.getSkillId(name)` 获取当前角色的技能id，普攻为1
 - `int monitor.getSkillFrame(name)` 获取当前角色的技能开始执行时的渲染帧
+- `int monitor.getSkillLFrame(name)` 获取当前角色的技能开始执行时的逻辑帧
 - `string monitor.getActionState(name)` 同autopcr同名函数，但是速度更快
 
 ### 依赖
