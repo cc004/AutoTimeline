@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.RegularExpressions;
 using CodeStage.AntiCheat.ObscuredTypes;
 using Neo.IronLua;
 using PCRAutoTimeline.Interaction;
@@ -15,11 +14,11 @@ namespace PCRAutoTimeline
     class Program
     {
         public static long hwnd, addr;
-        public static IntPtr main_handle;//目前没啥用
+        public static IntPtr main_handle;
+        public static bool is_init_main_handle = false;
 
         public static long seed_addr;
 
-        //public static IntPtr main_handle;
 
         private static readonly byte[] idcode =
         {
@@ -63,7 +62,7 @@ namespace PCRAutoTimeline
             env.RegisterPackage("input", typeof(Input));
             env.RegisterPackage("async", typeof(Async));
             env.RegisterPackage("monitor", typeof(Monitor));
-            env.RegisterPackage("unitautodata", typeof(UnitAutoCtr));
+            env.RegisterPackage("unitautodata", typeof(UnitAutoData));
 
             LuaChunk chunk;
             var file = args.Length > 0 ? args[0] : "timeline.lua";
@@ -83,12 +82,12 @@ namespace PCRAutoTimeline
                 throw;
             }
             
-            Console.Write("pid>");
+            Console.Write("内核pid，如果是单开，直接回车即可，程序自动搜索>");
             var str = Console.ReadLine();
             var pid = string.IsNullOrEmpty(str) ? TryGetProcess() : int.Parse(str);
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
-            main_handle = Process.GetProcessById(pid).MainWindowHandle;
+            
             
             
             Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
@@ -105,6 +104,8 @@ namespace PCRAutoTimeline
                 }
                 return false;
             });
+            Console.WriteLine("载入全角色数据");
+            UnitAutoData.Init(); //载入不怎么占用时间，直接在主程序载入了
 
             addr = tuple.Item1;
 
@@ -115,7 +116,7 @@ namespace PCRAutoTimeline
             if (addr == -1)
             {
                 Console.WriteLine("没找到数据！好好看看是不是输错进程pid了或者没进对战，进对战不要开倍速！");
-                if (time != 0)throw new Exception();
+                throw new Exception();
             }
             
             seed_addr = AobscanHelper.Aobscan(hwnd, seed_code, addr =>

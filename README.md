@@ -16,6 +16,10 @@ qq群1023837088
 
 使用时请把Data文件夹数据放在根目录下
 
+更新了角色和BOSS内存地址扫描的逻辑，增加了更便利的内存地址搜索方法
+
+增加了对角色和BOSS相关数据的接口，便于查询
+
 ## 用法
 
 ### 运行
@@ -31,7 +35,10 @@ AutoPcrApi:
 - `void autopcr.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
 
 - `long autopcr.getUnitAddr(unit_id, rarity, rank)` 根据数据获取角色的句柄，请务必保证搜索时该角色tp为0且满血，否则会搜索失败
-- `long autopcr.getBossAddr(unit_id)` 获取公会战boss的id
+- `List<(int,long, int,string)> autopcr.AutogetUnitAddr()` 自动获取公会战角色的句柄，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值C#.Net框架标准库的List<(int,long,int,string)>格式，获取数据的方法与C#语法一致（具体方法可以看轴示例），其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
+- `long autopcr.getUnitAddrEasy(unit_id)` 不用输入星级和rank就进行句柄扫描的方法，没有getUnitAddr可靠
+- `long autopcr.getBossAddr(unit_id)` 获取公会战boss的句柄
+- `List<(int,long, int,string)> autopcr.AutogetBossAddr()` 自动获取公会战boss和可能的多目标部位的句柄，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值C#.Net框架标准库的List<(int,long,int,string)>格式，获取数据的方法与C#语法一致（具体方法可以看轴示例），其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
 - `float autopcr.getTp(unit_handle)` 根据获得的句柄返回角色当前tp
 - `long autopcr.getHp(unit_handle)` 根据获得的句柄返回角色当前hp
 - `long autopcr.getMaxHp(unit_handle)` 根据获得的句柄返回角色最大hp
@@ -63,6 +70,10 @@ AutoPcrApi:
 - `string autopcr.getActionState(unit_handle)` 获取单位当前状态，取值如下：IDLE, ATK, SKILL_1, SKILL, WALK, DAMAGE, SUMMON, DIE, GAME_START, LOSE
 - `int autopcr.getSkillId(unit_handle)` 获取当前角色的技能id，普攻为1
 
+- `void autopcr.SwitchToGameInit()` 初始化dnplay进程，如果要使用autopcr.SwitchToGame()，需要先调用这个函数
+- `void autopcr.SwitchToGame()` 令Windows切换到模拟器上，防止误操作造成乱轴（建议加入连点函数上）
+
+
 MiniTouchApi:
 
 - `void minitouch.getMaxX()` 返回最大X
@@ -84,11 +95,16 @@ AsyncApi:
 
 UnitAutoDataApi:
 
-- `void unitautodata.Init()` 调用UnitAutoDataApi前，必须要先初始化
 - `int unitautodata.GetAtkPrefabFrame(unit_id)` 根据unit_id获取当前角色普攻生效帧(对弹道和部分物理角色有BUG)，没有数据返回-1
 - `int unitautodata.GetAtkType(unit_id)` 根据unit_id获取当前角色的输出/破甲类型，1表示物理，2表示魔法
 - `int unitautodata.GetUbTypeFromId(unit_id)` 根据unit_id获取当前角色的UB类型，1表示输出，2表示奶，3表示破甲，4表示增益
 - `int unitautodata.getSkillExFrame(name,skillid)` 获取当前角色的该技能所有动作都生效的逻辑帧(对弹道技能有BUG)
+- `string unitautodata.GetBossName(boss_id)` 根据boss的id获取该boss的名字（包含会战id和阶段信息），找不到boss返回"未找到该Boss"
+- `int unitautodata.GetBossPhase(boss_id)` 根据boss的id获取该boss所属的阶段，找不到boss返回-1
+- `int unitautodata.GetBossClanId(boss_id)` 根据boss的id获取该boss所属的会战ID，找不到boss返回-1
+- `List<(string, long)> unitautodata.GetBossChildId(boss_id)` 根据boss的id获取该boss的部位信息列表包含名称和部位id，返回值C#.Net框架标准库的List<(int,long,int,string)>格式，获取数据的方法与C#语法一致（具体方法可以看轴示例），元素的第一个值为所属部位，第二个值为部位id，找不到返回空列表
+- `string unitautodata.GetBossPartsName(part_id)` 根据部位的id获取该部位的名字，找不到返回"未知部位"
+- `long unitautodata.GetFatherId(long boss_part_id)` 根据部位的id获取该部位所属的Bossid，找不到boss返回-1
 
 MonitorApi: (experimental)
 
