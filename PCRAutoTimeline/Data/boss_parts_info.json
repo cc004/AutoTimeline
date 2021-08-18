@@ -1,0 +1,254 @@
+ [
+        {
+            "EnemyId": "401021505",
+            "BossName": "双子魔猪 第1阶段",
+            "ChildId1": "401021506",
+            "ChildId2": "401021507",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401021905",
+            "BossName": "暴食魔兽 第1阶段",
+            "ChildId1": "401021906",
+            "ChildId2": "401021907",
+            "ChildId3": "401021908",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401022105",
+            "BossName": "人马射手 第1阶段",
+            "ChildId1": "401022106",
+            "ChildId2": "401022107",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401022305",
+            "BossName": "阿克艾利欧斯 第1阶段",
+            "ChildId1": "401022306",
+            "ChildId2": "401022307",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401025905",
+            "BossName": "暴食魔兽 第1阶段 单人模式",
+            "ChildId1": "401025906",
+            "ChildId2": "401025907",
+            "ChildId3": "401025908",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401026105",
+            "BossName": "人马射手 第1阶段 单人模式",
+            "ChildId1": "401026106",
+            "ChildId2": "401026107",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401026305",
+            "BossName": "阿克艾利欧斯 第1阶段 单人模式",
+            "ChildId1": "401026306",
+            "ChildId2": "401026307",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401031505",
+            "BossName": "双子魔猪 第2阶段",
+            "ChildId1": "401031506",
+            "ChildId2": "401031507",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401031905",
+            "BossName": "暴食魔兽 第2阶段",
+            "ChildId1": "401031906",
+            "ChildId2": "401031907",
+            "ChildId3": "401031908",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401032105",
+            "BossName": "人马射手 第2阶段",
+            "ChildId1": "401032106",
+            "ChildId2": "401032107",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401032305",
+            "BossName": "阿克艾利欧斯 第2阶段",
+            "ChildId1": "401032306",
+            "ChildId2": "401032307",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401035905",
+            "BossName": "暴食魔兽 第2阶段 单人模式",
+            "ChildId1": "401035906",
+            "ChildId2": "401035907",
+            "ChildId3": "401035908",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401036105",
+            "BossName": "人马射手 第2阶段 单人模式",
+            "ChildId1": "401036106",
+            "ChildId2": "401036107",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401036305",
+            "BossName": "阿克艾利欧斯 第2阶段 单人模式",
+            "ChildId1": "401036306",
+            "ChildId2": "401036307",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401041505",
+            "BossName": "双子魔猪 第3阶段",
+            "ChildId1": "401041506",
+            "ChildId2": "401041507",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401041905",
+            "BossName": "暴食魔兽 第3阶段",
+            "ChildId1": "401041906",
+            "ChildId2": "401041907",
+            "ChildId3": "401041908",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401042105",
+            "BossName": "人马射手 第3阶段",
+            "ChildId1": "401042106",
+            "ChildId2": "401042107",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401042305",
+            "BossName": "阿克艾利欧斯 第3阶段",
+            "ChildId1": "401042306",
+            "ChildId2": "401042307",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401045905",
+            "BossName": "暴食魔兽 第3阶段 单人模式",
+            "ChildId1": "401045906",
+            "ChildId2": "401045907",
+            "ChildId3": "401045908",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401046105",
+            "BossName": "人马射手 第3阶段 单人模式",
+            "ChildId1": "401046106",
+            "ChildId2": "401046107",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "401046305",
+            "BossName": "阿克艾利欧斯 第3阶段 单人模式",
+            "ChildId1": "401046306",
+            "ChildId2": "401046307",
+            "ChildId3": "0",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "610017101",
+            "BossName": "培提尔其乌斯 NORMAL",
+            "ChildId1": "610017102",
+            "ChildId2": "610017103",
+            "ChildId3": "610017104",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "610017201",
+            "BossName": "培提尔其乌斯 HARD",
+            "ChildId1": "610017202",
+            "ChildId2": "610017203",
+            "ChildId3": "610017204",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "610017301",
+            "BossName": "培提尔其乌斯 VERY HARD",
+            "ChildId1": "610017302",
+            "ChildId2": "610017303",
+            "ChildId3": "610017304",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "610017401",
+            "BossName": "培提尔其乌斯 SP1",
+            "ChildId1": "610017411",
+            "ChildId2": "610017412",
+            "ChildId3": "610017413",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "610017402",
+            "BossName": "培提尔其乌斯 SP2",
+            "ChildId1": "610017421",
+            "ChildId2": "610017422",
+            "ChildId3": "610017423",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "610017403",
+            "BossName": "培提尔其乌斯 SP3",
+            "ChildId1": "610017431",
+            "ChildId2": "610017432",
+            "ChildId3": "610017433",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        },
+        {
+            "EnemyId": "801100213",
+            "BossName": "覇瞳侍从（复数）",
+            "ChildId1": "801100223",
+            "ChildId2": "801100233",
+            "ChildId3": "801100243",
+            "ChildId4": "0",
+            "ChildId5": "0"
+        }
+ ]

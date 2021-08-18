@@ -270,48 +270,115 @@ while (true) do
 end
 
 --]]
-<<<<<<< HEAD
 
----[[ pvz helper
+print("测试新api");
+autopcr.SwitchToGameInit();
+local test_boss_id=401031505;
+local test_part_id=401031506;
+boss_phase = unitautodata.GetBossPhase(test_boss_id);
+boss_battle_id = unitautodata.GetBossClanId(test_boss_id);
+boss_name = unitautodata.GetBossName(test_boss_id);
+boss_child_list = unitautodata.GetBossChildId(test_boss_id);
+print("Boss的会战ID为",boss_battle_id," Boss的阶段为:",boss_phase," Boss的名字为:",boss_name)
+for i=0,boss_child_list.Count-1 do
+print(boss_child_list[i].Item1,boss_child_list[i].Item2)
+autopcr.SwitchToGame()
 
-autopcr.calibrate("水壶");
-autopcr.calibrate("中心1");
-autopcr.calibrate("中心2");
-autopcr.calibrate("中心3");
-autopcr.calibrate("中心4");
-autopcr.calibrate("中心5");
-autopcr.calibrate("中心6");
-autopcr.calibrate("中心7");
-autopcr.calibrate("中心8");
-
-while (true) do
-    if (input.keyPressed("Q")) then
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心1"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心2"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心3"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心4"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心5"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心6"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心7"); autopcr.sleep(10);
-        autopcr.press("水壶"); autopcr.sleep(10); autopcr.press("中心8"); autopcr.sleep(10);
-    end
 end
---]]
-=======
---print("载入全角色技能数据");
---unitautodata.Init();
---unitautodata.getSkillExFrame(170101,1701002);
-minitouch.connect("localhost", 1111);
-for i = 0, 4 do
-    minitouch.setPos(5 - i, 400 + i * 208, 860);
-end
-minitouch.setPos(6, 1544, 716); --auto
-minitouch.setPos(7, 1544, 839); --forward
-minitouch.setPos(8, 1512, 43);  --pause
-minitouch.press(1);
-minitouch.press(2);
-minitouch.press(3);
-minitouch.press(4);
-minitouch.press(5);
+part_father=unitautodata.GetFatherId(test_part_id);
+part_name=unitautodata.GetBossPartsName(test_part_id);
+print("部位的名字为:",part_name," 部位的宿主为:",part_father," 部位的宿主名字为:",unitautodata.GetBossName(part_father));
+fast_useraddr=autopcr.getUnitAddrEasy(107101);
+print("快速获取地址",fast_useraddr);
 
->>>>>>> d3f086a756b3e88b35aaa3f87d986b8dcaae2b30
+local unitarray=autopcr.AutogetUnitAddr(); --这里unitarray是C#.Net框架标准库的List<(int,long,int,string)>格式，获取数据的方法与C#语法一致
+print("角色扫描结束");
+local bossarray=autopcr.AutogetBossAddr(); --这里bossarray是C#.Net框架标准库的List<(int,long,int,string)>格式，获取数据的方法与C#语法一致
+print("BOSS和部位扫描结束");
+
+
+print("以下是角色扫描结果：");
+for i=0,unitarray.Count-1 do
+    print("序号",unitarray[i].Item1," 句柄",unitarray[i].Item2," 角色ID",unitarray[i].Item3," 角色名称",unitarray[i].Item4);
+end
+print("以下是Boss或部位扫描结果：")
+for i=0,bossarray.Count-1 do
+    print("序号",bossarray[i].Item1," 句柄",bossarray[i].Item2," BossID",bossarray[i].Item3," Boss或部位名称",bossarray[i].Item4);
+end
+
+
+print("请根据扫描结果输入输入正确Boss的序号：");
+boss_order=io.read();
+bossid=bossarray[boss_order].Item3;
+boss=bossarray[boss_order].Item2;
+print("请根据扫描结果输入一号位角色的序号：");
+unit_order=io.read();
+firstid=unitarray[unit_order].Item3;
+first=unitarray[unit_order].Item2;
+print("请根据扫描结果输入二号位角色的序号：");
+unit_orde=io.read();
+secondid=unitarray[unit_order].Item3;
+second=unitarray[unit_order].Item2;
+print("请根据扫描结果输入三号位角色的序号：");
+unit_orde=io.read();
+thirdid=unitarray[unit_order].Item3;
+third=unitarray[unit_order].Item2;
+print("请根据扫描结果输入四号位角色的序号：");
+unit_orde=io.read();
+fourthid=unitarray[unit_order].Item3;
+fourth=unitarray[unit_order].Item2;
+print("请根据扫描结果输入五号位角色的序号：");
+unit_orde=io.read();
+fifthid=unitarray[unit_order].Item3;
+fifth=unitarray[unit_order].Item2;
+
+print("开启监视角色状态协程");
+monitor.add("一号位", first);
+monitor.add("二号位", second);
+monitor.add("三号位", third);
+monitor.add("四号位", fourth);
+monitor.add("五号位", fifth);
+print("开启完成");
+
+print(monitor.getSkillId("一号位"));
+
+function end_process()
+	lastDef=-1;
+	lastMagicDef=-1;
+	endflag = 0;
+	while (true) do
+	    if (autopcr.getLFrame()>5300) then
+			if (endflag==0) then
+			   print("最后阶段收尾");
+			   endflag = 1;
+			end
+			if (autopcr.getTp(first) == 1000) then
+				press_until_Tp(first,"一号位");
+			    end
+			if (autopcr.getTp(second) == 1000) then
+				press_until_Tp(second,"二号位");
+			    end
+			if (autopcr.getTp(second) == 1000) then
+				press_until_Tp(third,"三号位");
+			    end
+			if (autopcr.getTp(second) == 1000) then
+				press_until_Tp(fourth,"四号位");
+			    end
+			if (autopcr.getTp(second) == 1000) then
+				press_until_Tp(fifth,"五号位");
+			    end
+			end
+		if (autopcr.getLFrame()>5330) then
+			autopcr.press("暂停");
+			end
+		nowDef=autopcr.getDef(boss);
+		nowMagicDef=autopcr.getMagicDef(boss)
+		if (nowDef~=lastDef or nowMagicDef~=lastMagicDef) then
+		    print("当前BOSS物理护甲：",nowDef," 当前BOSS魔法护甲：",nowMagicDef);
+			lastDef=nowDef;
+			lastMagicDef=nowMagicDef;
+			end
+		autopcr.waitOneLFrame();
+		end
+	end
+async.start(end_process);
