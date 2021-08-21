@@ -87,7 +87,9 @@ namespace PCRAutoTimeline
             var pid = string.IsNullOrEmpty(str) ? TryGetProcess() : int.Parse(str);
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
-            
+            Console.WriteLine("载入全角色数据");
+            UnitAutoData.Init(); //载入不怎么占用时间，直接在主程序载入了
+
             
             
             Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
@@ -104,8 +106,7 @@ namespace PCRAutoTimeline
                 }
                 return false;
             });
-            Console.WriteLine("载入全角色数据");
-            UnitAutoData.Init(); //载入不怎么占用时间，直接在主程序载入了
+
 
             addr = tuple.Item1;
 
@@ -124,7 +125,7 @@ namespace PCRAutoTimeline
                 Console.WriteLine($"seed found.");
                 return true;
             }).Item1 - 0x90;
-            
+
             /*
             UnityRandom.State state0;
             NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out state0);
@@ -146,6 +147,8 @@ namespace PCRAutoTimeline
             }
             
             */
+
+            
             Async.start(() =>
             {
                 chunk.Run(env);
@@ -153,7 +156,7 @@ namespace PCRAutoTimeline
                 Minitouch.exit();
                 //Console.ReadLine();
             });
-
+            
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
