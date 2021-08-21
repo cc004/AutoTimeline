@@ -84,6 +84,13 @@ namespace PCRAutoTimeline.Interaction
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
 
+
+        public static void sleep(int time)
+        {
+            for (int i = 0; i < time; ++i) Async.await();
+        }
+
+
         private static bool UnitEvaluator(int unitid, int rarity, int promotion, long addr)
         {
             var t = TryGetIntInt(Program.hwnd, addr + 0x10);
@@ -128,7 +135,7 @@ namespace PCRAutoTimeline.Interaction
                 var tp = getTp(addr - 0x244);
                 var hp = getHp(addr - 0x244);
                 var maxHp = getMaxHp(addr - 0x244);
-                if (tp == 0.0 & maxHp<=15000000)
+                if (tp == 0.0 && maxHp<=15000000 && (maxHp%10000)==0)
                 {
                     Console.WriteLine($"unit found @{addr - 0x244:x} , tp = {tp}, hp = {hp}/{maxHp}");
                     return true;
@@ -145,7 +152,7 @@ namespace PCRAutoTimeline.Interaction
                 var tp = getTp(addr - 0x244);
                 var hp = getHp(addr - 0x244);
                 var maxHp = getMaxHp(addr - 0x244);
-                if (tp == 0.0 && maxHp == hp)
+                if (tp == 0.0 && maxHp == hp && maxHp >0 && maxHp<100000)
                 {
                     Console.WriteLine($"unit found @{addr - 0x244:x} star = {t.Item1},rank = {t.Item2} , tp = {tp}, hp = {hp}/{maxHp}");
                     return true;
@@ -183,18 +190,18 @@ namespace PCRAutoTimeline.Interaction
             return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
         }
 
-        public static List<(int,long, int,string)> AutogetBossAddr()
+        public static List<(int,long, long,string)> autoGetBossAddr()
         {
-            var res_list = new List<(int,long,int,string)>();
-            var b_low = BitConverter.GetBytes(401000000);
-            var b_high = BitConverter.GetBytes(401099999);
-            var search_list = AobscanHelper.Bosscompscan(Program.hwnd, b_low.ToArray(),b_high.ToArray(),
+            var res_list = new List<(int,long,long,string)>();
+            var b_low = 401000000;
+            var b_high = 401099999;
+            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low,b_high,
                 addr => BossAutoEvaluator(addr));
             var boss_name = new string("");
             int order = 0;
             foreach (var temp_tuple in search_list) 
             {
-                if (temp_tuple.Item1 != -1 && ((boss_name = UnitAutoData.GetBossName(temp_tuple.Item2)) != "未找到该Boss"||((boss_name = UnitAutoData.GetBossPartsName(temp_tuple.Item2)) != "未知部位")))
+                if (temp_tuple.Item1 != -1 && ((boss_name = UnitAutoData.getBossName(temp_tuple.Item2)) != "未找到该Boss"||((boss_name = UnitAutoData.getBossPartsName(temp_tuple.Item2)) != "未知部位")))
                 {
                     res_list.Add((order, temp_tuple.Item1 - 0x244, temp_tuple.Item2, boss_name));
                     order += 1;
@@ -203,19 +210,19 @@ namespace PCRAutoTimeline.Interaction
             return res_list;
         }
 
-        public static List<(int,long, int,string)> AutogetUnitAddr()
+        public static List<(int,long, long,string)> autoGetUnitAddr()
         {
-            var res_list = new List<(int, long, int, string)>();
-            var b_low = BitConverter.GetBytes(100101);
-            var b_high = BitConverter.GetBytes(190801);
-            var search_list = AobscanHelper.Unitcompscan(Program.hwnd, b_low.Concat(b_low).ToArray(), b_high.Concat(b_high).ToArray(),
-                addr => UnitAutoEvaluator(addr));
+            var res_list = new List<(int, long, long, string)>();
+            var b_low = 100101;
+            var b_high = 190801;
+            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low, b_high,
+                addr => UnitAutoEvaluator(addr),false);
             var unit_name = new string("");
             int order = 0;
 
             foreach (var temp_tuple in search_list)
             {
-                if (temp_tuple.Item1 != -1 && (unit_name=UnitAutoData.GetUnitName(temp_tuple.Item2) )!= "未知角色")
+                if (temp_tuple.Item1 != -1 && (unit_name=UnitAutoData.getUnitName(temp_tuple.Item2) )!= "未知角色")
                 { 
                     res_list.Add((order,temp_tuple.Item1 - 0x244, temp_tuple.Item2,unit_name));
                     order += 1;
@@ -223,8 +230,6 @@ namespace PCRAutoTimeline.Interaction
             }
             return res_list;
         }
-
-
 
 
         public static float getTp(long unitHandle)
@@ -493,15 +498,15 @@ namespace PCRAutoTimeline.Interaction
 
             return 0;
         }
-        public static void SwitchToGameInit()//用后台的handle不行，要用dnpayer的
+        public static void switchToGameInit()//用后台的handle不行，要用dnpayer的
         {
-            Console.Write("dnplay.exe的pid，如果是单开，直接回车即可，程序自动搜索>");
+            Console.Write("dnplayer.exe的pid，如果是单开，直接回车即可，程序自动搜索>");
             var str = Console.ReadLine();
             var pid = string.IsNullOrEmpty(str) ? TryGetDnplayerProcess() : int.Parse(str);
             Program.main_handle = System.Diagnostics.Process.GetProcessById(pid).MainWindowHandle;
             Program.is_init_main_handle = true;
         }
-        public static void SwitchToGame()//用后台的handle不行，要用dnpayer的,所以要先初始化
+        public static void switchToGame()//用后台的handle不行，要用dnpayer的,所以要先初始化
         {
             if (Program.is_init_main_handle) 
             { NativeFunctions.SetForegroundWindow(Program.main_handle); }
