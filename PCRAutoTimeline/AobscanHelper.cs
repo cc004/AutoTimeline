@@ -35,33 +35,25 @@ namespace PCRAutoTimeline
 
 
 
-
-        private static List<(long, long)> MemmemBossComp(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator)
+        public delegate List<(long, long)> CompDele(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator);
+        public static List<(long, long)> MemmemBossComp(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator)
         {
             long i, diff = alen - 4;
             var res_list = new List<(long, long)>();
-            byte[] byte_contain = new byte[] { a[0], a[1], a[2], a[3] };
             int int_place;
             for (i = 0; i < diff; i += 4) /* 4 bytes alignment */
             {   
-
-                byte_contain[0] = a[i];
-                byte_contain[1] = a[i + 1];
-                byte_contain[2] = a[i + 2];
-                byte_contain[3] = a[i + 3];
-                int_place = BitConverter.ToInt32(byte_contain, 0);
-
+                int_place = BitConverter.ToInt32(a, (int)i);
                 if (int_place >= b_low && int_place <= b_high && matchValidator(i))
                 { res_list.Add((i, int_place)); }
             }
             return res_list;
         }
 
-        private static List<(long, long)> MemmemUnitComp(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator)//因为做了concat，比较起来有些麻烦
+        public static List<(long, long)> MemmemUnitComp(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator)//因为做了concat，比较起来有些麻烦
         {
             long i, diff = alen - 8;
             int int_place;
-            byte[] byte_contain=new byte[] { a[0], a[1] , a[2] , a[3] };
             var res_list = new List<(long, long)>();//实验结果发现在一个BLOCK里可能有多个角色，所以还是得用List存，否则要大改循环
 
 
@@ -69,11 +61,7 @@ namespace PCRAutoTimeline
             {
                 if (a[i] == a[i + 4] && a[i + 1] == a[i + 5] && a[i + 2] == a[i + 6] && a[i + 3] == a[i + 7]) //如果前后对称
                 {
-                    byte_contain[0] = a[i];
-                    byte_contain[1] = a[i+1];
-                    byte_contain[2] = a[i+2];
-                    byte_contain[3] = a[i+3];
-                    int_place = BitConverter.ToInt32(byte_contain,0);
+                    int_place = BitConverter.ToInt32(a, (int)i);
 
                     if (int_place >= b_low && int_place <= b_high && matchValidator(i))
                     {
@@ -122,7 +110,7 @@ namespace PCRAutoTimeline
         }
 
 
-        public static List<(long, long)> Compscan(long handle, int aob_low, int aob_high, Func<long, bool> matchValidator, bool isBossComp = true ,long blockToStart = 0, Action<string> callback = null)
+        public static List<(long, long)> Compscan(long handle, int aob_low, int aob_high, Func<long, bool> matchValidator, CompDele memComp, long blockToStart = 0, Action<string> callback = null)
         {
             long i = blockToStart;
             var res_list = new List<(long, long)>();
@@ -142,9 +130,7 @@ namespace PCRAutoTimeline
                 else Console.Write($"\rscanning {mbi.BaseAddress:x}...");
                 byte[] va = new byte[mbi.RegionSize];
                 NativeFunctions.ReadProcessMemory(handle, mbi.BaseAddress, va, mbi.RegionSize, 0);
-                var res = new List<(long,long)>();
-                if (isBossComp) { res = MemmemBossComp(va, mbi.RegionSize, aob_low,aob_high, r => matchValidator(mbi.BaseAddress + r)); }
-                else { res = MemmemUnitComp(va, mbi.RegionSize, aob_low, aob_high, r => matchValidator(mbi.BaseAddress + r)); }
+                var res = memComp(va, mbi.RegionSize, aob_low,aob_high, r => matchValidator(mbi.BaseAddress + r));
                 //long r = KMP.IndexOf(va, aob);
                 if (res.Count > 0)
                 {
