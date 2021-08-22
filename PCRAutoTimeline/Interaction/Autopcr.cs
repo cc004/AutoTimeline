@@ -194,9 +194,9 @@ namespace PCRAutoTimeline.Interaction
         {
             var res_list = new List<(int,long,long,string)>();
             var b_low = 401000000;
-            var b_high = 401099999;
+            var b_high = 410000000;
             var search_list = AobscanHelper.Compscan(Program.hwnd, b_low,b_high,
-                addr => BossAutoEvaluator(addr));
+                addr => BossAutoEvaluator(addr),AobscanHelper.MemmemBossComp);
             var boss_name = new string("");
             int order = 0;
             foreach (var temp_tuple in search_list) 
@@ -216,7 +216,7 @@ namespace PCRAutoTimeline.Interaction
             var b_low = 100101;
             var b_high = 190801;
             var search_list = AobscanHelper.Compscan(Program.hwnd, b_low, b_high,
-                addr => UnitAutoEvaluator(addr),false);
+                addr => UnitAutoEvaluator(addr),AobscanHelper.MemmemUnitComp);
             var unit_name = new string("");
             int order = 0;
 
