@@ -404,53 +404,59 @@ print(unitautodata.getSkillExFrame(107101,1071003));
 childarray=unitautodata.getBossChildId(test_boss_id);
 print(childarray)
 
-local unitarray=autopcr.autoGetUnitAddr(); --这里unitarray是C#.Net框架标准库的List<(int,long,long,string)>格式，获取数据的方法与C#语法一致
+local unitarray=autopcr.autoGetUnitAddr(); 
 print("角色扫描结束");
-local bossarray=autopcr.autoGetBossAddr(); --这里bossarray是C#.Net框架标准库的List<(int,long,long,string)>格式，获取数据的方法与C#语法一致
-print("BOSS和部位扫描结束");
+--local bossarray=autopcr.autoGetBossAddr(); 
+--print("BOSS和部位扫描结束");
 
 
 print("以下是角色扫描结果：");
 for i=0,unitarray.Count-1 do
-    print("序号",unitarray[i].Item1," 句柄",unitarray[i].Item2," 角色ID",unitarray[i].Item3," 角色名称",unitarray[i].Item4);
+    print(i);
+    print("序号",unitarray[i][0]," 句柄",unitarray[i][1]," 角色ID",unitarray[i][2]," 角色名称",unitarray[i][3]);
 end
-print("以下是Boss或部位扫描结果：")
-for i=0,bossarray.Count-1 do
-    print("序号",bossarray[i].Item1," 句柄",bossarray[i].Item2," BossID",bossarray[i].Item3," Boss或部位名称",bossarray[i].Item4);
-end
+--print("以下是Boss或部位扫描结果：")
+--for i=0,bossarray.Count-1 do
+    --print("序号",bossarray[i][0]," 句柄",bossarray[i][1]," BossID",bossarray[i][2]," Boss或部位名称",bossarray[i][3]);
+--end
 
 
-print("请根据扫描结果输入输入正确Boss的序号：");
-boss_order=io.read();
-bossid=bossarray[boss_order].Item3;
-boss=bossarray[boss_order].Item2;
+--print("请根据扫描结果输入输入正确Boss的序号：");
+--boss_order=io.read();
+--bossid=bossarray[boss_order][2];
+--boss=bossarray[boss_order][1];
 print("请根据扫描结果输入一号位角色的序号：");
 unit_order=io.read();
-firstid=unitarray[unit_order].Item3;
-first=unitarray[unit_order].Item2;
+idfirst=unitarray[unit_order][2];
+first=unitarray[unit_order][1];
 print("请根据扫描结果输入二号位角色的序号：");
-unit_orde=io.read();
-secondid=unitarray[unit_order].Item3;
-second=unitarray[unit_order].Item2;
+unit_order=io.read();
+idsecond=unitarray[unit_order][2];
+second=unitarray[unit_order][1];
 print("请根据扫描结果输入三号位角色的序号：");
-unit_orde=io.read();
-thirdid=unitarray[unit_order].Item3;
-third=unitarray[unit_order].Item2;
+unit_order=io.read();
+idthird=unitarray[unit_order][2];
+third=unitarray[unit_order][1];
 print("请根据扫描结果输入四号位角色的序号：");
-unit_orde=io.read();
-fourthid=unitarray[unit_order].Item3;
-fourth=unitarray[unit_order].Item2;
+unit_order=io.read();
+idfourth=unitarray[unit_order][2];
+fourth=unitarray[unit_order][1];
 print("请根据扫描结果输入五号位角色的序号：");
-unit_orde=io.read();
-fifthid=unitarray[unit_order].Item3;
-fifth=unitarray[unit_order].Item2;
+unit_order=io.read();
+idfifth=unitarray[unit_order][2];
+fifth=unitarray[unit_order][1];
 
 print("开启监视角色状态协程");
 monitor.add("一号位", first);
+monitor.updateSelfBuff("一号位",idfirst);
 monitor.add("二号位", second);
+monitor.updateSelfBuff("二号位",idsecond);
 monitor.add("三号位", third);
+monitor.updateSelfBuff("三号位",idthird);
 monitor.add("四号位", fourth);
+monitor.updateSelfBuff("四号位",idfourth);
 monitor.add("五号位", fifth);
+monitor.updateSelfBuff("五号位",idfifth);
 print("开启完成");
 
 print(monitor.getSkillId("一号位"));
@@ -466,43 +472,62 @@ function press_until_Tp(handle,name)
         end
     end 
 
-function end_process()
+
+function monitor_process()
 	lastDef=-1;
 	lastMagicDef=-1;
 	endflag = 0;
+	firstbuff=false;
+	secondbuff=false;
+	thirdbuff=false;
+	fourthbuff=false;
+	fifthbuff=false;
 	while (true) do
-	    if (autopcr.getLFrame()>5300) then
+		if (autopcr.getLFrame()>5300) then
 			if (endflag==0) then
 			   print("最后阶段收尾");
 			   endflag = 1;
 			end
 			if (autopcr.getTp(first) == 1000) then
 				press_until_Tp(first,"一号位");
-			    end
+				end
 			if (autopcr.getTp(second) == 1000) then
 				press_until_Tp(second,"二号位");
-			    end
+				end
 			if (autopcr.getTp(third) == 1000) then
 				press_until_Tp(third,"三号位");
-			    end
+				end
 			if (autopcr.getTp(fourth) == 1000) then
 				press_until_Tp(fourth,"四号位");
-			    end
+				end
 			if (autopcr.getTp(fifth) == 1000) then
 				press_until_Tp(fifth,"五号位");
-			    end
+				end
 			end
 		if (autopcr.getLFrame()>5330) then
 			autopcr.press("暂停");
 			end
 		nowDef=autopcr.getDef(boss);
-		nowMagicDef=autopcr.getMagicDef(boss)
+		nowMagicDef=autopcr.getMagicDef(boss);
+		nowfirstbuff=monitor.getIsSelfBuffed("一号位");
+		nowsecondbuff=monitor.getIsSelfBuffed("二号位");
+		nowthirdbuff=monitor.getIsSelfBuffed("三号位");
+		nowfourthbuff=monitor.getIsSelfBuffed("四号位");
+		nowfifthbuff=monitor.getIsSelfBuffed("五号位");
 		if (nowDef~=lastDef or nowMagicDef~=lastMagicDef) then
-		    print("当前BOSS物理护甲：",nowDef," 当前BOSS魔法护甲：",nowMagicDef);
+			print("当前BOSS物理护甲：",nowDef," 当前BOSS魔法护甲：",nowMagicDef);
 			lastDef=nowDef;
 			lastMagicDef=nowMagicDef;
+			end
+		if (nowfirstbuff~=firstbuff or nowsecondbuff~=secondbuff or nowthirdbuff~=thirdbuff or nowfourthbuff~=fourthbuff or nowfifthbuff~=fifthbuff) then
+			print("当前五位角色的自buff的情况为（按照站位从左到右）：",nowfifthbuff,nowfourthbuff,nowthirdbuff,nowsecondbuff,nowfirstbuff)
+			firstbuff=nowfirstbuff;
+			secondbuff=nowsecondbuff;
+			thirdbuff=nowthirdbuff;
+			fourthbuff=nowfourthbuff;
+			fifthbuff=nowfifthbuff;
 			end
 		autopcr.waitOneLFrame();
 		end
 	end
-async.start(end_process);
+async.start(monitor_process);
