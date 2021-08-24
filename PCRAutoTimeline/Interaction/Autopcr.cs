@@ -190,29 +190,41 @@ namespace PCRAutoTimeline.Interaction
             return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
         }
 
-        public static List<(int,long, long,string)> autoGetBossAddr()
+        private static Dictionary<int, string> Tuple2dic((int, long, long, string) tuple)
         {
-            var res_list = new List<(int,long,long,string)>();
+            var dic_tuple = new Dictionary<int, string>();
+            dic_tuple[0] = tuple.Item1.ToString();
+            dic_tuple[1] = tuple.Item2.ToString();
+            dic_tuple[2] = tuple.Item3.ToString();
+            dic_tuple[3] = tuple.Item4.ToString();
+            return dic_tuple;
+        }
+
+        public static List<Dictionary<int, string>> autoGetBossAddr()
+        {
+            var res_list = new List<Dictionary<int, string>>();
             var b_low = 401000000;
             var b_high = 410000000;
             var search_list = AobscanHelper.Compscan(Program.hwnd, b_low,b_high,
                 addr => BossAutoEvaluator(addr),AobscanHelper.MemmemBossComp);
             var boss_name = new string("");
             int order = 0;
+            
             foreach (var temp_tuple in search_list) 
             {
                 if (temp_tuple.Item1 != -1 && ((boss_name = UnitAutoData.getBossName(temp_tuple.Item2)) != "未找到该Boss"||((boss_name = UnitAutoData.getBossPartsName(temp_tuple.Item2)) != "未知部位")))
                 {
-                    res_list.Add((order, temp_tuple.Item1 - 0x244, temp_tuple.Item2, boss_name));
+                    
+                    res_list.Add(Tuple2dic((order, temp_tuple.Item1 - 0x244, temp_tuple.Item2, boss_name)));
                     order += 1;
                 }
             }
             return res_list;
         }
 
-        public static List<(int,long, long,string)> autoGetUnitAddr()
+        public static List<Dictionary<int, string>> autoGetUnitAddr()
         {
-            var res_list = new List<(int, long, long, string)>();
+            var res_list = new List<Dictionary<int, string>>();
             var b_low = 100101;
             var b_high = 190801;
             var search_list = AobscanHelper.Compscan(Program.hwnd, b_low, b_high,
@@ -224,7 +236,7 @@ namespace PCRAutoTimeline.Interaction
             {
                 if (temp_tuple.Item1 != -1 && (unit_name=UnitAutoData.getUnitName(temp_tuple.Item2) )!= "未知角色")
                 { 
-                    res_list.Add((order,temp_tuple.Item1 - 0x244, temp_tuple.Item2,unit_name));
+                    res_list.Add(Tuple2dic((order,temp_tuple.Item1 - 0x244, temp_tuple.Item2,unit_name)));
                     order += 1;
                 }
             }

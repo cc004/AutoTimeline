@@ -20,6 +20,8 @@ namespace PCRAutoTimeline.Interaction
 			public float atk_cast_time;
 			public int ub_type;
 			public float atk_prefab_data;
+			public int self_buff_id;
+			public float self_buff_time;
 		}
 
 
@@ -118,6 +120,15 @@ namespace PCRAutoTimeline.Interaction
 
 		}
 
+		public static int getSelfBuffId(long unit_id)
+		{
+			return unit_auto_data.FirstOrDefault(u => u.unit_id == unit_id)?.self_buff_id ?? -1;
+		}
+
+		public static float getSelfBuffTime(long unit_id)
+		{
+			return unit_auto_data.FirstOrDefault(u => u.unit_id == unit_id)?.self_buff_time ?? -1;
+		}
 
 		public static string getUnitName(long unit_id) 
 		{
