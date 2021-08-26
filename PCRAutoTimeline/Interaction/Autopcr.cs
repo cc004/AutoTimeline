@@ -200,7 +200,7 @@ namespace PCRAutoTimeline.Interaction
             return dic_tuple;
         }
 
-        public static List<Dictionary<int, string>> autoGetBossAddr()
+        public static Dictionary<int, string>[] autoGetBossAddr()
         {
             var res_list = new List<Dictionary<int, string>>();
             var b_low = 401000000;
@@ -219,10 +219,10 @@ namespace PCRAutoTimeline.Interaction
                     order += 1;
                 }
             }
-            return res_list;
+            return res_list.ToArray();
         }
 
-        public static List<Dictionary<int, string>> autoGetUnitAddr()
+        public static Dictionary<int, string>[] autoGetUnitAddr()
         {
             var res_list = new List<Dictionary<int, string>>();
             var b_low = 100101;
@@ -240,7 +240,7 @@ namespace PCRAutoTimeline.Interaction
                     order += 1;
                 }
             }
-            return res_list;
+            return res_list.ToArray();
         }
 
 

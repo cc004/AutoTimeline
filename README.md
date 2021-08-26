@@ -37,10 +37,10 @@ AutoPcrApi:
 - `void autopcr.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
 
 - `long autopcr.getUnitAddr(unit_id, rarity, rank)` 根据数据获取角色的句柄，请务必保证搜索时该角色tp为0且满血，否则会搜索失败
-- `List<Dictionary<int, string>> autopcr.autoGetUnitAddr()` 自动获取公会战角色的句柄，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
+- `<Dictionary<int, string>[] autopcr.autoGetUnitAddr()` 自动获取公会战角色的句柄，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
 - `long autopcr.getUnitAddrEasy(unit_id)` 不用输入星级和rank就进行句柄扫描的方法，没有getUnitAddr可靠
 - `long autopcr.getBossAddr(unit_id)` 获取公会战boss的句柄
-- `List<Dictionary<int, string>> autopcr.autoGetBossAddr()` 自动获取公会战boss和可能的多目标部位的句柄(目前多部位有BUG扫不出)，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
+- `<Dictionary<int, string>[] autopcr.autoGetBossAddr()` 自动获取公会战boss和可能的多目标部位的句柄(目前多部位有BUG扫不出)，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
 - `float autopcr.getTp(unit_handle)` 根据获得的句柄返回角色当前tp
 - `long autopcr.getHp(unit_handle)` 根据获得的句柄返回角色当前hp
 - `long autopcr.getMaxHp(unit_handle)` 根据获得的句柄返回角色最大hp

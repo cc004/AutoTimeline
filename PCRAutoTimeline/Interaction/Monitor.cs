@@ -85,7 +85,7 @@ namespace PCRAutoTimeline.Interaction
             if (buff_id != -1)
             {
                 units[name].self_buff_id = buff_id;
-                units[name].self_buff_frame = (int)Math.Ceiling(60 * UnitAutoData.getSelfBuffTime(unit_id)) - 1;
+                units[name].self_buff_frame = (int)Math.Ceiling(60 * UnitAutoData.getSelfBuffTime(unit_id)) - 4;//多给几帧容错
                 units[name].is_self_buffed = false;
                 Async.start(() => UpdateBuffCoroutine(name));
             }
