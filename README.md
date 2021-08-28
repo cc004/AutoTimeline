@@ -16,6 +16,12 @@ qq群1023837088
 
 使用时请把Data文件夹数据放在根目录下
 
+更新了角色和BOSS内存地址扫描的逻辑，增加了更便利的内存地址搜索方法
+
+增加了对角色和BOSS相关数据的接口，便于查询
+
+增加了角色自buff的判断
+
 ## 用法
 
 ### 运行
@@ -31,7 +37,10 @@ AutoPcrApi:
 - `void autopcr.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
 
 - `long autopcr.getUnitAddr(unit_id, rarity, rank)` 根据数据获取角色的句柄，请务必保证搜索时该角色tp为0且满血，否则会搜索失败
-- `long autopcr.getBossAddr(unit_id)` 获取公会战boss的id
+- `<Dictionary<int, string>[] autopcr.autoGetUnitAddr()` 自动获取公会战角色的句柄，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
+- `long autopcr.getUnitAddrEasy(unit_id)` 不用输入星级和rank就进行句柄扫描的方法，没有getUnitAddr可靠
+- `long autopcr.getBossAddr(unit_id)` 获取公会战boss的句柄
+- `<Dictionary<int, string>[] autopcr.autoGetBossAddr()` 自动获取公会战boss和可能的多目标部位的句柄(目前多部位有BUG扫不出)，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
 - `float autopcr.getTp(unit_handle)` 根据获得的句柄返回角色当前tp
 - `long autopcr.getHp(unit_handle)` 根据获得的句柄返回角色当前hp
 - `long autopcr.getMaxHp(unit_handle)` 根据获得的句柄返回角色最大hp
@@ -63,6 +72,10 @@ AutoPcrApi:
 - `string autopcr.getActionState(unit_handle)` 获取单位当前状态，取值如下：IDLE, ATK, SKILL_1, SKILL, WALK, DAMAGE, SUMMON, DIE, GAME_START, LOSE
 - `int autopcr.getSkillId(unit_handle)` 获取当前角色的技能id，普攻为1
 
+- `void autopcr.switchToGameInit()` 初始化dnplayer进程，如果要使用autopcr.switchToGame()，需要先调用这个函数
+- `void autopcr.switchToGame()` 令Windows切换到模拟器上，防止误操作造成乱轴（建议加入连点函数上）
+
+
 MiniTouchApi:
 
 - `void minitouch.getMaxX()` 返回最大X
@@ -75,7 +88,7 @@ MiniTouchApi:
 
 InputApi:
 
-- `void input.keyPressed(key)` 返回键盘是否被按下
+- `bool input.keyPressed(key)` 返回键盘是否被按下
 
 AsyncApi:
 
@@ -84,11 +97,18 @@ AsyncApi:
 
 UnitAutoDataApi:
 
-- `void unitautodata.Init()` 调用UnitAutoDataApi前，必须要先初始化
-- `int unitautodata.GetAtkPrefabFrame(unit_id)` 根据unit_id获取当前角色普攻生效帧(对弹道和部分物理角色有BUG)，没有数据返回-1
-- `int unitautodata.GetAtkType(unit_id)` 根据unit_id获取当前角色的输出/破甲类型，1表示物理，2表示魔法
-- `int unitautodata.GetUbTypeFromId(unit_id)` 根据unit_id获取当前角色的UB类型，1表示输出，2表示奶，3表示破甲，4表示增益
+- `int unitautodata.getAtkPrefabFrame(unit_id)` 根据unit_id获取当前角色普攻生效帧(对弹道和部分物理角色有BUG)，没有数据返回-1
+- `int unitautodata.getAtkType(unit_id)` 根据unit_id获取当前角色的输出/破甲类型，1表示物理，2表示魔法
+- `int unitautodata.getUbTypeFromId(unit_id)` 根据unit_id获取当前角色的UB类型，1表示输出，2表示奶，3表示破甲，4表示增益
+- `int unitautodata.getSelfBuffId(unit_id)` 根据unit_id获取当前角色的自buff技能id，-1表示没有自buff技能记录
+- `float unitautodata.getSelfBuffTime(unit_id)` 根据unit_id获取当前角色的自buff持续时间，-1表示没有自buff技能记录
 - `int unitautodata.getSkillExFrame(name,skillid)` 获取当前角色的该技能所有动作都生效的逻辑帧(对弹道技能有BUG)
+- `string unitautodata.getBossName(boss_id)` 根据boss的id获取该boss的名字（包含会战id和阶段信息），找不到boss返回"未找到该Boss"
+- `int unitautodata.getBossPhase(boss_id)` 根据boss的id获取该boss所属的阶段，找不到boss返回-1
+- `int unitautodata.getBossClanId(boss_id)` 根据boss的id获取该boss所属的会战ID，找不到boss返回-1
+- `(string, long)[] unitautodata.getBossChildId(boss_id)` 根据boss的id获取该boss的部位信息列表包含名称和部位id，返回值是数组，获取数据的方法与C#语法一致，元素的第一个值为所属部位，第二个值为部位id，找不到返回空列表
+- `string unitautodata.getBossPartsName(part_id)` 根据部位的id获取该部位的名字，找不到返回"未知部位"
+- `long unitautodata.getFatherId(long boss_part_id)` 根据部位的id获取该部位所属的Bossid，找不到boss返回-1
 
 MonitorApi: (experimental)
 
@@ -99,6 +119,9 @@ MonitorApi: (experimental)
 - `int monitor.getSkillFrame(name)` 获取当前角色的技能开始执行时的渲染帧
 - `int monitor.getSkillLFrame(name)` 获取当前角色的技能开始执行时的逻辑帧
 - `string monitor.getActionState(name)` 同autopcr同名函数，但是速度更快
+- `void monitor.updateSelfBuff(name,unit_id)` 开启自buff监视协程
+- `bool monitor.getIsSelfBuffed(name)` 返回是否处于自buff状态
+
 
 ### 依赖
 

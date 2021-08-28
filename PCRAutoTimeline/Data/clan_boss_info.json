@@ -1,0 +1,1922 @@
+[
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1001",
+            "EnemyId": "401010101"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1001",
+            "EnemyId": "401010102"
+        },
+        {
+            "Phase": "1",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1001",
+            "EnemyId": "401010103"
+        },
+        {
+            "Phase": "1",
+            "BossName": "狂乱魔熊",
+            "ClanBattleId": "1001",
+            "EnemyId": "401010104"
+        },
+        {
+            "Phase": "1",
+            "BossName": "梦魇牡羊",
+            "ClanBattleId": "1001",
+            "EnemyId": "401010105"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1002",
+            "EnemyId": "401010201"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1002",
+            "EnemyId": "401010202"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1002",
+            "EnemyId": "401010203"
+        },
+        {
+            "Phase": "1",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1002",
+            "EnemyId": "401010204"
+        },
+        {
+            "Phase": "1",
+            "BossName": "弥诺陶洛斯",
+            "ClanBattleId": "1002",
+            "EnemyId": "401010205"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1002",
+            "EnemyId": "401011201"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1002",
+            "EnemyId": "401011202"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1002",
+            "EnemyId": "401011203"
+        },
+        {
+            "Phase": "1",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1002",
+            "EnemyId": "401011204"
+        },
+        {
+            "Phase": "1",
+            "BossName": "弥诺陶洛斯",
+            "ClanBattleId": "1002",
+            "EnemyId": "401011205"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1003",
+            "EnemyId": "401010301"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1003",
+            "EnemyId": "401010302"
+        },
+        {
+            "Phase": "1",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1003",
+            "EnemyId": "401010303"
+        },
+        {
+            "Phase": "1",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1003",
+            "EnemyId": "401010304"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双子魔猪",
+            "ClanBattleId": "1003",
+            "EnemyId": "401010305"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1003",
+            "EnemyId": "401011301"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1003",
+            "EnemyId": "401011302"
+        },
+        {
+            "Phase": "1",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1003",
+            "EnemyId": "401011303"
+        },
+        {
+            "Phase": "1",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1003",
+            "EnemyId": "401011304"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双子魔猪",
+            "ClanBattleId": "1003",
+            "EnemyId": "401011305"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1004",
+            "EnemyId": "401010401"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1004",
+            "EnemyId": "401010402"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1004",
+            "EnemyId": "401010403"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1004",
+            "EnemyId": "401010404"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨钳魔蟹",
+            "ClanBattleId": "1004",
+            "EnemyId": "401011401"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1004",
+            "EnemyId": "401011402"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1004",
+            "EnemyId": "401011403"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1004",
+            "EnemyId": "401011404"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1004",
+            "EnemyId": "401011405"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨钳魔蟹",
+            "ClanBattleId": "1004",
+            "EnemyId": "401011406"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1005",
+            "EnemyId": "401010501"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1005",
+            "EnemyId": "401010502"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷电",
+            "ClanBattleId": "1005",
+            "EnemyId": "401010503"
+        },
+        {
+            "Phase": "1",
+            "BossName": "狂乱魔熊",
+            "ClanBattleId": "1005",
+            "EnemyId": "401010504"
+        },
+        {
+            "Phase": "1",
+            "BossName": "炎吼狮王",
+            "ClanBattleId": "1005",
+            "EnemyId": "401010505"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1005",
+            "EnemyId": "401011501"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1005",
+            "EnemyId": "401011502"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷电",
+            "ClanBattleId": "1005",
+            "EnemyId": "401011503"
+        },
+        {
+            "Phase": "1",
+            "BossName": "狂乱魔熊",
+            "ClanBattleId": "1005",
+            "EnemyId": "401011504"
+        },
+        {
+            "Phase": "1",
+            "BossName": "炎吼狮王",
+            "ClanBattleId": "1005",
+            "EnemyId": "401011505"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1006",
+            "EnemyId": "401010601"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1006",
+            "EnemyId": "401010602"
+        },
+        {
+            "Phase": "1",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1006",
+            "EnemyId": "401010603"
+        },
+        {
+            "Phase": "1",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1006",
+            "EnemyId": "401010604"
+        },
+        {
+            "Phase": "1",
+            "BossName": "美杜莎",
+            "ClanBattleId": "1006",
+            "EnemyId": "401010605"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1006",
+            "EnemyId": "401011601"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1006",
+            "EnemyId": "401011602"
+        },
+        {
+            "Phase": "1",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1006",
+            "EnemyId": "401011603"
+        },
+        {
+            "Phase": "1",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1006",
+            "EnemyId": "401011604"
+        },
+        {
+            "Phase": "1",
+            "BossName": "美杜莎",
+            "ClanBattleId": "1006",
+            "EnemyId": "401011605"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1007",
+            "EnemyId": "401010701"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1007",
+            "EnemyId": "401010702"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1007",
+            "EnemyId": "401010703"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1007",
+            "EnemyId": "401010704"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暴食魔兽",
+            "ClanBattleId": "1007",
+            "EnemyId": "401010705"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1007",
+            "EnemyId": "401011701"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1007",
+            "EnemyId": "401011702"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1007",
+            "EnemyId": "401011703"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1007",
+            "EnemyId": "401011704"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暴食魔兽",
+            "ClanBattleId": "1007",
+            "EnemyId": "401011705"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1008",
+            "EnemyId": "401010801"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1008",
+            "EnemyId": "401010802"
+        },
+        {
+            "Phase": "1",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1008",
+            "EnemyId": "401010803"
+        },
+        {
+            "Phase": "1",
+            "BossName": "泰坦陆龟",
+            "ClanBattleId": "1008",
+            "EnemyId": "401010804"
+        },
+        {
+            "Phase": "1",
+            "BossName": "利蝎巴鲁托",
+            "ClanBattleId": "1008",
+            "EnemyId": "401010805"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1008",
+            "EnemyId": "401011801"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1008",
+            "EnemyId": "401011802"
+        },
+        {
+            "Phase": "1",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1008",
+            "EnemyId": "401011803"
+        },
+        {
+            "Phase": "1",
+            "BossName": "泰坦陆龟",
+            "ClanBattleId": "1008",
+            "EnemyId": "401011804"
+        },
+        {
+            "Phase": "1",
+            "BossName": "利蝎巴鲁托",
+            "ClanBattleId": "1008",
+            "EnemyId": "401011805"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1009",
+            "EnemyId": "401010901"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1009",
+            "EnemyId": "401010902"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型凶暴兔",
+            "ClanBattleId": "1009",
+            "EnemyId": "401010903"
+        },
+        {
+            "Phase": "1",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1009",
+            "EnemyId": "401010904"
+        },
+        {
+            "Phase": "1",
+            "BossName": "人马射手",
+            "ClanBattleId": "1009",
+            "EnemyId": "401010905"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1009",
+            "EnemyId": "401011901"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1009",
+            "EnemyId": "401011902"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型凶暴兔",
+            "ClanBattleId": "1009",
+            "EnemyId": "401011903"
+        },
+        {
+            "Phase": "1",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1009",
+            "EnemyId": "401011904"
+        },
+        {
+            "Phase": "1",
+            "BossName": "人马射手",
+            "ClanBattleId": "1009",
+            "EnemyId": "401011905"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1009",
+            "EnemyId": "401012901"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1009",
+            "EnemyId": "401012902"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型凶暴兔",
+            "ClanBattleId": "1009",
+            "EnemyId": "401012903"
+        },
+        {
+            "Phase": "1",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1009",
+            "EnemyId": "401012904"
+        },
+        {
+            "Phase": "1",
+            "BossName": "人马射手",
+            "ClanBattleId": "1009",
+            "EnemyId": "401012905"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1010",
+            "EnemyId": "401011001"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1010",
+            "EnemyId": "401011002"
+        },
+        {
+            "Phase": "1",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1010",
+            "EnemyId": "401011003"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1010",
+            "EnemyId": "401011004"
+        },
+        {
+            "Phase": "1",
+            "BossName": "摩羯教主",
+            "ClanBattleId": "1010",
+            "EnemyId": "401011005"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1010",
+            "EnemyId": "401021001"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1010",
+            "EnemyId": "401021002"
+        },
+        {
+            "Phase": "1",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1010",
+            "EnemyId": "401021003"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1010",
+            "EnemyId": "401021004"
+        },
+        {
+            "Phase": "1",
+            "BossName": "摩羯教主",
+            "ClanBattleId": "1010",
+            "EnemyId": "401021005"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1010",
+            "EnemyId": "401031001"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1010",
+            "EnemyId": "401031002"
+        },
+        {
+            "Phase": "1",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1010",
+            "EnemyId": "401031003"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1010",
+            "EnemyId": "401031004"
+        },
+        {
+            "Phase": "1",
+            "BossName": "摩羯教主",
+            "ClanBattleId": "1010",
+            "EnemyId": "401031005"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1011",
+            "EnemyId": "401011101"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1011",
+            "EnemyId": "401011102"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷电",
+            "ClanBattleId": "1011",
+            "EnemyId": "401011103"
+        },
+        {
+            "Phase": "1",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1011",
+            "EnemyId": "401011104"
+        },
+        {
+            "Phase": "1",
+            "BossName": "阿克艾利欧斯",
+            "ClanBattleId": "1011",
+            "EnemyId": "401011105"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1011",
+            "EnemyId": "401021101"
+        },
+        {
+            "Phase": "2",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1011",
+            "EnemyId": "401021102"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷电",
+            "ClanBattleId": "1011",
+            "EnemyId": "401021103"
+        },
+        {
+            "Phase": "2",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1011",
+            "EnemyId": "401021104"
+        },
+        {
+            "Phase": "2",
+            "BossName": "阿克艾利欧斯",
+            "ClanBattleId": "1011",
+            "EnemyId": "401021105"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1011",
+            "EnemyId": "401031101"
+        },
+        {
+            "Phase": "3",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1011",
+            "EnemyId": "401031102"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷电",
+            "ClanBattleId": "1011",
+            "EnemyId": "401031103"
+        },
+        {
+            "Phase": "3",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1011",
+            "EnemyId": "401031104"
+        },
+        {
+            "Phase": "3",
+            "BossName": "阿克艾利欧斯",
+            "ClanBattleId": "1011",
+            "EnemyId": "401031105"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1012",
+            "EnemyId": "401021201"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1012",
+            "EnemyId": "401021202"
+        },
+        {
+            "Phase": "1",
+            "BossName": "极彩鸟",
+            "ClanBattleId": "1012",
+            "EnemyId": "401021203"
+        },
+        {
+            "Phase": "1",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1012",
+            "EnemyId": "401021204"
+        },
+        {
+            "Phase": "1",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1012",
+            "EnemyId": "401021205"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1012",
+            "EnemyId": "401031201"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1012",
+            "EnemyId": "401031202"
+        },
+        {
+            "Phase": "2",
+            "BossName": "极彩鸟",
+            "ClanBattleId": "1012",
+            "EnemyId": "401031203"
+        },
+        {
+            "Phase": "2",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1012",
+            "EnemyId": "401031204"
+        },
+        {
+            "Phase": "2",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1012",
+            "EnemyId": "401031205"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1012",
+            "EnemyId": "401041201"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1012",
+            "EnemyId": "401041202"
+        },
+        {
+            "Phase": "3",
+            "BossName": "极彩鸟",
+            "ClanBattleId": "1012",
+            "EnemyId": "401041203"
+        },
+        {
+            "Phase": "3",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1012",
+            "EnemyId": "401041204"
+        },
+        {
+            "Phase": "3",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1012",
+            "EnemyId": "401041205"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1013",
+            "EnemyId": "401021301"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1013",
+            "EnemyId": "401021302"
+        },
+        {
+            "Phase": "1",
+            "BossName": "怒蛇",
+            "ClanBattleId": "1013",
+            "EnemyId": "401021303"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1013",
+            "EnemyId": "401021304"
+        },
+        {
+            "Phase": "1",
+            "BossName": "梦魇牡羊",
+            "ClanBattleId": "1013",
+            "EnemyId": "401021305"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1013",
+            "EnemyId": "401031301"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1013",
+            "EnemyId": "401031302"
+        },
+        {
+            "Phase": "2",
+            "BossName": "怒蛇",
+            "ClanBattleId": "1013",
+            "EnemyId": "401031303"
+        },
+        {
+            "Phase": "2",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1013",
+            "EnemyId": "401031304"
+        },
+        {
+            "Phase": "2",
+            "BossName": "梦魇牡羊",
+            "ClanBattleId": "1013",
+            "EnemyId": "401031305"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1013",
+            "EnemyId": "401041301"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1013",
+            "EnemyId": "401041302"
+        },
+        {
+            "Phase": "3",
+            "BossName": "怒蛇",
+            "ClanBattleId": "1013",
+            "EnemyId": "401041303"
+        },
+        {
+            "Phase": "3",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1013",
+            "EnemyId": "401041304"
+        },
+        {
+            "Phase": "3",
+            "BossName": "梦魇牡羊",
+            "ClanBattleId": "1013",
+            "EnemyId": "401041305"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1014",
+            "EnemyId": "401021401"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1014",
+            "EnemyId": "401021402"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型凶暴兔",
+            "ClanBattleId": "1014",
+            "EnemyId": "401021403"
+        },
+        {
+            "Phase": "1",
+            "BossName": "狂乱魔熊",
+            "ClanBattleId": "1014",
+            "EnemyId": "401021404"
+        },
+        {
+            "Phase": "1",
+            "BossName": "弥诺陶洛斯",
+            "ClanBattleId": "1014",
+            "EnemyId": "401021405"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1014",
+            "EnemyId": "401031401"
+        },
+        {
+            "Phase": "2",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1014",
+            "EnemyId": "401031402"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型凶暴兔",
+            "ClanBattleId": "1014",
+            "EnemyId": "401031403"
+        },
+        {
+            "Phase": "2",
+            "BossName": "狂乱魔熊",
+            "ClanBattleId": "1014",
+            "EnemyId": "401031404"
+        },
+        {
+            "Phase": "2",
+            "BossName": "弥诺陶洛斯",
+            "ClanBattleId": "1014",
+            "EnemyId": "401031405"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1014",
+            "EnemyId": "401041401"
+        },
+        {
+            "Phase": "3",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1014",
+            "EnemyId": "401041402"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型凶暴兔",
+            "ClanBattleId": "1014",
+            "EnemyId": "401041403"
+        },
+        {
+            "Phase": "3",
+            "BossName": "狂乱魔熊",
+            "ClanBattleId": "1014",
+            "EnemyId": "401041404"
+        },
+        {
+            "Phase": "3",
+            "BossName": "弥诺陶洛斯",
+            "ClanBattleId": "1014",
+            "EnemyId": "401041405"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1015",
+            "EnemyId": "401021501"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1015",
+            "EnemyId": "401021502"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷电",
+            "ClanBattleId": "1015",
+            "EnemyId": "401021503"
+        },
+        {
+            "Phase": "1",
+            "BossName": "三战士图腾",
+            "ClanBattleId": "1015",
+            "EnemyId": "401021504"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双子魔猪",
+            "ClanBattleId": "1015",
+            "EnemyId": "401021505"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1015",
+            "EnemyId": "401031501"
+        },
+        {
+            "Phase": "2",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1015",
+            "EnemyId": "401031502"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷电",
+            "ClanBattleId": "1015",
+            "EnemyId": "401031503"
+        },
+        {
+            "Phase": "2",
+            "BossName": "三战士图腾",
+            "ClanBattleId": "1015",
+            "EnemyId": "401031504"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双子魔猪",
+            "ClanBattleId": "1015",
+            "EnemyId": "401031505"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1015",
+            "EnemyId": "401041501"
+        },
+        {
+            "Phase": "3",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1015",
+            "EnemyId": "401041502"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷电",
+            "ClanBattleId": "1015",
+            "EnemyId": "401041503"
+        },
+        {
+            "Phase": "3",
+            "BossName": "三战士图腾",
+            "ClanBattleId": "1015",
+            "EnemyId": "401041504"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双子魔猪",
+            "ClanBattleId": "1015",
+            "EnemyId": "401041505"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1016",
+            "EnemyId": "401021601"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1016",
+            "EnemyId": "401021602"
+        },
+        {
+            "Phase": "1",
+            "BossName": "海龙",
+            "ClanBattleId": "1016",
+            "EnemyId": "401021603"
+        },
+        {
+            "Phase": "1",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1016",
+            "EnemyId": "401021604"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨钳魔蟹",
+            "ClanBattleId": "1016",
+            "EnemyId": "401021605"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1016",
+            "EnemyId": "401031601"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1016",
+            "EnemyId": "401031602"
+        },
+        {
+            "Phase": "2",
+            "BossName": "海龙",
+            "ClanBattleId": "1016",
+            "EnemyId": "401031603"
+        },
+        {
+            "Phase": "2",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1016",
+            "EnemyId": "401031604"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨钳魔蟹",
+            "ClanBattleId": "1016",
+            "EnemyId": "401031605"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1016",
+            "EnemyId": "401041601"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1016",
+            "EnemyId": "401041602"
+        },
+        {
+            "Phase": "3",
+            "BossName": "海龙",
+            "ClanBattleId": "1016",
+            "EnemyId": "401041603"
+        },
+        {
+            "Phase": "3",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1016",
+            "EnemyId": "401041604"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨钳魔蟹",
+            "ClanBattleId": "1016",
+            "EnemyId": "401041605"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1017",
+            "EnemyId": "401021701"
+        },
+        {
+            "Phase": "1",
+            "BossName": "陆生树懒",
+            "ClanBattleId": "1017",
+            "EnemyId": "401021702"
+        },
+        {
+            "Phase": "1",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1017",
+            "EnemyId": "401021703"
+        },
+        {
+            "Phase": "1",
+            "BossName": "泰坦陆龟",
+            "ClanBattleId": "1017",
+            "EnemyId": "401021704"
+        },
+        {
+            "Phase": "1",
+            "BossName": "炎吼狮王",
+            "ClanBattleId": "1017",
+            "EnemyId": "401021705"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1017",
+            "EnemyId": "401031701"
+        },
+        {
+            "Phase": "2",
+            "BossName": "陆生树懒",
+            "ClanBattleId": "1017",
+            "EnemyId": "401031702"
+        },
+        {
+            "Phase": "2",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1017",
+            "EnemyId": "401031703"
+        },
+        {
+            "Phase": "2",
+            "BossName": "泰坦陆龟",
+            "ClanBattleId": "1017",
+            "EnemyId": "401031704"
+        },
+        {
+            "Phase": "2",
+            "BossName": "炎吼狮王",
+            "ClanBattleId": "1017",
+            "EnemyId": "401031705"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1017",
+            "EnemyId": "401041701"
+        },
+        {
+            "Phase": "3",
+            "BossName": "陆生树懒",
+            "ClanBattleId": "1017",
+            "EnemyId": "401041702"
+        },
+        {
+            "Phase": "3",
+            "BossName": "兽人头目",
+            "ClanBattleId": "1017",
+            "EnemyId": "401041703"
+        },
+        {
+            "Phase": "3",
+            "BossName": "泰坦陆龟",
+            "ClanBattleId": "1017",
+            "EnemyId": "401041704"
+        },
+        {
+            "Phase": "3",
+            "BossName": "炎吼狮王",
+            "ClanBattleId": "1017",
+            "EnemyId": "401041705"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1018",
+            "EnemyId": "401021801"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1018",
+            "EnemyId": "401021802"
+        },
+        {
+            "Phase": "1",
+            "BossName": "极彩鸟",
+            "ClanBattleId": "1018",
+            "EnemyId": "401021803"
+        },
+        {
+            "Phase": "1",
+            "BossName": "魔界人狼",
+            "ClanBattleId": "1018",
+            "EnemyId": "401021804"
+        },
+        {
+            "Phase": "1",
+            "BossName": "美杜莎",
+            "ClanBattleId": "1018",
+            "EnemyId": "401021805"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1018",
+            "EnemyId": "401031801"
+        },
+        {
+            "Phase": "2",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1018",
+            "EnemyId": "401031802"
+        },
+        {
+            "Phase": "2",
+            "BossName": "极彩鸟",
+            "ClanBattleId": "1018",
+            "EnemyId": "401031803"
+        },
+        {
+            "Phase": "2",
+            "BossName": "魔界人狼",
+            "ClanBattleId": "1018",
+            "EnemyId": "401031804"
+        },
+        {
+            "Phase": "2",
+            "BossName": "美杜莎",
+            "ClanBattleId": "1018",
+            "EnemyId": "401031805"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1018",
+            "EnemyId": "401041801"
+        },
+        {
+            "Phase": "3",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1018",
+            "EnemyId": "401041802"
+        },
+        {
+            "Phase": "3",
+            "BossName": "极彩鸟",
+            "ClanBattleId": "1018",
+            "EnemyId": "401041803"
+        },
+        {
+            "Phase": "3",
+            "BossName": "魔界人狼",
+            "ClanBattleId": "1018",
+            "EnemyId": "401041804"
+        },
+        {
+            "Phase": "3",
+            "BossName": "美杜莎",
+            "ClanBattleId": "1018",
+            "EnemyId": "401041805"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1019",
+            "EnemyId": "401021901"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1019",
+            "EnemyId": "401021902"
+        },
+        {
+            "Phase": "1",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1019",
+            "EnemyId": "401021903"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑滴水嘴兽",
+            "ClanBattleId": "1019",
+            "EnemyId": "401021904"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暴食魔兽",
+            "ClanBattleId": "1019",
+            "EnemyId": "401021905"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1019",
+            "EnemyId": "401031901"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1019",
+            "EnemyId": "401031902"
+        },
+        {
+            "Phase": "2",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1019",
+            "EnemyId": "401031903"
+        },
+        {
+            "Phase": "2",
+            "BossName": "暗黑滴水嘴兽",
+            "ClanBattleId": "1019",
+            "EnemyId": "401031904"
+        },
+        {
+            "Phase": "2",
+            "BossName": "暴食魔兽",
+            "ClanBattleId": "1019",
+            "EnemyId": "401031905"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1019",
+            "EnemyId": "401041901"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1019",
+            "EnemyId": "401041902"
+        },
+        {
+            "Phase": "3",
+            "BossName": "幽灵领主",
+            "ClanBattleId": "1019",
+            "EnemyId": "401041903"
+        },
+        {
+            "Phase": "3",
+            "BossName": "暗黑滴水嘴兽",
+            "ClanBattleId": "1019",
+            "EnemyId": "401041904"
+        },
+        {
+            "Phase": "3",
+            "BossName": "暴食魔兽",
+            "ClanBattleId": "1019",
+            "EnemyId": "401041905"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1020",
+            "EnemyId": "401022001"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1020",
+            "EnemyId": "401022002"
+        },
+        {
+            "Phase": "1",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1020",
+            "EnemyId": "401022003"
+        },
+        {
+            "Phase": "1",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1020",
+            "EnemyId": "401022004"
+        },
+        {
+            "Phase": "1",
+            "BossName": "利蝎巴鲁托",
+            "ClanBattleId": "1020",
+            "EnemyId": "401022005"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1020",
+            "EnemyId": "401032001"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1020",
+            "EnemyId": "401032002"
+        },
+        {
+            "Phase": "2",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1020",
+            "EnemyId": "401032003"
+        },
+        {
+            "Phase": "2",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1020",
+            "EnemyId": "401032004"
+        },
+        {
+            "Phase": "2",
+            "BossName": "利蝎巴鲁托",
+            "ClanBattleId": "1020",
+            "EnemyId": "401032005"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1020",
+            "EnemyId": "401042001"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1020",
+            "EnemyId": "401042002"
+        },
+        {
+            "Phase": "3",
+            "BossName": "针刺攀缘花",
+            "ClanBattleId": "1020",
+            "EnemyId": "401042003"
+        },
+        {
+            "Phase": "3",
+            "BossName": "独眼巨人",
+            "ClanBattleId": "1020",
+            "EnemyId": "401042004"
+        },
+        {
+            "Phase": "3",
+            "BossName": "利蝎巴鲁托",
+            "ClanBattleId": "1020",
+            "EnemyId": "401042005"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1021",
+            "EnemyId": "401022101"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1021",
+            "EnemyId": "401022102"
+        },
+        {
+            "Phase": "1",
+            "BossName": "天空女武神",
+            "ClanBattleId": "1021",
+            "EnemyId": "401022103"
+        },
+        {
+            "Phase": "1",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1021",
+            "EnemyId": "401022104"
+        },
+        {
+            "Phase": "1",
+            "BossName": "人马射手",
+            "ClanBattleId": "1021",
+            "EnemyId": "401022105"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1021",
+            "EnemyId": "401032101"
+        },
+        {
+            "Phase": "2",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1021",
+            "EnemyId": "401032102"
+        },
+        {
+            "Phase": "2",
+            "BossName": "天空女武神",
+            "ClanBattleId": "1021",
+            "EnemyId": "401032103"
+        },
+        {
+            "Phase": "2",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1021",
+            "EnemyId": "401032104"
+        },
+        {
+            "Phase": "2",
+            "BossName": "人马射手",
+            "ClanBattleId": "1021",
+            "EnemyId": "401032105"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1021",
+            "EnemyId": "401042101"
+        },
+        {
+            "Phase": "3",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1021",
+            "EnemyId": "401042102"
+        },
+        {
+            "Phase": "3",
+            "BossName": "天空女武神",
+            "ClanBattleId": "1021",
+            "EnemyId": "401042103"
+        },
+        {
+            "Phase": "3",
+            "BossName": "灵魂角鹿",
+            "ClanBattleId": "1021",
+            "EnemyId": "401042104"
+        },
+        {
+            "Phase": "3",
+            "BossName": "人马射手",
+            "ClanBattleId": "1021",
+            "EnemyId": "401042105"
+        },
+        {
+            "Phase": "1",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1022",
+            "EnemyId": "401022201"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1022",
+            "EnemyId": "401022202"
+        },
+        {
+            "Phase": "1",
+            "BossName": "怒蛇",
+            "ClanBattleId": "1022",
+            "EnemyId": "401022203"
+        },
+        {
+            "Phase": "1",
+            "BossName": "狸猫首领",
+            "ClanBattleId": "1022",
+            "EnemyId": "401022204"
+        },
+        {
+            "Phase": "1",
+            "BossName": "摩羯教主",
+            "ClanBattleId": "1022",
+            "EnemyId": "401022205"
+        },
+        {
+            "Phase": "2",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1022",
+            "EnemyId": "401032201"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1022",
+            "EnemyId": "401032202"
+        },
+        {
+            "Phase": "2",
+            "BossName": "怒蛇",
+            "ClanBattleId": "1022",
+            "EnemyId": "401032203"
+        },
+        {
+            "Phase": "2",
+            "BossName": "狸猫首领",
+            "ClanBattleId": "1022",
+            "EnemyId": "401032204"
+        },
+        {
+            "Phase": "2",
+            "BossName": "摩羯教主",
+            "ClanBattleId": "1022",
+            "EnemyId": "401032205"
+        },
+        {
+            "Phase": "3",
+            "BossName": "巨型哥布林",
+            "ClanBattleId": "1022",
+            "EnemyId": "401042201"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1022",
+            "EnemyId": "401042202"
+        },
+        {
+            "Phase": "3",
+            "BossName": "怒蛇",
+            "ClanBattleId": "1022",
+            "EnemyId": "401042203"
+        },
+        {
+            "Phase": "3",
+            "BossName": "狸猫首领",
+            "ClanBattleId": "1022",
+            "EnemyId": "401042204"
+        },
+        {
+            "Phase": "3",
+            "BossName": "摩羯教主",
+            "ClanBattleId": "1022",
+            "EnemyId": "401042205"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1023",
+            "EnemyId": "401022301"
+        },
+        {
+            "Phase": "1",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1023",
+            "EnemyId": "401022302"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷电",
+            "ClanBattleId": "1023",
+            "EnemyId": "401022303"
+        },
+        {
+            "Phase": "1",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1023",
+            "EnemyId": "401022304"
+        },
+        {
+            "Phase": "1",
+            "BossName": "阿克艾利欧斯",
+            "ClanBattleId": "1023",
+            "EnemyId": "401022305"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1023",
+            "EnemyId": "401032301"
+        },
+        {
+            "Phase": "2",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1023",
+            "EnemyId": "401032302"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷电",
+            "ClanBattleId": "1023",
+            "EnemyId": "401032303"
+        },
+        {
+            "Phase": "2",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1023",
+            "EnemyId": "401032304"
+        },
+        {
+            "Phase": "2",
+            "BossName": "阿克艾利欧斯",
+            "ClanBattleId": "1023",
+            "EnemyId": "401032305"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1023",
+            "EnemyId": "401042301"
+        },
+        {
+            "Phase": "3",
+            "BossName": "野性狮鹫",
+            "ClanBattleId": "1023",
+            "EnemyId": "401042302"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷电",
+            "ClanBattleId": "1023",
+            "EnemyId": "401042303"
+        },
+        {
+            "Phase": "3",
+            "BossName": "海蛞蝓",
+            "ClanBattleId": "1023",
+            "EnemyId": "401042304"
+        },
+        {
+            "Phase": "3",
+            "BossName": "阿克艾利欧斯",
+            "ClanBattleId": "1023",
+            "EnemyId": "401042305"
+        },
+        {
+            "Phase": "1",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401022401"
+        },
+        {
+            "Phase": "1",
+            "BossName": "雷雷",
+            "ClanBattleId": "1024",
+            "EnemyId": "401022402"
+        },
+        {
+            "Phase": "1",
+            "BossName": "海龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401022403"
+        },
+        {
+            "Phase": "1",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1024",
+            "EnemyId": "401022404"
+        },
+        {
+            "Phase": "1",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1024",
+            "EnemyId": "401022405"
+        },
+        {
+            "Phase": "2",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401032401"
+        },
+        {
+            "Phase": "2",
+            "BossName": "雷雷",
+            "ClanBattleId": "1024",
+            "EnemyId": "401032402"
+        },
+        {
+            "Phase": "2",
+            "BossName": "海龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401032403"
+        },
+        {
+            "Phase": "2",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1024",
+            "EnemyId": "401032404"
+        },
+        {
+            "Phase": "2",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1024",
+            "EnemyId": "401032405"
+        },
+        {
+            "Phase": "3",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401042401"
+        },
+        {
+            "Phase": "3",
+            "BossName": "雷雷",
+            "ClanBattleId": "1024",
+            "EnemyId": "401042402"
+        },
+        {
+            "Phase": "3",
+            "BossName": "海龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401042403"
+        },
+        {
+            "Phase": "3",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1024",
+            "EnemyId": "401042404"
+        },
+        {
+            "Phase": "3",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1024",
+            "EnemyId": "401042405"
+        },
+        {
+            "Phase": "4",
+            "BossName": "双足飞龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401052401"
+        },
+        {
+            "Phase": "4",
+            "BossName": "雷雷",
+            "ClanBattleId": "1024",
+            "EnemyId": "401052402"
+        },
+        {
+            "Phase": "4",
+            "BossName": "海龙",
+            "ClanBattleId": "1024",
+            "EnemyId": "401052403"
+        },
+        {
+            "Phase": "4",
+            "BossName": "暗黑独角兽",
+            "ClanBattleId": "1024",
+            "EnemyId": "401052404"
+        },
+        {
+            "Phase": "4",
+            "BossName": "托尔佩顿",
+            "ClanBattleId": "1024",
+            "EnemyId": "401052405"
+        }
+]
