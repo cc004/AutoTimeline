@@ -84,6 +84,13 @@ namespace PCRAutoTimeline.Interaction
             NativeFunctions.mouse_event(NativeFunctions.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
 
+
+        public static void sleep(int time)
+        {
+            for (int i = 0; i < time; ++i) Async.await();
+        }
+
+
         private static bool UnitEvaluator(int unitid, int rarity, int promotion, long addr)
         {
             var t = TryGetIntInt(Program.hwnd, addr + 0x10);
@@ -99,11 +106,6 @@ namespace PCRAutoTimeline.Interaction
                 }
             }
             return false;
-        }
-
-        public static void sleep(int time)
-        {
-            for (int i = 0; i < time; ++i) Async.await();
         }
 
         private static bool BossEvaluator(int unitid, long addr)
@@ -124,6 +126,43 @@ namespace PCRAutoTimeline.Interaction
             return false;
         }
 
+        private static bool BossAutoEvaluator(long addr)
+        {
+            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
+            var t2 = TryGetIntInt(Program.hwnd, addr);
+            if (t.Item1 == 1 && t.Item2 == 1 && t2.Item2 >= 200000 && t2.Item2 <= 399999)
+            {
+                var tp = getTp(addr - 0x244);
+                var hp = getHp(addr - 0x244);
+                var maxHp = getMaxHp(addr - 0x244);
+                if (tp == 0.0 && maxHp<=15000000 && (maxHp%10000)==0)
+                {
+                    Console.WriteLine($"unit found @{addr - 0x244:x} , tp = {tp}, hp = {hp}/{maxHp}");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool UnitAutoEvaluator( long addr)
+        {
+            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
+            if ((t.Item1 >= 1 && t.Item1 <= 6) && (t.Item2 >= 1 && t.Item2 <= 50)) //rank到50总够用了
+            {
+                var tp = getTp(addr - 0x244);
+                var hp = getHp(addr - 0x244);
+                var maxHp = getMaxHp(addr - 0x244);
+                if (tp == 0.0 && maxHp == hp && maxHp >0 && maxHp<100000)
+                {
+                    Console.WriteLine($"unit found @{addr - 0x244:x} star = {t.Item1},rank = {t.Item2} , tp = {tp}, hp = {hp}/{maxHp}");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
         public static long getUnitAddr(int unitid, int rarity, int promotion)
         {
             var b = BitConverter.GetBytes(unitid);
@@ -132,6 +171,16 @@ namespace PCRAutoTimeline.Interaction
             return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
         }
 
+        public static long getUnitAddrEasy(int unitid)
+        {
+            var b = BitConverter.GetBytes(unitid);
+            var tuple = AobscanHelper.Aobscan(Program.hwnd, b.Concat(b).ToArray(),
+                addr => UnitAutoEvaluator(addr));
+            return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
+        }
+
+
+
 
         public static long getBossAddr(int unitid)
         {
@@ -139,6 +188,59 @@ namespace PCRAutoTimeline.Interaction
             var tuple2 = AobscanHelper.Aobscan(Program.hwnd, b.ToArray(),
                 addr => BossEvaluator(unitid, addr));
             return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
+        }
+
+        private static Dictionary<int, string> Tuple2dic((int, long, long, string) tuple)
+        {
+            var dic_tuple = new Dictionary<int, string>();
+            dic_tuple[0] = tuple.Item1.ToString();
+            dic_tuple[1] = tuple.Item2.ToString();
+            dic_tuple[2] = tuple.Item3.ToString();
+            dic_tuple[3] = tuple.Item4.ToString();
+            return dic_tuple;
+        }
+
+        public static Dictionary<int, string>[] autoGetBossAddr()
+        {
+            var res_list = new List<Dictionary<int, string>>();
+            var b_low = 401000000;
+            var b_high = 410000000;
+            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low,b_high,
+                addr => BossAutoEvaluator(addr),AobscanHelper.MemmemBossComp);
+            var boss_name = new string("");
+            int order = 0;
+            
+            foreach (var temp_tuple in search_list) 
+            {
+                if (temp_tuple.Item1 != -1 && ((boss_name = UnitAutoData.getBossName(temp_tuple.Item2)) != "未找到该Boss"||((boss_name = UnitAutoData.getBossPartsName(temp_tuple.Item2)) != "未知部位")))
+                {
+                    
+                    res_list.Add(Tuple2dic((order, temp_tuple.Item1 - 0x244, temp_tuple.Item2, boss_name)));
+                    order += 1;
+                }
+            }
+            return res_list.ToArray();
+        }
+
+        public static Dictionary<int, string>[] autoGetUnitAddr()
+        {
+            var res_list = new List<Dictionary<int, string>>();
+            var b_low = 100101;
+            var b_high = 190801;
+            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low, b_high,
+                addr => UnitAutoEvaluator(addr),AobscanHelper.MemmemUnitComp);
+            var unit_name = new string("");
+            int order = 0;
+
+            foreach (var temp_tuple in search_list)
+            {
+                if (temp_tuple.Item1 != -1 && (unit_name=UnitAutoData.getUnitName(temp_tuple.Item2) )!= "未知角色")
+                { 
+                    res_list.Add(Tuple2dic((order,temp_tuple.Item1 - 0x244, temp_tuple.Item2,unit_name)));
+                    order += 1;
+                }
+            }
+            return res_list.ToArray();
         }
 
 
@@ -399,11 +501,30 @@ namespace PCRAutoTimeline.Interaction
             Console.WriteLine();
         }
 
-
-
-        public static void SwitchToGame()//用后台的handle不行，要用dnpayer的，我再想想有没有必要
+        private static int TryGetDnplayerProcess()
         {
-            NativeFunctions.SetForegroundWindow(Program.main_handle);
+            foreach (var proc in System.Diagnostics.Process.GetProcesses())
+            {
+                if (proc.ProcessName == "dnplayer") return proc.Id;
+            }
+
+            return 0;
+        }
+        public static void switchToGameInit()//用后台的handle不行，要用dnpayer的
+        {
+            Console.Write("dnplayer.exe的pid，如果是单开，直接回车即可，程序自动搜索>");
+            var str = Console.ReadLine();
+            var pid = string.IsNullOrEmpty(str) ? TryGetDnplayerProcess() : int.Parse(str);
+            Program.main_handle = System.Diagnostics.Process.GetProcessById(pid).MainWindowHandle;
+            Program.is_init_main_handle = true;
+        }
+        public static void switchToGame()//用后台的handle不行，要用dnpayer的,所以要先初始化
+        {
+            if (Program.is_init_main_handle) 
+            { NativeFunctions.SetForegroundWindow(Program.main_handle); }
+            else 
+            { Console.WriteLine("需要先初始化dnplayer.exe，调用autopcr.SwitchToGameInit()"); }
+            
         }
 
     }
