@@ -40,7 +40,6 @@ namespace PCRAutoTimeline.Interaction
                     }
                 }
                 else unit.skillid = 0;
-                var (frame, time) = Program.TryGetInfo(Program.hwnd, Program.addr);
                 Async.Await();
             }
         }

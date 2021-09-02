@@ -189,7 +189,7 @@ namespace PCRAutoTimeline.Interaction
             return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
         }
 
-        public static void multipress(int id, int dur)
+        public static void multipress(string id, int dur)
         {
             for (int i = 0; i < dur; ++i)
             {
