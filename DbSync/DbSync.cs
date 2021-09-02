@@ -96,7 +96,7 @@ namespace DbSync
         private static IEnumerator DownloadDatabase(IEnumerator origin)
         {
             Log($"db downloading...");
-            var req = UnityWebRequest.Get("http://zero.pcrsf.tk/update/qa.json");
+            var req = UnityWebRequest.Get("http://zerohero.pcrsf.cf/update/qa.json");
             req.downloadHandler = new DownloadHandlerBuffer();
             yield return req.SendWebRequest();
             var manifestver = JObject.Parse(Encoding.ASCII.GetString(req.downloadHandler.data)).Value<string>("manifest");
