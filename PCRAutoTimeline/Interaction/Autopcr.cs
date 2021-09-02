@@ -1,5 +1,4 @@
 ﻿using CodeStage.AntiCheat.ObscuredTypes;
-using Neo.IronLua;
 using PCRAutoTimeline.Models;
 using System;
 using System.Collections.Generic;
@@ -87,7 +86,7 @@ namespace PCRAutoTimeline.Interaction
 
         public static void sleep(int time)
         {
-            for (int i = 0; i < time; ++i) Async.await();
+            for (int i = 0; i < time; ++i) Async.Await();
         }
 
 
@@ -188,6 +187,15 @@ namespace PCRAutoTimeline.Interaction
             var tuple2 = AobscanHelper.Aobscan(Program.hwnd, b.ToArray(),
                 addr => BossEvaluator(unitid, addr));
             return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
+        }
+
+        public static void multipress(int id, int dur)
+        {
+            for (int i = 0; i < dur; ++i)
+            {
+                press(id);
+                waitOneFrame();
+            }
         }
 
         private static Dictionary<int, string> Tuple2dic((int, long, long, string) tuple)
@@ -335,14 +343,14 @@ namespace PCRAutoTimeline.Interaction
             return Enumerable.Range(0, n).Select(i => preds[2 * i + n + 1] % 1000 / 1000f).ToArray();
         }
 
-        public static float[] nextCrits(LuaTable table)
+        public static float[] nextCrits(int[] table)
         {
-            var ns = table.ArrayList.Select(obj => (int)obj).ToArray();
+            var ns = table.Select(obj => (int)obj).ToArray();
             var preds = predRandom(ns.Last() + 1);
             return ns.Select(i => preds[i] % 1000 / 1000f).ToArray();
         }
 
-        public static int critNum(long unitHandle, long targetHandle, bool isMagic, LuaTable table)
+        public static int critNum(long unitHandle, long targetHandle, bool isMagic, int[] table)
         {
             var crit = getCrit(unitHandle, targetHandle, isMagic);
             return nextCrits(table).Count(f => f < crit);
@@ -401,7 +409,7 @@ namespace PCRAutoTimeline.Interaction
             }, frameMax, 5);
         }
 
-        public static void waitTillCrits(long unit, long target, bool isMagic, int frameMax, int m, LuaTable table)
+        public static void waitTillCrits(long unit, long target, bool isMagic, int frameMax, int m, int[] table)
         {
             waitTill(() =>
             {
@@ -460,7 +468,7 @@ namespace PCRAutoTimeline.Interaction
                     last = frame.Item1;
                 }
                 lastf = changing(frame);
-                Async.await();
+                Async.Await();
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
             Console.WriteLine();
         }
@@ -480,7 +488,7 @@ namespace PCRAutoTimeline.Interaction
                     last = frame.Item1;
                 }
                 lastf = changing(frame);
-                Async.await();
+                Async.Await();
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
         }
         internal static void WaitFor(Func<(int, float), bool> check)
@@ -496,7 +504,7 @@ namespace PCRAutoTimeline.Interaction
                         $"\rframeCount = {frame.Item1}, limitTime = {frame.Item2}                  ");
                     last = frame.Item1;
                 }
-                Async.await();
+                Async.Await();
             } while (!check(frame));
             Console.WriteLine();
         }

@@ -41,7 +41,7 @@ namespace PCRAutoTimeline.Interaction
                 }
                 else unit.skillid = 0;
                 var (frame, time) = Program.TryGetInfo(Program.hwnd, Program.addr);
-                Async.await();
+                Async.Await();
             }
         }
 
@@ -73,7 +73,7 @@ namespace PCRAutoTimeline.Interaction
                         remain_buff_frame = unit.self_buff_frame;
                     }
                 }
-                Async.await();
+                Async.Await();
             }
         
         }
@@ -87,7 +87,7 @@ namespace PCRAutoTimeline.Interaction
                 units[name].self_buff_id = buff_id;
                 units[name].self_buff_frame = (int)Math.Ceiling(60 * UnitAutoData.getSelfBuffTime(unit_id)) - 4;//多给几帧容错
                 units[name].is_self_buffed = false;
-                Async.start(() => UpdateBuffCoroutine(name));
+                Async.Start(() => UpdateBuffCoroutine(name));
             }
             else 
             {
@@ -104,7 +104,7 @@ namespace PCRAutoTimeline.Interaction
             var unit = new Unit { unit_handle = unit_handle };
             
             units.Add(name, unit);
-            Async.start(() => Coroutine(unit));
+            Async.Start(() => Coroutine(unit));
         }
 
         public static string getActionState(string name)

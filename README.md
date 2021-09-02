@@ -26,15 +26,21 @@ qq群1023837088
 
 ### 运行
 
-默认读取timeline.lua，可以通过命令行更改输入文件名
+1. 安装python**3.8**
+2. 安装wheel下的四个whl文件
+3. 运行timeline.py样例
 
-### 编写timeline.lua
+### 编写timeline.py
+
+第一行务必`from autotimeline import *`
 
 AutoPcrApi:
 
 - `void autopcr.calibrate(id)` 对站位id进行校准（可以为字符串或者数字）
 - `void autopcr.press(id)` 点击站位为id的角色，不占用时间，但可能点不上
 - `void autopcr.framePress(id)` 点击站位为id的角色，保证点上，占用两帧，一般用于连点
+- `void autopcr.multipress(id, dur)` 连点站位为id的角色，持续dur
+- `UnitCtrl autopcr.getUnit(id)` 懒得说明
 
 - `long autopcr.getUnitAddr(unit_id, rarity, rank)` 根据数据获取角色的句柄，请务必保证搜索时该角色tp为0且满血，否则会搜索失败
 - `<Dictionary<int, string>[] autopcr.autoGetUnitAddr()` 自动获取公会战角色的句柄，多个结果以列表形式存放（就一个的话也是个单元素的列表），返回值为Dictionary格式的数组，数据获取方式与lua table类似，其中第一个值为列表元素序号，第二个值为该单位的句柄，第三个值为该单位的数据库id，第四个值为该单位的名称，如果找不到符合的单位，为空列表
@@ -92,8 +98,9 @@ InputApi:
 
 AsyncApi:
 
-- `void async.start(action)` 开始一个新协程
-- `void async.await()` 协程进入等待，使其他协程进入运行态
+- `void Async.Start(action)` 开始一个新协程
+- `void Async.Await()` 协程进入等待，使其他协程进入运行态
+- `void Async.Exit()` 运行直到所有协程退出，请务必保证主线程结束前运行该函数
 
 UnitAutoDataApi:
 

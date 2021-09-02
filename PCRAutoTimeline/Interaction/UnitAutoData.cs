@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace PCRAutoTimeline.Interaction
 {
-    class UnitAutoData
+    public static class UnitAutoData
     {
 		private class UnitAuto
 		{

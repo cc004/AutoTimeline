@@ -6,12 +6,10 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using CodeStage.AntiCheat.ObscuredTypes;
-using Neo.IronLua;
-using PCRAutoTimeline.Interaction;
 
-namespace PCRAutoTimeline
+namespace PCRAutoTimeline.Interaction
 {
-    class Program
+    public class Program
     {
         public static long hwnd, addr;
         public static IntPtr main_handle;
@@ -45,7 +43,8 @@ namespace PCRAutoTimeline
 
             return 0;
         }
-        static void Main(string[] args)
+
+        public static void Main()
         {
             //Minitouch.connect("localhost", 1111);
             //Minitouch.setPos(1, 100, 100);
@@ -53,34 +52,6 @@ namespace PCRAutoTimeline
             
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             NativeFunctions.timeBeginPeriod(1);
-
-            using var lua = new Lua();
-            var env = lua.CreateEnvironment();
-
-            env.RegisterPackage("autopcr", typeof(Autopcr));
-            env.RegisterPackage("minitouch", typeof(Minitouch));
-            env.RegisterPackage("input", typeof(Input));
-            env.RegisterPackage("async", typeof(Async));
-            env.RegisterPackage("monitor", typeof(Monitor));
-            env.RegisterPackage("unitautodata", typeof(UnitAutoData));
-
-            LuaChunk chunk;
-            var file = args.Length > 0 ? args[0] : "timeline.lua";
-
-            try
-            {
-                chunk = lua.CompileChunk(File.ReadAllText(file), "timeline.lua", new LuaCompileOptions());
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine($"你{file}呢？");
-                throw;
-            }
-            catch (LuaParseException e)
-            {
-                Console.WriteLine($"lua写错了！滚去学编程 行{e.Line}, 列{e.Column}");
-                throw;
-            }
             
             Console.Write("内核pid，如果是单开，直接回车即可，程序自动搜索>");
             var str = Console.ReadLine();
@@ -89,8 +60,6 @@ namespace PCRAutoTimeline
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
             Console.WriteLine("载入全角色数据");
             UnitAutoData.Init(); //载入不怎么占用时间，直接在主程序载入了
-
-            
             
             Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
             var time = int.Parse(Console.ReadLine());
@@ -126,6 +95,7 @@ namespace PCRAutoTimeline
                 return true;
             }).Item1 - 0x90;
 
+            Async.StartCurrent();
             /*
             UnityRandom.State state0;
             NativeFunctions.ReadProcessMemory(Program.hwnd, Program.seed_addr, out state0);
@@ -147,16 +117,6 @@ namespace PCRAutoTimeline
             }
             
             */
-
-            
-            Async.start(() =>
-            {
-                chunk.Run(env);
-                exiting = true;
-                Minitouch.exit();
-                //Console.ReadLine();
-            });
-            
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

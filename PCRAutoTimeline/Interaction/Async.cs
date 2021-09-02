@@ -1,5 +1,4 @@
-﻿using Neo.IronLua;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,16 +25,19 @@ namespace PCRAutoTimeline.Interaction
             node.Value.Release();
         }
 
-        internal static void start(Action coroutine)
+        private static Semaphore sema;
+        private static LinkedListNode<Semaphore> mynode;
+
+        internal static void StartCurrent()
         {
-            start(() =>
-            {
-                coroutine();
-                return null;
-            });
+            sema = new Semaphore(0, 1);
+            coroutines.AddLast(sema);
+            mynode = coroutines.Last;
+
+            nowRunning = mynode;
         }
 
-        public static void start(Func<LuaResult> coroutine)
+        public static void Start(Action coroutine)
         {
             var sema = new Semaphore(0, 1);
             coroutines.AddLast(sema);
@@ -62,7 +64,17 @@ namespace PCRAutoTimeline.Interaction
 
         }
 
-        public static void await()
+        public static void Exit()
+        {
+            while (coroutines.Count > 1) Await();
+            sema.Dispose();
+            var next = NextOrFirst(mynode);
+            coroutines.Remove(mynode);
+            // wait up next
+            if (next != mynode) Wakeup(next);
+        }
+
+        public static void Await()
         {
             if (firstawait == null) firstawait = nowRunning;
             var next = NextOrFirst(nowRunning);
