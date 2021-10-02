@@ -55,11 +55,13 @@ namespace PCRAutoTimeline.Interaction
 
         internal static int frameoff = 0;
         internal static float timeoff = 0;
+        internal static int delay;
 
-        public static void setOffset(int frame, float time)
+        public static void setOffset(int frame, int delay)
         {
             frameoff = frame;
-            timeoff = time;
+            timeoff = -frame / 60f + Program.timeOffsetByTotal;
+            Autopcr.delay = delay;
         }
 
         public static void waitOneFrame()
@@ -210,11 +212,22 @@ namespace PCRAutoTimeline.Interaction
 
         public static Dictionary<int, string>[] autoGetBossAddr()
         {
+            static IEnumerable<(long, long)> MemmemBossComp(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator)
+            {
+                long i, diff = alen - 4;
+                int int_place;
+                for (i = 0; i < diff; i += 4) /* 4 bytes alignment */
+                {
+                    int_place = BitConverter.ToInt32(a, (int)i);
+                    if (int_place >= b_low && int_place <= b_high && matchValidator(i))
+                        yield return (i, int_place);
+                }
+            }
+
             var res_list = new List<Dictionary<int, string>>();
             var b_low = 401000000;
             var b_high = 410000000;
-            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low,b_high,
-                addr => BossAutoEvaluator(addr),AobscanHelper.MemmemBossComp);
+            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low,b_high, BossAutoEvaluator, MemmemBossComp);
             var boss_name = new string("");
             int order = 0;
             
@@ -232,11 +245,31 @@ namespace PCRAutoTimeline.Interaction
 
         public static Dictionary<int, string>[] autoGetUnitAddr()
         {
+            static IEnumerable<(long, long)> MemmemUnitComp(byte[] a, long alen, int b_low, int b_high, Func<long, bool> matchValidator)//因为做了concat，比较起来有些麻烦
+            {
+                long i, diff = alen - 8;
+                int int_place;
+                //实验结果发现在一个BLOCK里可能有多个角色，所以还是得用List存，否则要大改循环
+
+                for (i = 0; i < diff; i += 4) /* 4 bytes alignment */
+                {
+                    if (a[i] == a[i + 4] && a[i + 1] == a[i + 5] && a[i + 2] == a[i + 6] && a[i + 3] == a[i + 7]) //如果前后对称
+                    {
+                        int_place = BitConverter.ToInt32(a, (int)i);
+
+                        if (int_place >= b_low && int_place <= b_high && matchValidator(i))
+                        {
+                            Console.WriteLine(int_place);
+                            yield return (i, int_place);
+                        }
+                    }
+                }
+            }
+
             var res_list = new List<Dictionary<int, string>>();
             var b_low = 100101;
             var b_high = 190801;
-            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low, b_high,
-                addr => UnitAutoEvaluator(addr),AobscanHelper.MemmemUnitComp);
+            var search_list = AobscanHelper.Compscan(Program.hwnd, b_low, b_high, UnitAutoEvaluator, MemmemUnitComp);
             var unit_name = new string("");
             int order = 0;
 
@@ -427,7 +460,7 @@ namespace PCRAutoTimeline.Interaction
 
         public static void waitLFrame(int frame)
         {
-            WaitForNoPrint(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
+            WaitFor(inf => inf.Item2 <= (5400-frame)/60f - timeoff, inf => inf.Item2);
         }
 
         internal static (int, int) TryGetIntInt(long hwnd, long addr)
@@ -451,6 +484,10 @@ namespace PCRAutoTimeline.Interaction
             frameoff -= framecount;
         }
 
+        private static bool doPrint = true;
+
+        public static void setPrintEnabled(bool enabled) => doPrint = enabled;
+
         internal static void WaitFor(Func<(int, float), bool> check, Func<(int, float), float> changing)
         {
             (int, float) frame;
@@ -463,50 +500,23 @@ namespace PCRAutoTimeline.Interaction
                 frame = Program.TryGetInfo(Program.hwnd, Program.addr);
                 if (frame.Item1 != last)
                 {
-                    Console.Write(
-                        $"\rrFrame = {frame.Item1}, lFrame = {(90 - frame.Item2) * 60}, lTime = {frame.Item2}                                 ");
+                    if (doPrint)
+                        Console.Write(
+                            $"\rrFrame = {frame.Item1}, lFrame = {(90 - frame.Item2) * 60}, lTime = {frame.Item2}                                 ");
                     last = frame.Item1;
                 }
                 lastf = changing(frame);
                 Async.Await();
             } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
-            Console.WriteLine();
+            if (doPrint)
+                Console.WriteLine();
+            doDelay();
         }
 
-        internal static void WaitForNoPrint(Func<(int, float), bool> check, Func<(int, float), float> changing)
+        private static void doDelay()
         {
-            (int, float) frame;
-            float lastf = float.NaN;
-            var last = -1;
-            float lastff;
-            do
-            {
-                lastff = lastf;
-                frame = Program.TryGetInfo(Program.hwnd, Program.addr);
-                if (frame.Item1 != last)
-                {
-                    last = frame.Item1;
-                }
-                lastf = changing(frame);
+            for (int i = 0; i < delay; ++i)
                 Async.Await();
-            } while (!check(frame) || !(changing(frame) != lastff && !float.IsNaN(lastff)));
-        }
-        internal static void WaitFor(Func<(int, float), bool> check)
-        {
-            (int, float) frame;
-            var last = -1;
-            do
-            {
-                frame = Program.TryGetInfo(Program.hwnd, Program.addr);
-                if (frame.Item1 != last)
-                {
-                    Console.Write(
-                        $"\rframeCount = {frame.Item1}, limitTime = {frame.Item2}                  ");
-                    last = frame.Item1;
-                }
-                Async.Await();
-            } while (!check(frame));
-            Console.WriteLine();
         }
 
         private static int TryGetDnplayerProcess()

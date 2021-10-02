@@ -26,9 +26,7 @@ qq群1023837088
 
 ### 运行
 
-1. 安装python**3.8**
-2. 安装wheel下的四个whl文件
-3. 运行timeline.py样例
+timeline.py拖进launcher.bar
 
 ### 编写timeline.py
 
@@ -64,7 +62,7 @@ AutoPcrApi:
 - `void autopcr.waitOneLFrame()` 暂停协程直到过去一个逻辑帧
 - `void autopcr.waitTime(frame)` 暂停协程直到时间达到
 
-- `void autopcr.setOffset(frame_offset, time_offset)` 设定延迟校准参数
+- `void autopcr.setOffset(frame_offset, delay)` 设定延迟校准参数，第一个参数lframe和frame共享，第二个参数是精确的校准，单位是ms
 - `float autopcr.getCrit(unit_handle, target_handle, isMagic)` 获取对某个target攻击的暴击率
 - `uint[] autopcr.predRandom(count)` 获取下count个随机数的值
 
