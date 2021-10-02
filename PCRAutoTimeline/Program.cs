@@ -45,6 +45,8 @@ namespace PCRAutoTimeline
 
             return 0;
         }
+        internal static float timeOffsetByTotal;
+
         static void Main(string[] args)
         {
             //Minitouch.connect("localhost", 1111);
@@ -90,9 +92,13 @@ namespace PCRAutoTimeline
             Console.WriteLine("载入全角色数据");
             UnitAutoData.Init(); //载入不怎么占用时间，直接在主程序载入了
 
-            
-            
-            Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
+
+
+            Console.Write("总刀长度（以秒为单位，不填默认90）");
+            var s = Console.ReadLine();
+            var total = string.IsNullOrEmpty(s) ? 90 : int.Parse(s);
+            timeOffsetByTotal = 90 - total;
+            Console.Write("当前时间（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
             var time = int.Parse(Console.ReadLine());
             
             var tuple =  AobscanHelper.Aobscan(hwnd, idcode, addr =>

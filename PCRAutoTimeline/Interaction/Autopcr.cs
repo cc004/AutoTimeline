@@ -60,7 +60,7 @@ namespace PCRAutoTimeline.Interaction
         public static void setOffset(int frame, float time)
         {
             frameoff = frame;
-            timeoff = time;
+            timeoff = time + Program.timeOffsetByTotal;
         }
 
         public static void waitOneFrame()
