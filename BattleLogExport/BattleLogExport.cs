@@ -50,20 +50,26 @@ namespace BattleLogExport
             var log = battleLogList.GetValue(log1) as List<BattleLogData>;
             int seed = (battleProcessor.GetValue(__instance) as MLDKPCCPIOC).GetSeed();
             var dbmgr = ManagerSingleton<MasterDataManager>.Instance;
+            var units = __instance.GetMyUnitList().Where(u => UnitUtility.IsPersonUnit(u.UnitId)).ToArray();
 
-            var cdict = __instance.GetMyUnitList().ToDictionary(u => u.UnitId, u => new{ name=(string)(dbmgr.masterUnitData.Get(u.UnitId).UnitName), unit=u });
+            var cdict = units.ToDictionary(u => u.UnitId, u => new{ name=(string)(dbmgr.masterUnitData.Get(u.UnitId).UnitName), unit=u });
             var enemy = dbmgr.masterUnitEnemyData.Get(__instance.BossUnit.PrefabId).unit_name;
-            var dmgs = __instance.GetMyUnitList().ToDictionary(i => i.UnitId, i => i.UnitDamageInfo.damage);
+            var dmgs = units.ToDictionary(i => i.UnitId, i => i.UnitDamageInfo.damage);
             var msg = new StringBuilder();
             var src = new StringBuilder();
             var srct = new StringBuilder();
 
+            var header = "import sys\nsys.path.append('.')\nfrom autotimeline import *\n";
+
+            src.AppendLine(header);
+            src.AppendLine(header);
+
             foreach (var tuple in cdict)
             {
-                src.AppendLine($"print(\"calibrate for {tuple.Value.name}\");");
-                src.AppendLine($"autopcr.calibrate(\"{tuple.Value.name}\");");
-                srct.AppendLine($"print(\"calibrate for {tuple.Value.name}\");");
-                srct.AppendLine($"autopcr.calibrate(\"{tuple.Value.name}\");");
+                src.AppendLine($"print(\"calibrate for {tuple.Value.name}\"); ");
+                src.AppendLine($"autopcr.calibrate(\"{tuple.Value.name}\")\n");
+                srct.AppendLine($"print(\"calibrate for {tuple.Value.name}\"); ");
+                srct.AppendLine($"autopcr.calibrate(\"{tuple.Value.name}\")\n");
             }
 
             var damage = dmgs.Where(pair => pair.Key <= 999999).Sum(pair => pair.Value);
@@ -76,8 +82,8 @@ namespace BattleLogExport
             msg.AppendLine("帧轴：");
 
             var skippingFrame = 0;
-            src.AppendLine("autopcr.setOffset(2, 0); --offset calibration");
-            srct.AppendLine("autopcr.setOffset(2, 0); --offset calibration");
+            src.AppendLine("autopcr.setOffset(2, 0); //offset calibration");
+            srct.AppendLine("autopcr.setOffset(2, 0); //offset calibration");
 
             cdict.Add(__instance.BossUnit.UnitId, new { name = string.Empty, unit = __instance.BossUnit });
             var limit = 60 * 90;// __instance.GetMiliLimitTime() / 1000;
@@ -98,18 +104,20 @@ namespace BattleLogExport
                 }
                 else
                 {
+                    src.AppendLine($"# bossub");
+                    srct.AppendLine($"# bossub");
                     var name = dbmgr.masterEnemyParameter.GetFromAllKind(unit_id).name;
                     msg.AppendLine($"{ToTime(60 * limit + skippingFrame - logline.frame, limit)}:{logline.frame})\t{name}");
                 }
                 skippingFrame += BlackoutToFrame((unitActionController.GetValue(cdict[unit_id].unit) as UnitActionController).UnionBurstList[0].BlackOutTime);
             }
 
-            src.AppendLine($"--[[\n{msg}\n]]");
-            srct.AppendLine($"--[[\n{msg}\n]]");
+            src.AppendLine($"'''\n{msg}\n'''");
+            srct.AppendLine($"'''\n{msg}\n'''");
 
-            File.WriteAllText("timeline.lua", src.ToString());
-            File.WriteAllText("timeline_logic.lua", srct.ToString());
-            Log("timeline.lua generated.");
+            File.WriteAllText("timeline.py", src.ToString());
+            File.WriteAllText("timeline_logic.py", srct.ToString());
+            Log("timeline.py generated.");
         }
 
         public override void Initialize()

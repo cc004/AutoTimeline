@@ -9,6 +9,13 @@ using System.Text;
 
 namespace PCRAutoTimeline.Interaction
 {
+    public class Ref<T> where T : struct
+    {
+        public T t;
+        public Ref(T t) { this.t = t; }
+
+    }
+
     public static class Autopcr
     {
         private static readonly Dictionary<int, NativeFunctions.POINT> mousepos = new();
@@ -193,10 +200,17 @@ namespace PCRAutoTimeline.Interaction
 
         public static void multipress(string id, int dur)
         {
-            for (int i = 0; i < dur; ++i)
+            var exiting = new Ref<bool>(false);
+            Async.Start(() =>
+            {
+                for (int i = 0; i < dur; ++i)
+                    waitOneFrame();
+                exiting.t = true;
+            });
+            while (!exiting.t)
             {
                 press(id);
-                waitOneFrame();
+                Async.Await();
             }
         }
 

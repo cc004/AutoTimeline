@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PCRAutoTimeline
 {
@@ -45,31 +46,38 @@ namespace PCRAutoTimeline
         /// <returns></returns>
         public static (long, long) Aobscan(long handle, byte[] aob, Func<long, bool> matchValidator, long blockToStart = 0, Action<string> callback = null)
         {
-            long i = blockToStart;
-            while (i < long.MaxValue)
+            // returns
+            IEnumerable<(long, long)> getMemblocks(long handle)
             {
-                int flag = NativeFunctions.VirtualQueryEx(handle, i, out NativeFunctions.MEMORY_BASIC_INFORMATION mbi, NativeFunctions.MEMORY_BASIC_INFORMATION_SIZE);
-                if (flag != NativeFunctions.MEMORY_BASIC_INFORMATION_SIZE)
-                    break;
-                if (mbi.RegionSize <= 0)
-                    break;
-                if (mbi.State != (int)NativeFunctions.AllocationType.Commit)
+                long i = blockToStart;
+                while (i < long.MaxValue)
                 {
+                    int flag = NativeFunctions.VirtualQueryEx(handle, i, out NativeFunctions.MEMORY_BASIC_INFORMATION mbi, NativeFunctions.MEMORY_BASIC_INFORMATION_SIZE);
+                    if (flag != NativeFunctions.MEMORY_BASIC_INFORMATION_SIZE)
+                        break;
+                    if (mbi.RegionSize <= 0)
+                        break;
+                    if (mbi.State == (int)NativeFunctions.AllocationType.Commit)
+                    {
+                        yield return (mbi.RegionSize, mbi.BaseAddress);
+                    }
                     i = mbi.BaseAddress + mbi.RegionSize;
-                    continue;
                 }
-                if (callback != null) callback($"scanning {mbi.BaseAddress:x}...");
-                else Console.Write($"\rscanning {mbi.BaseAddress:x}...");
-                byte[] va = new byte[mbi.RegionSize];
-                NativeFunctions.ReadProcessMemory(handle, mbi.BaseAddress, va, mbi.RegionSize, 0);
-                long r = Memmem(va, mbi.RegionSize, aob, aob.Length, r => matchValidator(mbi.BaseAddress + r));
-                if (r >= 0)
-                {
-                    return (mbi.BaseAddress + r, i);
-                }
-                i = mbi.BaseAddress + mbi.RegionSize;
             }
-            return (-1, -1);
+
+            (long, long) result = (-1, -1);
+            getMemblocks(handle).AsParallel().WithDegreeOfParallelism(8).ForAll(blk =>
+            {
+                var (size, @base) = blk;
+                byte[] va = new byte[size];
+                if (result.Item1 > 0) return;
+                NativeFunctions.ReadProcessMemory(handle, @base, va, size, 0);
+                if (result.Item1 > 0) return;
+                long r = Memmem(va, va.Length, aob, aob.Length, r => matchValidator(@base + r));
+                if (r >= 0)
+                    result = (@base + r, @base);
+            });
+            return result;
         }
 
 
