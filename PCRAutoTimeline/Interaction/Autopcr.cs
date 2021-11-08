@@ -209,7 +209,7 @@ namespace PCRAutoTimeline.Interaction
             });
             while (!exiting.t)
             {
-                if (!Input.keyPressed("s"))
+                if (!Input.keyPressed("S"))
                     press(id);
                 Async.Await();
             }
