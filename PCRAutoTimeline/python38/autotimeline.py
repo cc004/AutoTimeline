@@ -1,4 +1,7 @@
 import sys
+sys.path.append('lib')
+sys.path.append('.')
+
 from clr_loader import get_coreclr
 from pythonnet import set_runtime
 

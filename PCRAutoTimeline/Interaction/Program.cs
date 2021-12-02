@@ -38,6 +38,7 @@ namespace PCRAutoTimeline.Interaction
         {
             foreach (var proc in Process.GetProcesses())
             {
+                if (proc.ProcessName == "NemuHeadless") return proc.Id;
                 if (proc.ProcessName == "LdVBoxHeadless") return proc.Id;
             }
 
@@ -57,20 +58,20 @@ namespace PCRAutoTimeline.Interaction
             
             Console.Write("内核pid，如果是单开，直接回车即可，程序自动搜索>");
             var str = Console.ReadLine();
-            var pid = string.IsNullOrEmpty(str) ? TryGetProcess() : int.Parse(str);
+            var pid = !int.TryParse(str, out var val) ? TryGetProcess() : val;
             //var pid = 11892;
             hwnd = NativeFunctions.OpenProcess(NativeFunctions.PROCESS_ALL_ACCESS, false, pid);
             Console.WriteLine("载入全角色数据");
             UnitAutoData.Init(); //载入不怎么占用时间，直接在主程序载入了
 
             Console.Write("总刀长度（以秒为单位，不填默认90）");
-            var s = Console.ReadLine();
+            var s = str == "debug" ? "" : Console.ReadLine();
             var total = string.IsNullOrEmpty(s) ? 90 : int.Parse(s);
             timeOffsetByTotal = 90 - total;
             Autopcr.setOffset(0, 0);
 
             Console.Write("当前世界（以秒为单位，别给我填100,1.00，要是超过了20s直接挂树吧）");
-            var time = int.Parse(Console.ReadLine());
+            var time = str == "debug" ? 0 : int.Parse(Console.ReadLine());
             
             var tuple =  AobscanHelper.Aobscan(hwnd, idcode, addr =>
             {
@@ -91,7 +92,7 @@ namespace PCRAutoTimeline.Interaction
 
             Console.WriteLine();
 
-            if (addr == -1)
+            if (addr == -1 && str != "debug")
             {
                 Console.WriteLine("没找到数据！好好看看是不是输错进程pid了或者没进对战，进对战不要开倍速！");
                 throw new Exception();
