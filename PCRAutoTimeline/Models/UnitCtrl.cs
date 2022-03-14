@@ -18,23 +18,23 @@ namespace PCRAutoTimeline.Models
     [StructLayout(LayoutKind.Explicit)]
     public struct UnitCtrl
     {
-        [FieldOffset(0x4e0)]
+        [FieldOffset(0x518)]
         public ObscuredFloat tp;
-        [FieldOffset(0x390)]
+        [FieldOffset(0x3AC)]
         public ObscuredLong hp;
-        [FieldOffset(0x3a4)]
+        [FieldOffset(0x3C0)]
         public ObscuredLong maxHp;
-        [FieldOffset(0x384)]
+        [FieldOffset(0x3A0)]
         public ObscuredInt level;
-        [FieldOffset(0x3d0)]
+        [FieldOffset(0x3EC)]
         public ObscuredInt def;
-        [FieldOffset(0x3dc)]
+        [FieldOffset(0x3F8)]
         public ObscuredInt magicDef;
-        [FieldOffset(0x400)]
+        [FieldOffset(0x41C)]
         public ObscuredInt physicalCritical;
-        [FieldOffset(0x40c)]
+        [FieldOffset(0x428)]
         public ObscuredInt magicCritical;
-        [FieldOffset(0x18c)]
+        [FieldOffset(0x18C)]
         public ActionState currentState;
         [FieldOffset(0x194)]
         public ObscuredFloat castTimer;
@@ -44,5 +44,15 @@ namespace PCRAutoTimeline.Models
         public bool attackPatternIsLoop;
         [FieldOffset(0x1e0)]
         public int currentActionPatternId;
+        [FieldOffset(0x108)]
+        public int currentSkill;
+        [FieldOffset(0x24c)]
+        public int unitId;
+        [FieldOffset(0x250)]
+        public int prefabId;
+        [FieldOffset(0x25c)]
+        public int rarity;
+        [FieldOffset(0x264)]
+        public int promotion;
     }
 }

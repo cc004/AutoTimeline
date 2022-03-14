@@ -30,7 +30,7 @@ namespace PCRAutoTimeline.Interaction
         public static (int, float) TryGetInfo(long hwnd, long addr)
         {
             var data = new byte[16];
-            NativeFunctions.ReadProcessMemory(hwnd, addr - 0x44, data, 16, 0);
+            NativeFunctions.ReadProcessMemory(hwnd, addr - 0x48, data, 16, 0);
             return (BitConverter.ToInt32(data, 0), BitConverter.ToSingle(data, 8));
         }
 
@@ -40,6 +40,7 @@ namespace PCRAutoTimeline.Interaction
             {
                 if (proc.ProcessName == "NemuHeadless") return proc.Id;
                 if (proc.ProcessName == "LdVBoxHeadless") return proc.Id;
+                if (proc.ProcessName == "LdBoxHeadless") return proc.Id;
             }
 
             return 0;

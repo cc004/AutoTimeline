@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 
@@ -19,6 +21,10 @@ namespace PCRAutoTimeline.Interaction
     public static class Autopcr
     {
         private static readonly Dictionary<int, NativeFunctions.POINT> mousepos = new();
+
+        private static readonly int OFFSET_UNITID = typeof(UnitCtrl).GetField(nameof(UnitCtrl.unitId))
+            !.GetCustomAttribute<FieldOffsetAttribute>()!.Value;
+
 
         public static UnitCtrl getUnit(long unitHandle)
         {
@@ -101,15 +107,12 @@ namespace PCRAutoTimeline.Interaction
 
         private static bool UnitEvaluator(int unitid, int rarity, int promotion, long addr)
         {
-            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
-            if (t.Item1 == rarity && t.Item2 == promotion)
+            var unit = getUnit(addr - OFFSET_UNITID);
+            if (unit.rarity == rarity && unit.promotion == promotion)
             {
-                var tp = getTp(addr - 0x244);
-                var hp = getHp(addr - 0x244);
-                var maxHp = getMaxHp(addr - 0x244);
-                if (tp == 0.0 && maxHp == hp)
+                if (unit.tp == 0.0 && unit.maxHp == unit.hp)
                 {
-                    Console.WriteLine($"unit found @{addr - 0x244:x} unitid = {unitid}, tp = {tp}, hp = {hp}/{maxHp}");
+                    Console.WriteLine($"unit found @{addr - OFFSET_UNITID:x} unitid = {unitid}, tp = {unit.tp}, hp = {unit.hp}/{unit.maxHp}");
                     return true;
                 }
             }
@@ -118,16 +121,12 @@ namespace PCRAutoTimeline.Interaction
 
         private static bool BossEvaluator(int unitid, long addr)
         {
-            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
-            var t2 = TryGetIntInt(Program.hwnd, addr);
-            if (t.Item1 == 1 && t.Item2 == 1 && t2.Item2 >= 200000 && t2.Item2 <= 399999)
+            var unit = getUnit(addr - OFFSET_UNITID);
+            if (unit.rarity == 1 && unit.promotion == 1 && unit.prefabId >= 200000 && unit.prefabId <= 399999)
             {
-                var tp = getTp(addr - 0x244);
-                var hp = getHp(addr - 0x244);
-                var maxHp = getMaxHp(addr - 0x244);
-                if (tp == 0.0)
+                if (unit.tp == 0.0)
                 {
-                    Console.WriteLine($"unit found @{addr - 0x244:x} unitid = {unitid}, tp = {tp}, hp = {hp}/{maxHp}");
+                    Console.WriteLine($"unit found @{addr - OFFSET_UNITID:x} unitid = {unitid}, tp = {unit.tp}, hp = {unit.hp}/{unit.maxHp}");
                     return true;
                 }
             }
@@ -136,16 +135,12 @@ namespace PCRAutoTimeline.Interaction
 
         private static bool BossAutoEvaluator(long addr)
         {
-            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
-            var t2 = TryGetIntInt(Program.hwnd, addr);
-            if (t.Item1 == 1 && t.Item2 == 1 && t2.Item2 >= 200000 && t2.Item2 <= 399999)
+            var unit = getUnit(addr - OFFSET_UNITID);
+            if (unit.rarity == 1 && unit.promotion == 1 && unit.prefabId >= 200000 && unit.prefabId <= 399999)
             {
-                var tp = getTp(addr - 0x244);
-                var hp = getHp(addr - 0x244);
-                var maxHp = getMaxHp(addr - 0x244);
-                if (tp == 0.0 && maxHp<=15000000 && (maxHp%10000)==0)
+                if (unit.tp == 0.0 && unit.maxHp <= 100000000 && (unit.maxHp %10000)==0)
                 {
-                    Console.WriteLine($"unit found @{addr - 0x244:x} , tp = {tp}, hp = {hp}/{maxHp}");
+                    Console.WriteLine($"unit found @{addr - OFFSET_UNITID:x} , tp = {unit.tp}, hp = {unit.hp}/{unit.maxHp}");
                     return true;
                 }
             }
@@ -154,15 +149,12 @@ namespace PCRAutoTimeline.Interaction
 
         private static bool UnitAutoEvaluator( long addr)
         {
-            var t = TryGetIntInt(Program.hwnd, addr + 0x10);
-            if ((t.Item1 >= 1 && t.Item1 <= 6) && (t.Item2 >= 1 && t.Item2 <= 50)) //rank到50总够用了
+            var unit = getUnit(addr - OFFSET_UNITID);
+            if (unit.rarity is >= 1 and <= 6 && unit.promotion is >= 1 and <= 50) //rank到50总够用了
             {
-                var tp = getTp(addr - 0x244);
-                var hp = getHp(addr - 0x244);
-                var maxHp = getMaxHp(addr - 0x244);
-                if (tp == 0.0 && maxHp == hp && maxHp >0 && maxHp<100000)
+                if (unit.tp == 0.0 && unit.maxHp == unit.hp && unit.maxHp >0 && unit.maxHp <100000)
                 {
-                    Console.WriteLine($"unit found @{addr - 0x244:x} star = {t.Item1},rank = {t.Item2} , tp = {tp}, hp = {hp}/{maxHp}");
+                    Console.WriteLine($"unit found @{addr - OFFSET_UNITID:x} star = {unit.rarity},rank = {unit.promotion} , tp = {unit.tp}, hp = {unit.hp}/{unit.maxHp}");
                     return true;
                 }
             }
@@ -176,15 +168,15 @@ namespace PCRAutoTimeline.Interaction
             var b = BitConverter.GetBytes(unitid);
             var tuple = AobscanHelper.Aobscan(Program.hwnd, b.Concat(b).ToArray(),
                 addr => UnitEvaluator(unitid, rarity, promotion, addr));
-            return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
+            return tuple.Item1 != -1 ? tuple.Item1 - OFFSET_UNITID : -1;
         }
 
         public static long getUnitAddrEasy(int unitid)
         {
             var b = BitConverter.GetBytes(unitid);
             var tuple = AobscanHelper.Aobscan(Program.hwnd, b.Concat(b).ToArray(),
-                addr => UnitAutoEvaluator(addr));
-            return tuple.Item1 != -1 ? tuple.Item1 - 0x244 : -1;
+                UnitAutoEvaluator);
+            return tuple.Item1 != -1 ? tuple.Item1 - OFFSET_UNITID : -1;
         }
 
 
@@ -195,7 +187,7 @@ namespace PCRAutoTimeline.Interaction
             var b = BitConverter.GetBytes(unitid);
             var tuple2 = AobscanHelper.Aobscan(Program.hwnd, b.ToArray(),
                 addr => BossEvaluator(unitid, addr));
-            return tuple2.Item1 != -1 ? tuple2.Item1 - 0x244 : -1;
+            return tuple2.Item1 != -1 ? tuple2.Item1 - OFFSET_UNITID : -1;
         }
 
         public static void multipress(string id, int dur)
@@ -251,7 +243,7 @@ namespace PCRAutoTimeline.Interaction
                 if (temp_tuple.Item1 != -1 && ((boss_name = UnitAutoData.getBossName(temp_tuple.Item2)) != "未找到该Boss"||((boss_name = UnitAutoData.getBossPartsName(temp_tuple.Item2)) != "未知部位")))
                 {
                     
-                    res_list.Add(Tuple2dic((order, temp_tuple.Item1 - 0x244, temp_tuple.Item2, boss_name)));
+                    res_list.Add(Tuple2dic((order, temp_tuple.Item1 - OFFSET_UNITID, temp_tuple.Item2, boss_name)));
                     order += 1;
                 }
             }
@@ -292,7 +284,7 @@ namespace PCRAutoTimeline.Interaction
             {
                 if (temp_tuple.Item1 != -1 && (unit_name=UnitAutoData.getUnitName(temp_tuple.Item2) )!= "未知角色")
                 { 
-                    res_list.Add(Tuple2dic((order,temp_tuple.Item1 - 0x244, temp_tuple.Item2,unit_name)));
+                    res_list.Add(Tuple2dic((order,temp_tuple.Item1 - OFFSET_UNITID, temp_tuple.Item2,unit_name)));
                     order += 1;
                 }
             }
@@ -302,50 +294,42 @@ namespace PCRAutoTimeline.Interaction
 
         public static float getTp(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x4E0, out ObscuredFloat tp);
-            return tp;
+            return getUnit(unitHandle).tp;
         }
 
         public static long getHp(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x390, out ObscuredLong hp);
-            return hp;
+            return getUnit(unitHandle).hp;
         }
 
         public static long getMaxHp(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3A4, out ObscuredLong hp);
-            return hp;
+            return getUnit(unitHandle).maxHp;
         }
 
         public static int getLevel(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x384, out ObscuredInt level);
-            return level;
+            return getUnit(unitHandle).level;
         }
 
         public static int getDef(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3D0, out ObscuredInt def);
-            return def;
+            return getUnit(unitHandle).def;
         }
 
         public static int getMagicDef(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x3DC, out ObscuredInt def);
-            return def;
+            return getUnit(unitHandle).magicDef;
         }
 
         public static int getPhysicalCritical(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x400, out ObscuredInt crit);
-            return crit;
+            return getUnit(unitHandle).physicalCritical;
         }
 
         public static int getMagicCritical(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x40C, out ObscuredInt crit);
-            return crit;
+            return getUnit(unitHandle).magicCritical;
         }
 
         public static float getCrit(long unitHandle, long targetHandle, bool isMagic)
@@ -356,20 +340,17 @@ namespace PCRAutoTimeline.Interaction
 
         public static string getActionState(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x18C, out int state);
-            return ((ActionState)state).ToString();
+            return getUnit(unitHandle).currentState.ToString();
         }
 
         public static float getCastTimer(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x194, out ObscuredFloat castTimer);
-            return castTimer;
+            return getUnit(unitHandle).castTimer;
         }
         
         public static int getSkillId(long unitHandle)
         {
-            NativeFunctions.ReadProcessMemory(Program.hwnd, unitHandle + 0x110, out int skillid);
-            return skillid;
+            return getUnit(unitHandle).currentSkill;
         }
 
         public static uint[] predRandom(int count)
@@ -483,6 +464,12 @@ namespace PCRAutoTimeline.Interaction
             var data = new byte[16];
             NativeFunctions.ReadProcessMemory(hwnd, addr, data, 16, 0);
             return (BitConverter.ToInt32(data, 0), BitConverter.ToInt32(data, 4));
+        }
+        internal static int TryGetInt(long hwnd, long addr)
+        {
+            var data = new byte[4];
+            NativeFunctions.ReadProcessMemory(hwnd, addr, data, 4, 0);
+            return BitConverter.ToInt32(data, 0);
         }
 
         private static void PressAt(NativeFunctions.POINT point)
