@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using AssetsTools;
 
 namespace PlatformPatcher
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var client = new HttpClient();
             /*
@@ -23,12 +25,50 @@ namespace PlatformPatcher
                     );
             }
             */
-            
-            Console.WriteLine(Convert.ToBase64String("6B 20 E2 AB 6C 31 13 30 F7 61 D7 37 CE 3F 30 25 75 08 50 66 5E EA 58 B6 37 2F 8D 2F 57 50 1E B3 6D 5C 30 BA 27 C9 38 F5 BC A9 D1 D9 90 64 98 19 51 DB CA 43"
-                .Split(' ').Select(i => (byte)int.Parse(i, System.Globalization.NumberStyles.HexNumber)).ToArray()));
-            
-            foreach (var file in Directory.GetFiles(@"C:\Users\Administrator\Documents\Tencent Files\1176321897\FileRecv\priconner/Assets/a_"))
+
+            var dict = new Dictionary<string, string>();
+            foreach (var file in (await client
+                         .GetStringAsync(
+                             "https://prd-priconne-redive.akamaized.net/dl/Resources/10028300/Jpn/AssetBundles/Windows/manifest/manifest_assetmanifest")
+                         ).Split('\n').Select(r => r.Split(',')[0]))
             {
+                if (string.IsNullOrEmpty(file)) continue;
+                foreach (var line in (await client
+                             .GetStringAsync(
+                                 $"https://prd-priconne-redive.akamaized.net/dl/Resources/10028300/Jpn/AssetBundles/Windows/{file}")
+                             ).Split('\n'))
+                {
+                    var s = line.Split(',');
+                    dict.Add(s[0], s[1]);
+                }
+            }
+
+            var tasks = new List<Task>();
+            var done = File.ReadAllText("1.txt");
+
+            foreach (var file in Directory.GetFiles(@"D:\pro\unity\PCRCalculator\Assets\StreamingAssets\AB"))
+            {
+                if (!file.EndsWith(".unity3d")) continue;
+                var p = "a/" + Path.GetFileName(file);
+                if (!dict.ContainsKey(p)) continue;
+                var path = dict[p];
+                if (done.Contains(path)) continue;
+                tasks.Add(Task.Run(async () =>
+                {
+                    try
+                    {
+                        await File.WriteAllBytesAsync(file,
+                            await client.GetByteArrayAsync(
+                                    $"https://prd-priconne-redive.akamaized.net/dl/pool/AssetBundles/{path[0..2]}/{path}")
+                                );
+                        Console.WriteLine(path);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }));
+                /*
                 var fn = Path.GetFileName(file);
                 var ab = AssetBundleFile.LoadFromFile(file);
                 foreach (var handle in ab.Files)
@@ -40,8 +80,10 @@ namespace PlatformPatcher
                     handle.LoadAssetsFile(asset);
                 }
                 //ab.Header.versionEngine = "2018.4.21f1";
-                ab.SaveToFile(@$"C:\Users\Administrator\Documents\Tencent Files\1176321897\FileRecv\priconner/Assets/a/{fn}");
+                ab.SaveToFile(@$"{fn}");*/
             }
+
+            Task.WaitAll(tasks.ToArray());
             /*
             var ab = AssetBundleFile.LoadFromFile(@"D:\PrincessConnectReDive\a\64669037b7eb150c28347b8b0189c54188105906");
             Console.WriteLine(ab.Files[0].ToAssetsFile().MetadataHeader.TargetPlatform);
